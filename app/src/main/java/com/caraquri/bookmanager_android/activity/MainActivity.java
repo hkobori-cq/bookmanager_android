@@ -11,21 +11,23 @@ import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
 import com.caraquri.bookmanager_android.api.BookDataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
 import com.caraquri.bookmanager_android.model.BookDataModel;
+import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.Call;
-import retrofit.Callback;
 import retrofit.GsonConverterFactory;
-import retrofit.Response;
 import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
+import rx.Observer;
+import rx.Subscription;
 
 
 public class MainActivity extends Activity {
     public ActivityMainBinding mainBinding;
+    protected Subscription subscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +37,30 @@ public class MainActivity extends Activity {
     }
 
     private void initRecyclerView(){
-        OkHttpClient httpClient = new OkHttpClient();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://app.com")
-                .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         BookDataClient.BookDataService service = retrofit.create(BookDataClient.BookDataService.class);
 
-        Call<String> call = service.getBookData("0-10");
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Response<String> response, Retrofit retrofit) {
-                Log.v("", Boolean.toString(response.isSuccess()));
-            }
+        this.subscription = service.getBookData("0-10")
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.d("","onComplete");
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
-                Log.e("error",t.toString());
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("", "エラー : " + e.toString());
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        Log.d("","onNext");
+                    }
+                });
         List<BookDataModel> list = new ArrayList<>();
         list.add(new BookDataModel("item1"));
         list.add(new BookDataModel("item2"));
