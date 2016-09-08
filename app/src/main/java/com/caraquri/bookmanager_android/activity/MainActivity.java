@@ -8,20 +8,29 @@ import android.util.Log;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
-import com.caraquri.bookmanager_android.api.APIListener;
-import com.caraquri.bookmanager_android.api.ConnectAPI;
+import com.caraquri.bookmanager_android.api.BookDataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
 import com.caraquri.bookmanager_android.model.BookDataModel;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.GsonConverterFactory;
+import retrofit.HttpException;
+import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
-public class MainActivity extends Activity implements APIListener {
+public class MainActivity extends Activity {
     public ActivityMainBinding mainBinding;
-    private MainActivity mainActivity;
+    protected Subscription subscription;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,29 +40,43 @@ public class MainActivity extends Activity implements APIListener {
     }
 
     private void initRecyclerView(){
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ConnectAPI connectAPI = new ConnectAPI("page=0-10","getBook");
-                connectAPI.setAPIListener(mainActivity);
-                connectAPI.execute();
-            }
-        })).start();
-        List<BookDataModel> list = new ArrayList<>();
-        list.add(new BookDataModel("item1"));
-        list.add(new BookDataModel("item2"));
-        list.add(new BookDataModel("item3"));
-        list.add(new BookDataModel("item4"));
-        list.add(new BookDataModel("item5"));
-        list.add(new BookDataModel("item6"));
-        BookTitleAdapter adapter = new BookTitleAdapter(list);
-        mainBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mainBinding.recyclerView.setAdapter(adapter);
-    }
 
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://app.com/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+
+        BookDataClient bookDataClient = retrofit.create(BookDataClient.class);
+        this.subscription = bookDataClient.getBookData("0-10")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BookDataModel>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof HttpException){
+                            HttpException response = (HttpException)e;
+                            int code = response.code();
+                        }
+                    }
+                    @Override
+                    public void onNext(BookDataModel bookDataModel) {
+                    }
+                });
+    }
     @Override
-    public void succeededAPIConnection(StringBuffer result){
-        Log.d("ok","ok");
+    protected void onDestroy(){
+        this.subscription.unsubscribe();
+        super.onDestroy();
     }
 
 }
