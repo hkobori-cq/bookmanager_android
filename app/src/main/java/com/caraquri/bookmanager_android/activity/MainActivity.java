@@ -10,26 +10,22 @@ import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
 import com.caraquri.bookmanager_android.api.BookDataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
-import com.caraquri.bookmanager_android.model.BookDataModel;
-import com.google.gson.FieldNamingPolicy;
+import com.caraquri.bookmanager_android.model.BookDataEntity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.List;
 
+
+import retrofit.Call;
+import retrofit.Callback;
 import retrofit.GsonConverterFactory;
-import retrofit.HttpException;
+import retrofit.Response;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 public class MainActivity extends Activity {
     public ActivityMainBinding mainBinding;
-    protected Subscription subscription;
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -42,7 +38,6 @@ public class MainActivity extends Activity {
     private void initRecyclerView(){
 
         Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -52,31 +47,17 @@ public class MainActivity extends Activity {
                 .build();
 
         BookDataClient bookDataClient = retrofit.create(BookDataClient.class);
-        this.subscription = bookDataClient.getBookData("0-10")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<BookDataModel>() {
-                    @Override
-                    public void onCompleted() {
+        Call<BookDataEntity> call = bookDataClient.getBookData("0-10");
+        call.enqueue(new Callback<BookDataEntity>() {
+            @Override
+            public void onResponse(Response<BookDataEntity> response, Retrofit retrofit) {
+                BookTitleAdapter adapter = new BookTitleAdapter(response.body().getBookData());
+                mainBinding.recyclerView.setAdapter(adapter);
+            }
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof HttpException){
-                            HttpException response = (HttpException)e;
-                            int code = response.code();
-                        }
-                    }
-                    @Override
-                    public void onNext(BookDataModel bookDataModel) {
-                    }
-                });
+            @Override
+            public void onFailure(Throwable t) {
+            }
+        });
     }
-    @Override
-    protected void onDestroy(){
-        this.subscription.unsubscribe();
-        super.onDestroy();
-    }
-
 }
