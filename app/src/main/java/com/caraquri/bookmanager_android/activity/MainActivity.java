@@ -3,6 +3,9 @@ package com.caraquri.bookmanager_android.activity;
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
@@ -23,6 +26,8 @@ import retrofit.RxJavaCallAdapterFactory;
 
 
 public class MainActivity extends Activity {
+    protected TabLayout tabLayout;
+    protected ViewPager viewPager;
     public ActivityMainBinding mainBinding;
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -30,6 +35,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        tabLayout = mainBinding.tabbar;
+        viewPager = mainBinding.viewPaper;
         initRecyclerView();
     }
 

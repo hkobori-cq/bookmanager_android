@@ -1,6 +1,5 @@
 package com.caraquri.bookmanager_android.model;
 
-import com.caraquri.bookmanager_android.util.ChangeDateFormat;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
