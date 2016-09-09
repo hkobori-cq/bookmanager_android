@@ -35,6 +35,7 @@ public class BookTitleAdapter extends RecyclerView.Adapter<BookTitleAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
         BookDataModel bookDataModel = dataset.get(position);
+        bookDataModel.bookPrice = bookDataModel.bookPrice + "円";
         ChangeDateFormat format = new ChangeDateFormat();
         bookDataModel.purchaseDate = format.changeDateFormat(bookDataModel.purchaseDate);
         holder.binding.setVariable(BR.bookData,bookDataModel);
