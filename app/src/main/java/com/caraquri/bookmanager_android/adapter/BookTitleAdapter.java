@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.caraquri.bookmanager_android.BR;
 import com.caraquri.bookmanager_android.databinding.ItemBookListRowBinding;
 import com.caraquri.bookmanager_android.model.BookDataModel;
+import com.caraquri.bookmanager_android.util.ChangeDateFormat;
 
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class BookTitleAdapter extends RecyclerView.Adapter<BookTitleAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder,int position){
         BookDataModel bookDataModel = dataset.get(position);
+        ChangeDateFormat format = new ChangeDateFormat();
+        bookDataModel.purchaseDate = format.changeDateFormat(bookDataModel.purchaseDate);
         holder.binding.setVariable(BR.bookData,bookDataModel);
         holder.binding.executePendingBindings();
     }
