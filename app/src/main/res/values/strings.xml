@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BookManager_Android</string>
+    <string name="book_image_picture">book image picture</string>
 </resources>

@@ -3,8 +3,6 @@ package com.caraquri.bookmanager_android.activity;
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;

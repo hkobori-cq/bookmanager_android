@@ -10,12 +10,12 @@ public class BookDataModel {
     public String bookName;
     @Expose
     @SerializedName("price")
-    public Integer bookPrice;
+    public String bookPrice;
     @Expose
     @SerializedName("purchase_date")
     public String purchaseDate;
 
-    public BookDataModel(String bookName,Integer bookPrice,String purchaseDate){
+    public BookDataModel(String bookName,String bookPrice,String purchaseDate){
         this.bookName = bookName;
         this.bookPrice = bookPrice;
         this.purchaseDate = purchaseDate;

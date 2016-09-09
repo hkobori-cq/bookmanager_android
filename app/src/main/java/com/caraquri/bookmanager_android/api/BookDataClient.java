@@ -2,8 +2,6 @@ package com.caraquri.bookmanager_android.api;
 
 import com.caraquri.bookmanager_android.model.BookDataEntity;
 
-import java.util.List;
-
 import retrofit.Call;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
