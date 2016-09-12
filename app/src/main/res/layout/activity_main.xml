@@ -14,8 +14,7 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="書籍一覧"
-            app:titleTextColor="@color/white"
-            app:titleMarginStart="@dimen/activity_horizontal_margin"/>
+            app:titleTextColor="@color/white" />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_below="@+id/toolbar"

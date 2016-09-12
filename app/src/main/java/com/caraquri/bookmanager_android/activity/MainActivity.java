@@ -1,11 +1,11 @@
 package com.caraquri.bookmanager_android.activity;
 
-import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
@@ -25,9 +25,7 @@ import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
 
-public class MainActivity extends Activity {
-    protected TabLayout tabLayout;
-    protected ViewPager viewPager;
+public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding mainBinding;
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -35,8 +33,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        tabLayout = mainBinding.tabbar;
-        viewPager = mainBinding.viewPaper;
+        initToolbar();
         initRecyclerView();
     }
 
@@ -64,5 +61,21 @@ public class MainActivity extends Activity {
             public void onFailure(Throwable t) {
             }
         });
+    }
+
+    private void initToolbar(){
+        setSupportActionBar(mainBinding.toolbar);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayShowHomeEnabled(true);
+            bar.setHomeButtonEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

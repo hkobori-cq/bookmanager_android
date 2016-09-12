@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BookManager_Android</string>
     <string name="book_image_picture">book image picture</string>
+    <string name="add">追加</string>
 </resources>
