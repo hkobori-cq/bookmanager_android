@@ -21,4 +21,10 @@ public class BookRegisterFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
         binding = FragmentAddViewBinding.bind(getView());
     }
+
+
+
+    public String getBookDataText(){
+        return binding.bookDateField.getText().toString();
+    }
 }

@@ -1,9 +1,13 @@
 package com.caraquri.bookmanager_android.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.caraquri.bookmanager_android.BR;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BookDataModel {
+public class BookDataModel extends BaseObservable{
 
     @Expose
     @SerializedName("name")
@@ -19,5 +23,15 @@ public class BookDataModel {
         this.bookName = bookName;
         this.bookPrice = bookPrice;
         this.purchaseDate = purchaseDate;
+    }
+
+    @Bindable
+    public String getBookName(){
+        return bookName;
+    }
+
+    public void setBookName(String bookName){
+        this.bookName = bookName;
+        notifyPropertyChanged(BR.bookName);
     }
 }
