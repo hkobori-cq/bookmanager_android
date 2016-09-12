@@ -2,4 +2,8 @@
     <string name="app_name">BookManager_Android</string>
     <string name="book_image_picture">book image picture</string>
     <string name="add">追加</string>
+    <string name="add_image">写真を追加</string>
+    <string name="book_name">書籍名</string>
+    <string name="book_price">金額</string>
+    <string name="purchase_date">購入日</string>
 </resources>
