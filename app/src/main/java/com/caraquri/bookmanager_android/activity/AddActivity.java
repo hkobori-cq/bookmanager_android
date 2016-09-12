@@ -9,10 +9,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.api.BookDataRegisterClient;
 import com.caraquri.bookmanager_android.databinding.ActivityAddBinding;
+import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -25,6 +27,7 @@ import retrofit.RxJavaCallAdapterFactory;
 
 public class AddActivity extends AppCompatActivity {
     protected ActivityAddBinding binding;
+    protected FragmentAddViewBinding fragmentAddViewBinding;
     private static final String TAG = MainActivity.class.getSimpleName();
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -67,6 +70,15 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void registerBookData(){
+        EditText name = (EditText)findViewById(R.id.book_title_field);
+        EditText price = (EditText)findViewById(R.id.book_price_field);
+        EditText date = (EditText)findViewById(R.id.book_date_field);
+
+        String nameStr = name.getText().toString();
+        Integer priceInt = Integer.parseInt(price.getText().toString());
+        String dateStr = date.getText().toString();
+
+
         Gson gson = new GsonBuilder()
                 .create();
 
@@ -76,7 +88,7 @@ public class AddActivity extends AppCompatActivity {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         BookDataRegisterClient client = retrofit.create(BookDataRegisterClient.class);
-        Call<Void> call = client.storeBookData("ok","PHP",333,"2016-03-21");
+        Call<Void> call = client.storeBookData("sample",nameStr,priceInt,dateStr);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Response<Void> response, Retrofit retrofit) {
