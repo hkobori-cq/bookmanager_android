@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
-import com.caraquri.bookmanager_android.util.ChangeDateFormat;
 
 public class BookRegisterFragment extends Fragment {
     protected FragmentAddViewBinding binding;
@@ -32,7 +31,7 @@ public class BookRegisterFragment extends Fragment {
     private void initFieldData(){
         Intent intent = getActivity().getIntent();
         binding.bookTitleField.setText(intent.getStringExtra("name"));
-        binding.bookPriceField.setText(intent.getStringExtra("price"));
+        binding.bookPriceField.setText(intent.getStringExtra("price").replace("円",""));
         binding.bookDateField.setText(intent.getStringExtra("date").replaceAll("/","-"));
     }
 
