@@ -33,8 +33,6 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit);
         initToolbar();
-        setInitData();
-
     }
 
     private void initToolbar() {
@@ -46,10 +44,6 @@ public class EditActivity extends AppCompatActivity {
             bar.setDisplayShowTitleEnabled(false);
             bar.setHomeButtonEnabled(true);
         }
-    }
-
-    private void setInitData(){
-
     }
 
     @Override

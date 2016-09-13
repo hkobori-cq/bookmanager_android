@@ -15,7 +15,6 @@ import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
 import com.caraquri.bookmanager_android.api.BookDataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
-import com.caraquri.bookmanager_android.fragment.BookRegisterFragment;
 import com.caraquri.bookmanager_android.model.BookDataEntity;
 import com.caraquri.bookmanager_android.widget.OnItemClickListener;
 import com.google.gson.Gson;

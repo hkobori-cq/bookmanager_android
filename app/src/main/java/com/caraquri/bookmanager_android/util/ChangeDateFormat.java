@@ -29,6 +29,10 @@ public class ChangeDateFormat {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        this.month += 1;
         return this.year + "/" + this.month + "/" + this.day;
     }
+
+
+
 }
