@@ -5,5 +5,5 @@
         android:id="@+id/register"
         android:orderInCategory="101"
         app:showAsAction="ifRoom"
-        android:title="@string/register"/>
+        android:title="@string/register" />
 </menu>

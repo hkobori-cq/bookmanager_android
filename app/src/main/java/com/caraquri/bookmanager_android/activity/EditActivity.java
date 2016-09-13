@@ -27,17 +27,18 @@ import retrofit.RxJavaCallAdapterFactory;
 public class EditActivity extends AppCompatActivity {
     protected ActivityEditBinding binding;
     private static final String TAG = EditActivity.class.getSimpleName();
+
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit);
         initToolbar();
     }
 
-    private void initToolbar(){
+    private void initToolbar() {
         setSupportActionBar(binding.toolbar);
         ActionBar bar = getSupportActionBar();
-        if (bar != null){
+        if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
             bar.setDisplayShowHomeEnabled(true);
             bar.setDisplayShowTitleEnabled(false);
@@ -46,8 +47,8 @@ public class EditActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -67,10 +68,10 @@ public class EditActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void registerBookData(){
-        EditText name = (EditText)findViewById(R.id.book_title_field);
-        EditText price = (EditText)findViewById(R.id.book_price_field);
-        EditText date = (EditText)findViewById(R.id.book_date_field);
+    public void registerBookData() {
+        EditText name = (EditText) findViewById(R.id.book_title_field);
+        EditText price = (EditText) findViewById(R.id.book_price_field);
+        EditText date = (EditText) findViewById(R.id.book_date_field);
 
         String nameStr = name.getText().toString();
         Integer priceInt = Integer.parseInt(price.getText().toString());
@@ -86,16 +87,16 @@ public class EditActivity extends AppCompatActivity {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         BookDataRegisterClient client = retrofit.create(BookDataRegisterClient.class);
-        Call<Void> call = client.storeBookData("sample",nameStr,priceInt,dateStr);
+        Call<Void> call = client.storeBookData("sample", nameStr, priceInt, dateStr);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Response<Void> response, Retrofit retrofit) {
-                Log.d(TAG,"ok");
+                Log.d(TAG, "ok");
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.d(TAG,"だめ");
+                Log.d(TAG, "だめ");
             }
         });
     }

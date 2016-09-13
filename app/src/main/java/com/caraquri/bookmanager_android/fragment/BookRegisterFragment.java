@@ -13,26 +13,27 @@ import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
 
 public class BookRegisterFragment extends Fragment {
     protected FragmentAddViewBinding binding;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        return inflater.inflate(R.layout.fragment_add_view,container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_add_view, container, false);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentAddViewBinding.bind(getView());
         TappedDateButton();
     }
 
-    private void TappedDateButton(){
+    private void TappedDateButton() {
         binding.bookDateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 DatePickerFragment datePicker = new DatePickerFragment();
-                datePicker.setTargetFragment(BookRegisterFragment.this,0);
-                datePicker.show(manager,"datePicker");
+                datePicker.setTargetFragment(BookRegisterFragment.this, 0);
+                datePicker.show(manager, "datePicker");
             }
         });
     }

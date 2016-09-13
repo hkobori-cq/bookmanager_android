@@ -21,7 +21,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 
-
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -30,7 +29,7 @@ import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
 
-public class MainActivity extends AppCompatActivity implements OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements OnItemClickListener {
     public ActivityMainBinding mainBinding;
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         initRecyclerView();
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
 
         Gson gson = new GsonBuilder()
                 .create();
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         call.enqueue(new Callback<BookDataEntity>() {
             @Override
             public void onResponse(Response<BookDataEntity> response, Retrofit retrofit) {
-                BookTitleAdapter adapter = new BookTitleAdapter(response.body().getBookData(),MainActivity.this);
+                BookTitleAdapter adapter = new BookTitleAdapter(response.body().getBookData(), MainActivity.this);
                 mainBinding.recyclerView.setAdapter(adapter);
             }
 
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         });
     }
 
-    private void initToolbar(){
+    private void initToolbar() {
         setSupportActionBar(mainBinding.toolbar);
         ActionBar bar = getSupportActionBar();
         if (bar != null) {
@@ -85,8 +84,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.action_add:
                 Intent intent = new Intent(this, AddActivity.class);
                 startActivity(intent);
@@ -96,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     }
 
     @Override
-    public void onItemClick(View view,int position){
-        Intent intent = new Intent(MainActivity.this,EditActivity.class);
+    public void onItemClick(View view, int position) {
+        Intent intent = new Intent(MainActivity.this, EditActivity.class);
         startActivity(intent);
     }
 

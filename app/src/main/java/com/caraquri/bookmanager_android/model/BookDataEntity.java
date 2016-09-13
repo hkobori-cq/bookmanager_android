@@ -10,11 +10,11 @@ public class BookDataEntity {
     @SerializedName("result")
     private List<BookDataModel> bookDataModels;
 
-    public List<BookDataModel> getBookData(){
+    public List<BookDataModel> getBookData() {
         return bookDataModels;
     }
 
-    public void setBookData(List<BookDataModel> bookDataModels){
+    public void setBookData(List<BookDataModel> bookDataModels) {
         this.bookDataModels = bookDataModels;
     }
 }

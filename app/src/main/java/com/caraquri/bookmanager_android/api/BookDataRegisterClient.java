@@ -18,5 +18,5 @@ public interface BookDataRegisterClient {
             @Field("name") String name,
             @Field("price") Integer price,
             @Field("purchase_date") String date
-            );
+    );
 }
