@@ -1,7 +1,11 @@
 package com.caraquri.bookmanager_android.fragment;
 
-import android.app.Fragment;
+import android.app.Activity;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +13,7 @@ import android.view.ViewGroup;
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
 
-public class BookRegisterFragment extends Fragment{
+public class BookRegisterFragment extends Fragment {
     protected FragmentAddViewBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -20,11 +24,26 @@ public class BookRegisterFragment extends Fragment{
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         binding = FragmentAddViewBinding.bind(getView());
+        TappedDateButton();
     }
 
-
-
-    public String getBookDataText(){
-        return binding.bookDateField.getText().toString();
+    private void TappedDateButton(){
+        binding.bookDateField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                DatePickerFragment datePicker = new DatePickerFragment();
+                datePicker.setTargetFragment(BookRegisterFragment.this,0);
+                datePicker.show(manager,"datePicker");
+            }
+        });
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String date = data.getStringExtra(Intent.EXTRA_TEXT);
+        binding.bookDateField.setText(date);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }
