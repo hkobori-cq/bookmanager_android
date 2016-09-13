@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.caraquri.bookmanager_android.R;
+import com.caraquri.bookmanager_android.activity.EditActivity;
 import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
 
 public class BookRegisterFragment extends Fragment {
@@ -24,7 +25,9 @@ public class BookRegisterFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentAddViewBinding.bind(getView());
-        initFieldData();
+        if (!(getActivity().getIntent().getStringExtra("name") == null)){
+            initFieldData();
+        }
         TappedDateButton();
     }
 
