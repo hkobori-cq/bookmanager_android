@@ -15,6 +15,7 @@ import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
 import com.caraquri.bookmanager_android.api.BookDataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
+import com.caraquri.bookmanager_android.fragment.BookRegisterFragment;
 import com.caraquri.bookmanager_android.model.BookDataEntity;
 import com.caraquri.bookmanager_android.widget.OnItemClickListener;
 import com.google.gson.Gson;
@@ -95,8 +96,12 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     }
 
     @Override
-    public void onItemClick(View view, int position) {
+    public void onItemClick(View view, String id,String name,String price,String date) {
         Intent intent = new Intent(MainActivity.this, EditActivity.class);
+        intent.putExtra("id",id);
+        intent.putExtra("name",name);
+        intent.putExtra("price",price);
+        intent.putExtra("date",date);
         startActivity(intent);
     }
 

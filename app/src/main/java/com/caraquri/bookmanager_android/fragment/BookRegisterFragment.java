@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,15 @@ public class BookRegisterFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentAddViewBinding.bind(getView());
+        initFieldData();
         TappedDateButton();
+    }
+
+    private void initFieldData(){
+        Intent intent = getActivity().getIntent();
+        binding.bookTitleField.setText(intent.getStringExtra("name"));
+        binding.bookPriceField.setText(intent.getStringExtra("price"));
+        binding.bookDateField.setText(intent.getStringExtra("date"));
     }
 
     private void TappedDateButton() {

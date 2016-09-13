@@ -40,7 +40,7 @@ public class BookTitleAdapter extends RecyclerView.Adapter<BookTitleAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        BookDataModel bookDataModel = dataset.get(position);
+        final BookDataModel bookDataModel = dataset.get(position);
         bookDataModel.bookPrice = bookDataModel.bookPrice + "円";
         ChangeDateFormat format = new ChangeDateFormat();
         bookDataModel.purchaseDate = format.changeDateFormat(bookDataModel.purchaseDate);
@@ -49,7 +49,7 @@ public class BookTitleAdapter extends RecyclerView.Adapter<BookTitleAdapter.View
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onItemClick(view, position);
+                listener.onItemClick(view, bookDataModel.id,bookDataModel.bookName,bookDataModel.bookPrice,bookDataModel.purchaseDate);
             }
         });
     }

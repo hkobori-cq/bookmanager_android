@@ -10,6 +10,9 @@ import com.google.gson.annotations.SerializedName;
 public class BookDataModel extends BaseObservable {
 
     @Expose
+    @SerializedName("id")
+    public String id;
+    @Expose
     @SerializedName("name")
     public String bookName;
     @Expose
@@ -28,10 +31,5 @@ public class BookDataModel extends BaseObservable {
     @Bindable
     public String getBookName() {
         return bookName;
-    }
-
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-        notifyPropertyChanged(BR.bookName);
     }
 }
