@@ -5,16 +5,18 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
 import com.caraquri.bookmanager_android.api.BookDataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
 import com.caraquri.bookmanager_android.model.BookDataEntity;
+import com.caraquri.bookmanager_android.widget.OnItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -28,7 +30,7 @@ import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnItemClickListener{
     public ActivityMainBinding mainBinding;
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<BookDataEntity>() {
             @Override
             public void onResponse(Response<BookDataEntity> response, Retrofit retrofit) {
-                BookTitleAdapter adapter = new BookTitleAdapter(response.body().getBookData());
+                BookTitleAdapter adapter = new BookTitleAdapter(response.body().getBookData(),MainActivity.this);
                 mainBinding.recyclerView.setAdapter(adapter);
             }
 
@@ -93,5 +95,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onItemClick(View view,int position){
+        Intent intent = new Intent(MainActivity.this,EditActivity.class);
+        startActivity(intent);
+    }
 
 }

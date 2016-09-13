@@ -13,7 +13,7 @@ import android.widget.EditText;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.api.BookDataRegisterClient;
-import com.caraquri.bookmanager_android.databinding.ActivityAddBinding;
+import com.caraquri.bookmanager_android.databinding.ActivityEditBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -24,13 +24,13 @@ import retrofit.Response;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
-public class AddActivity extends AppCompatActivity {
-    protected ActivityAddBinding binding;
-    private static final String TAG = MainActivity.class.getSimpleName();
+public class EditActivity extends AppCompatActivity {
+    protected ActivityEditBinding binding;
+    private static final String TAG = EditActivity.class.getSimpleName();
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_add);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_edit);
         initToolbar();
     }
 
