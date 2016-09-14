@@ -24,12 +24,11 @@ public class ChangeDateFormat {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(mDate);
             this.year = calendar.get(Calendar.YEAR);
-            this.month = calendar.get(Calendar.MONTH);
+            this.month = calendar.get(Calendar.MONTH) + 1;
             this.day = calendar.get(Calendar.DAY_OF_MONTH);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        this.month += 1;
         return this.year + "/" + this.month + "/" + this.day;
     }
 

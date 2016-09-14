@@ -1,6 +1,11 @@
 package com.caraquri.bookmanager_android.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -10,8 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.caraquri.bookmanager_android.R;
-import com.caraquri.bookmanager_android.activity.EditActivity;
 import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
+
+import java.io.FileDescriptor;
+import java.io.IOException;
+
 
 public class BookRegisterFragment extends Fragment {
     protected FragmentAddViewBinding binding;
@@ -28,7 +36,23 @@ public class BookRegisterFragment extends Fragment {
         if (!(getActivity().getIntent().getStringExtra("name") == null)){
             initFieldData();
         }
-        TappedDateButton();
+        tappedDateButton();
+        tappedAddImageButton();
+    }
+
+
+    private void tappedAddImageButton(){
+        Log.d("ok",binding.bookDateField.getText().toString());
+        binding.addImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent,10);
+            }
+        });
+
     }
 
     private void initFieldData(){
@@ -40,13 +64,14 @@ public class BookRegisterFragment extends Fragment {
 
 
 
-    private void TappedDateButton() {
+    private void tappedDateButton() {
+
         binding.bookDateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 DatePickerFragment datePicker = new DatePickerFragment();
-                datePicker.setTargetFragment(BookRegisterFragment.this, 0);
+                datePicker.setTargetFragment(BookRegisterFragment.this,0);
                 datePicker.show(manager, "datePicker");
             }
         });
@@ -54,9 +79,32 @@ public class BookRegisterFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String date = data.getStringExtra(Intent.EXTRA_TEXT);
-        binding.bookDateField.setText(date);
-        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                String date = data.getStringExtra(Intent.EXTRA_TEXT);
+                binding.bookDateField.setText(date);
+                break;
+            case 10:
+                Uri uri = data.getData();
+
+                try {
+                    Bitmap bmp = getBitmapFromUri(uri);
+                    binding.addPageBookImage.setImageBitmap(bmp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+
+    }
+
+    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(uri, "r");
+        assert parcelFileDescriptor != null;
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
     }
 
 }
