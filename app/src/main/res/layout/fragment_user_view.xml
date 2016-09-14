@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@+id/book_add_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/user_email_text"
+            android:text="@string/book_name"
+            android:layout_marginTop="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_email_field"
+            android:hint=""
+            android:textColor="@color/indigo500"
+            android:layout_below="@+id/user_email_text"
+            android:layout_alignLeft="@+id/user_email_text"
+            android:layout_alignStart="@+id/user_email_text"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/user_password_text"
+            android:text="@string/book_price"
+            android:layout_below="@+id/user_email_field"
+            android:layout_alignLeft="@+id/user_email_field"
+            android:layout_alignStart="@+id/user_email_field"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_password_field"
+            android:hint=""
+            android:textColor="@color/indigo500"
+            android:layout_below="@+id/user_password_text"
+            android:layout_alignLeft="@+id/user_password_text"
+            android:layout_alignStart="@+id/user_password_text"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</layout>
