@@ -38,34 +38,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         super.onCreate(savedInstanceState);
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initToolbar();
-        initRecyclerView();
     }
 
-    private void initRecyclerView() {
-
-        Gson gson = new GsonBuilder()
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://app.com/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-
-        BookDataClient bookDataClient = retrofit.create(BookDataClient.class);
-        Call<BookDataEntity> call = bookDataClient.getBookData("0-10");
-        call.enqueue(new Callback<BookDataEntity>() {
-            @Override
-            public void onResponse(Response<BookDataEntity> response, Retrofit retrofit) {
-                BookTitleAdapter adapter = new BookTitleAdapter(response.body().getBookData(), MainActivity.this);
-                mainBinding.recyclerView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-            }
-        });
-    }
 
     private void initToolbar() {
         setSupportActionBar(mainBinding.toolbar);

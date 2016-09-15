@@ -1,9 +1,9 @@
 package com.caraquri.bookmanager_android.fragment;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
 import com.caraquri.bookmanager_android.api.BookDataClient;
+import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
 import com.caraquri.bookmanager_android.databinding.FragmentListViewBinding;
 import com.caraquri.bookmanager_android.model.BookDataEntity;
 import com.caraquri.bookmanager_android.widget.OnItemClickListener;
@@ -25,7 +26,7 @@ import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
 public class RecyclerLayoutFragment extends Fragment {
-    FragmentListViewBinding binding;
+    private FragmentListViewBinding binding;
     OnItemClickListener listener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class RecyclerLayoutFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        binding = FragmentListViewBinding.bind(getView());
         initRecyclerView();
     }
 
