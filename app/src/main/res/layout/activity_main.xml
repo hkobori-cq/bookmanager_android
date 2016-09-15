@@ -16,11 +16,6 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="書籍一覧" />
-        <fragment
-            android:id="@+id/recycler_view_fragment"
-            android:name="com.caraquri.bookmanager_android.fragment.RecyclerLayoutFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabbar"
@@ -33,7 +28,7 @@
             android:id="@+id/view_paper"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_below="@+id/recycler_view_fragment"
+            android:layout_below="@+id/toolbar"
             android:layout_above="@+id/tabbar" />
     </RelativeLayout>
 </layout>
