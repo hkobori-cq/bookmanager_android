@@ -1,7 +1,5 @@
 package com.caraquri.bookmanager_android.fragment;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.caraquri.bookmanager_android.R;
-import com.caraquri.bookmanager_android.activity.MainActivity;
 import com.caraquri.bookmanager_android.databinding.FragmentUserViewBinding;
 
 public class UserSettingsFragment extends Fragment{
@@ -23,12 +20,5 @@ public class UserSettingsFragment extends Fragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentUserViewBinding.bind(getView());
-    }
-
-    @Override
-    public void onAttach(Context context){
-        super.onAttach(context);
-        Activity activity = getActivity();
-
     }
 }
