@@ -7,7 +7,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.caraquri.bookmanager_android.fragment.RecyclerLayoutFragment;
 import com.caraquri.bookmanager_android.fragment.UserSettingsFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PagerAdapter extends FragmentPagerAdapter {
+
+    private final List<String> mCategoryNames = new ArrayList<>();
+
+    public void addCategory(String categoryName){
+        mCategoryNames.add(categoryName);
+    }
 
     public PagerAdapter(FragmentManager fragmentManager){
         super(fragmentManager);
@@ -29,6 +38,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
     }
     @Override
     public CharSequence getPageTitle(int position){
-        return "ページ"+(position+1);
+        return mCategoryNames.get(position);
     }
 }

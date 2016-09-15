@@ -47,7 +47,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     private void initTabBar(){
         FragmentManager manager = getSupportFragmentManager();
         PagerAdapter adapter = new PagerAdapter(manager);
+        adapter.addCategory("書籍一覧");
+        adapter.addCategory("設定");
         mainBinding.viewPaper.setAdapter(adapter);
+        mainBinding.tabbar.setupWithViewPager(mainBinding.viewPaper);
     }
 
 

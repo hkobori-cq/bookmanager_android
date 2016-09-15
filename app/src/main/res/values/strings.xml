@@ -8,4 +8,6 @@
     <string name="purchase_date">購入日</string>
     <string name="register">保存</string>
     <string name="date">購入日を追加</string>
+    <string name="email">メールアドレス</string>
+    <string name="password">パスワード</string>
 </resources>
