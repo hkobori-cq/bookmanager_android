@@ -11,4 +11,5 @@
     <string name="date">購入日を追加</string>
     <string name="email">メールアドレス</string>
     <string name="password">パスワード</string>
+    <string name="save_user">保存</string>
 </resources>

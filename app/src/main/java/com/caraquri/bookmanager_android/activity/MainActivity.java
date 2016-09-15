@@ -7,15 +7,25 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.PagerAdapter;
+import com.caraquri.bookmanager_android.api.UserDataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
 import com.caraquri.bookmanager_android.widget.OnItemClickListener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
 
 
 public class MainActivity extends AppCompatActivity implements OnItemClickListener {
@@ -63,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                         break;
                     case 1:
                         mainBinding.toolbar.setTitle("設定");
+                        mainBinding.toolbar.inflateMenu(R.menu.user_settings_actions);
                         break;
                 }
             }
@@ -76,18 +87,14 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
                 Intent intent = new Intent(this, AddActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.action_user_settings:
+                registerUserData();
                 break;
         }
         return true;
@@ -101,6 +108,36 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         intent.putExtra("price",price);
         intent.putExtra("date",date);
         startActivity(intent);
+    }
+
+    public void registerUserData(){
+        EditText email = (EditText)findViewById(R.id.user_email_field);
+        EditText password = (EditText)findViewById(R.id.user_password_field);
+
+        String emailStr = email.getText().toString();
+        String passwordStr = password.getText().toString();
+
+        Gson gson = new GsonBuilder()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://app.com")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        UserDataClient client = retrofit.create(UserDataClient.class);
+        Call<Void> call = client.storeUserData(emailStr,passwordStr);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Response<Void> response, Retrofit retrofit) {
+                Log.d(TAG,"ok");
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.d(TAG,"だめ");
+            }
+        });
     }
 
 }
