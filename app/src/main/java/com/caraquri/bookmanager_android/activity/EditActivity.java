@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -79,26 +80,43 @@ public class EditActivity extends AppCompatActivity {
         Integer priceInt = Integer.parseInt(price.getText().toString());
         String dateStr = date.getText().toString();
 
-        Gson gson = new GsonBuilder()
-                .create();
+        if (nameStr.isEmpty()){
+            new AlertDialog.Builder(this)
+                    .setTitle("名前を入力してください")
+                    .setNegativeButton("ok",null)
+                    .show();
+        }else if (price.getText().toString().isEmpty()){
+            new AlertDialog.Builder(this)
+                    .setTitle("価格を入力してください")
+                    .setNegativeButton("ok",null)
+                    .show();
+        } else if (dateStr.isEmpty()){
+            new AlertDialog.Builder(this)
+                    .setTitle("日付を選択してください")
+                    .setNegativeButton("ok",null)
+                    .show();
+        }else {
+            Gson gson = new GsonBuilder()
+                    .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://app.com")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        BookDataUpdateClient client = retrofit.create(BookDataUpdateClient.class);
-        Call<Void> call = client.storeBookData(id, "sample", nameStr, priceInt, dateStr);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Response<Void> response, Retrofit retrofit) {
-                Log.d(TAG, "ok");
-            }
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://app.com")
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .build();
+            BookDataUpdateClient client = retrofit.create(BookDataUpdateClient.class);
+            Call<Void> call = client.storeBookData(id, "sample", nameStr, priceInt, dateStr);
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Response<Void> response, Retrofit retrofit) {
+                    Log.d(TAG, "ok");
+                }
 
-            @Override
-            public void onFailure(Throwable t) {
-                Log.d(TAG, "だめ");
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.d(TAG, "だめ");
+                }
+            });
+        }
     }
 }

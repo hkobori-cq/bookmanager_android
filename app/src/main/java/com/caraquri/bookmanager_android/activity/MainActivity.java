@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +22,7 @@ import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
 import com.caraquri.bookmanager_android.widget.OnItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -85,6 +89,13 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -113,31 +124,57 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     public void registerUserData() {
         EditText email = (EditText) findViewById(R.id.user_email_field);
         EditText password = (EditText) findViewById(R.id.user_password_field);
+        EditText passwordCon = (EditText) findViewById(R.id.user_password_confirm_field);
 
         String emailStr = email.getText().toString();
         String passwordStr = password.getText().toString();
+        String passwordConStr = passwordCon.getText().toString();
 
-        Gson gson = new GsonBuilder()
-                .create();
+        if (emailStr.isEmpty()){
+            new AlertDialog.Builder(this)
+                    .setTitle("メールアドレスを入力してください")
+                    .setNegativeButton("ok",null)
+                    .show();
+        }else if (passwordStr.isEmpty()){
+            new AlertDialog.Builder(this)
+                    .setTitle("パスワードを入力してください")
+                    .setNegativeButton("ok",null)
+                    .show();
+        } else if (passwordConStr.isEmpty()){
+            new AlertDialog.Builder(this)
+                    .setTitle("パスワード確認を入力してください")
+                    .setNegativeButton("ok",null)
+                    .show();
+        }else if (!(passwordStr.equals(passwordConStr))){
+            new AlertDialog.Builder(this)
+                    .setTitle("パスワードと確認が一致しません")
+                    .setNegativeButton("ok",null)
+                    .show();
+        } else {
+            Gson gson = new GsonBuilder()
+                    .create();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://app.com")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        UserDataClient client = retrofit.create(UserDataClient.class);
-        Call<Void> call = client.storeUserData(emailStr, passwordStr);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Response<Void> response, Retrofit retrofit) {
-                Log.d(TAG, "ok");
-            }
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://app.com")
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .build();
+            UserDataClient client = retrofit.create(UserDataClient.class);
+            Call<Void> call = client.storeUserData(emailStr, passwordStr);
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Response<Void> response, Retrofit retrofit) {
+                    Log.d(TAG, "ok");
+                }
 
-            @Override
-            public void onFailure(Throwable t) {
-                Log.d(TAG, "だめ");
-            }
-        });
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.d(TAG, "だめ");
+                }
+            });
+        }
+
+
     }
 
 }

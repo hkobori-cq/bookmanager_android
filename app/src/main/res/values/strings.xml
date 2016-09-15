@@ -12,4 +12,5 @@
     <string name="email">メールアドレス</string>
     <string name="password">パスワード</string>
     <string name="save_user">保存</string>
+    <string name="password_confirm">パスワード確認</string>
 </resources>

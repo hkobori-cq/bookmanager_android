@@ -64,7 +64,7 @@ public class RecyclerLayoutFragment extends Fragment {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         BookDataClient bookDataClient = retrofit.create(BookDataClient.class);
-        Call<BookDataEntity> call = bookDataClient.getBookData("0-10");
+        Call<BookDataEntity> call = bookDataClient.getBookData("0-100");
         call.enqueue(new Callback<BookDataEntity>() {
             @Override
             public void onResponse(Response<BookDataEntity> response, Retrofit retrofit) {
