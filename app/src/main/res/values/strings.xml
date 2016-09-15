@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BookManager_Android</string>
     <string name="book_image_picture">book image picture</string>
+    <string name="user_settings">設定</string>
     <string name="add">追加</string>
     <string name="add_image">写真を追加</string>
     <string name="book_name">書籍名</string>

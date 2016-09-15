@@ -7,29 +7,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.caraquri.bookmanager_android.R;
-import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
 import com.caraquri.bookmanager_android.adapter.PagerAdapter;
-import com.caraquri.bookmanager_android.api.BookDataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
-import com.caraquri.bookmanager_android.model.BookDataEntity;
 import com.caraquri.bookmanager_android.widget.OnItemClickListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
 
 
 public class MainActivity extends AppCompatActivity implements OnItemClickListener {
@@ -61,7 +47,33 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
             bar.setDisplayShowHomeEnabled(true);
             bar.setHomeButtonEnabled(true);
         }
+        mainBinding.viewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mainBinding.toolbar.getMenu().clear();
+                switch (position) {
+                    case 0:
+                        mainBinding.toolbar.setTitle("書籍一覧");
+                        mainBinding.toolbar.inflateMenu(R.menu.main_activity_actions);
+                        break;
+                    case 1:
+                        mainBinding.toolbar.setTitle("設定");
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

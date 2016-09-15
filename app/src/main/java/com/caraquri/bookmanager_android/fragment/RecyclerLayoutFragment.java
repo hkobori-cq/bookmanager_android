@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.caraquri.bookmanager_android.R;
+import com.caraquri.bookmanager_android.activity.MainActivity;
 import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
+import com.caraquri.bookmanager_android.adapter.PagerAdapter;
 import com.caraquri.bookmanager_android.api.BookDataClient;
-import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
 import com.caraquri.bookmanager_android.databinding.FragmentListViewBinding;
 import com.caraquri.bookmanager_android.model.BookDataEntity;
 import com.caraquri.bookmanager_android.widget.OnItemClickListener;
@@ -50,6 +51,7 @@ public class RecyclerLayoutFragment extends Fragment {
             throw new ClassCastException(activity.toString() + " must implement OnItemSelectedListener");
         }
     }
+
 
 
     public void initRecyclerView(){
