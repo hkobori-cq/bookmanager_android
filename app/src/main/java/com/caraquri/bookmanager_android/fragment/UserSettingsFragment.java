@@ -9,8 +9,9 @@ import android.view.ViewGroup;
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.databinding.FragmentUserViewBinding;
 
-public class UserSettingsFragment extends Fragment{
+public class UserSettingsFragment extends Fragment {
     protected FragmentUserViewBinding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_user_view, container, false);

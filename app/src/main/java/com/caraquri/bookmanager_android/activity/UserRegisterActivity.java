@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.databinding.ActivityUserRegisterBinding;
 
-public class UserRegisterActivity extends AppCompatActivity{
+public class UserRegisterActivity extends AppCompatActivity {
     protected ActivityUserRegisterBinding binding;
     private static final String TAG = UserRegisterActivity.class.getSimpleName();
 
@@ -20,7 +20,7 @@ public class UserRegisterActivity extends AppCompatActivity{
         initToolbar();
     }
 
-    private void initToolbar(){
+    private void initToolbar() {
         setSupportActionBar(binding.toolbar);
         ActionBar bar = getSupportActionBar();
         if (bar != null) {
@@ -28,8 +28,6 @@ public class UserRegisterActivity extends AppCompatActivity{
             bar.setDisplayShowHomeEnabled(true);
         }
     }
-
-
 
 
 }

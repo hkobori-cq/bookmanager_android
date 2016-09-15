@@ -49,7 +49,7 @@ public class BookTitleAdapter extends RecyclerView.Adapter<BookTitleAdapter.View
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onItemClick(view, bookDataModel.id,bookDataModel.bookName,bookDataModel.bookPrice,bookDataModel.purchaseDate);
+                listener.onItemClick(view, bookDataModel.id, bookDataModel.bookName, bookDataModel.bookPrice, bookDataModel.purchaseDate);
             }
         });
     }

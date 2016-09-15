@@ -33,7 +33,7 @@ public class BookRegisterFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentAddViewBinding.bind(getView());
-        if (!(getActivity().getIntent().getStringExtra("name") == null)){
+        if (!(getActivity().getIntent().getStringExtra("name") == null)) {
             initFieldData();
         }
         tappedDateButton();
@@ -41,27 +41,26 @@ public class BookRegisterFragment extends Fragment {
     }
 
 
-    private void tappedAddImageButton(){
-        Log.d("ok",binding.bookDateField.getText().toString());
+    private void tappedAddImageButton() {
+        Log.d("ok", binding.bookDateField.getText().toString());
         binding.addImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent,10);
+                startActivityForResult(intent, 10);
             }
         });
 
     }
 
-    private void initFieldData(){
+    private void initFieldData() {
         Intent intent = getActivity().getIntent();
         binding.bookTitleField.setText(intent.getStringExtra("name"));
-        binding.bookPriceField.setText(intent.getStringExtra("price").replace("円",""));
-        binding.bookDateField.setText(intent.getStringExtra("date").replaceAll("/","-"));
+        binding.bookPriceField.setText(intent.getStringExtra("price").replace("円", ""));
+        binding.bookDateField.setText(intent.getStringExtra("date").replaceAll("/", "-"));
     }
-
 
 
     private void tappedDateButton() {
@@ -71,7 +70,7 @@ public class BookRegisterFragment extends Fragment {
             public void onClick(View view) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 DatePickerFragment datePicker = new DatePickerFragment();
-                datePicker.setTargetFragment(BookRegisterFragment.this,0);
+                datePicker.setTargetFragment(BookRegisterFragment.this, 0);
                 datePicker.show(manager, "datePicker");
             }
         });
@@ -79,7 +78,7 @@ public class BookRegisterFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case 1:
                 String date = data.getStringExtra(Intent.EXTRA_TEXT);
                 binding.bookDateField.setText(date);

@@ -20,7 +20,7 @@ public class UserLoginActivity extends AppCompatActivity {
         initToolbar();
     }
 
-    private void initToolbar(){
+    private void initToolbar() {
         setSupportActionBar(binding.toolbar);
         ActionBar bar = getSupportActionBar();
         if (bar != null) {

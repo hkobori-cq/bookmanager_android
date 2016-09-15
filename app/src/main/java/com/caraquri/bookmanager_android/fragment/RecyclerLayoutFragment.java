@@ -29,6 +29,7 @@ import retrofit.RxJavaCallAdapterFactory;
 public class RecyclerLayoutFragment extends Fragment {
     private FragmentListViewBinding binding;
     OnItemClickListener listener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_list_view, container, false);
@@ -53,8 +54,7 @@ public class RecyclerLayoutFragment extends Fragment {
     }
 
 
-
-    public void initRecyclerView(){
+    public void initRecyclerView() {
         Gson gson = new GsonBuilder()
                 .create();
 
@@ -68,7 +68,7 @@ public class RecyclerLayoutFragment extends Fragment {
         call.enqueue(new Callback<BookDataEntity>() {
             @Override
             public void onResponse(Response<BookDataEntity> response, Retrofit retrofit) {
-                BookTitleAdapter adapter = new BookTitleAdapter(response.body().getBookData(),listener);
+                BookTitleAdapter adapter = new BookTitleAdapter(response.body().getBookData(), listener);
                 binding.recyclerView.setAdapter(adapter);
             }
 

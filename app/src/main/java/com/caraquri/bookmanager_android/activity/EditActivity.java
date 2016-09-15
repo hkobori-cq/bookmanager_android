@@ -88,7 +88,7 @@ public class EditActivity extends AppCompatActivity {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         BookDataUpdateClient client = retrofit.create(BookDataUpdateClient.class);
-        Call<Void> call = client.storeBookData(id,"sample", nameStr, priceInt, dateStr);
+        Call<Void> call = client.storeBookData(id, "sample", nameStr, priceInt, dateStr);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Response<Void> response, Retrofit retrofit) {

@@ -5,7 +5,7 @@ import android.databinding.BaseObservable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserDataModel extends BaseObservable{
+public class UserDataModel extends BaseObservable {
     @Expose
     @SerializedName("mail_address")
     public String mailAddress;
@@ -14,7 +14,7 @@ public class UserDataModel extends BaseObservable{
     @SerializedName("password")
     public String password;
 
-    public UserDataModel(String mailAddress,String password){
+    public UserDataModel(String mailAddress, String password) {
         this.mailAddress = mailAddress;
         this.password = password;
     }

@@ -17,21 +17,21 @@ public class PagerAdapter extends FragmentPagerAdapter {
     private MainActivity activity;
     private final List<String> mCategoryNames = new ArrayList<>();
 
-    public void addCategory(String categoryName){
+    public void addCategory(String categoryName) {
         mCategoryNames.add(categoryName);
     }
 
-    public PagerAdapter(FragmentManager fragmentManager){
+    public PagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-           default:
+        switch (position) {
+            default:
                 return new RecyclerLayoutFragment();
             case 1:
-                return  new UserSettingsFragment();
+                return new UserSettingsFragment();
         }
     }
 
@@ -39,8 +39,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return 2;
     }
+
     @Override
-    public CharSequence getPageTitle(int position){
+    public CharSequence getPageTitle(int position) {
         return mCategoryNames.get(position);
     }
 }

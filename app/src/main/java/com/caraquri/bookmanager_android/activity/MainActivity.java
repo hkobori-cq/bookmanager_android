@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         initTabBar();
     }
 
-    private void initTabBar(){
+    private void initTabBar() {
         FragmentManager manager = getSupportFragmentManager();
         PagerAdapter adapter = new PagerAdapter(manager);
         adapter.addCategory("書籍一覧");
@@ -101,18 +101,18 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     }
 
     @Override
-    public void onItemClick(View view, String id,String name,String price,String date) {
+    public void onItemClick(View view, String id, String name, String price, String date) {
         Intent intent = new Intent(MainActivity.this, EditActivity.class);
-        intent.putExtra("id",id);
-        intent.putExtra("name",name);
-        intent.putExtra("price",price);
-        intent.putExtra("date",date);
+        intent.putExtra("id", id);
+        intent.putExtra("name", name);
+        intent.putExtra("price", price);
+        intent.putExtra("date", date);
         startActivity(intent);
     }
 
-    public void registerUserData(){
-        EditText email = (EditText)findViewById(R.id.user_email_field);
-        EditText password = (EditText)findViewById(R.id.user_password_field);
+    public void registerUserData() {
+        EditText email = (EditText) findViewById(R.id.user_email_field);
+        EditText password = (EditText) findViewById(R.id.user_password_field);
 
         String emailStr = email.getText().toString();
         String passwordStr = password.getText().toString();
@@ -126,16 +126,16 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         UserDataClient client = retrofit.create(UserDataClient.class);
-        Call<Void> call = client.storeUserData(emailStr,passwordStr);
+        Call<Void> call = client.storeUserData(emailStr, passwordStr);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Response<Void> response, Retrofit retrofit) {
-                Log.d(TAG,"ok");
+                Log.d(TAG, "ok");
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.d(TAG,"だめ");
+                Log.d(TAG, "だめ");
             }
         });
     }
