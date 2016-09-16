@@ -110,7 +110,8 @@ public class EditActivity extends AppCompatActivity {
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {
-                    Log.d(TAG, "ok");
+                    Intent intent = new Intent(EditActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
 
                 @Override
