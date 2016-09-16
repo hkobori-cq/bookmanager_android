@@ -176,7 +176,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {
-                    Log.d(TAG, "ok");
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("登録が完了しました")
+                            .setNegativeButton("ok",null)
+                            .show();
                 }
 
                 @Override
