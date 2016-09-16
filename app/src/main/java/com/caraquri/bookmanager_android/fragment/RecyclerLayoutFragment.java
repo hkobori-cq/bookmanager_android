@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.caraquri.bookmanager_android.adapter.RecyclerViewAdapter;
 import com.caraquri.bookmanager_android.api.BookDataGetClient;
 import com.caraquri.bookmanager_android.databinding.FragmentListViewBinding;
 import com.caraquri.bookmanager_android.model.BookDataEntity;
+import com.caraquri.bookmanager_android.widget.EndlessScrollListener;
 import com.caraquri.bookmanager_android.widget.OnRecyclerItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,7 +29,8 @@ import retrofit.RxJavaCallAdapterFactory;
 
 public class RecyclerLayoutFragment extends Fragment {
     private FragmentListViewBinding binding;
-    OnRecyclerItemClickListener listener;
+    private OnRecyclerItemClickListener listener;
+    private Integer readData = 15;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +66,13 @@ public class RecyclerLayoutFragment extends Fragment {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         BookDataGetClient bookDataGetClient = retrofit.create(BookDataGetClient.class);
-        Call<BookDataEntity> call = bookDataGetClient.getBookData("0-15");
+        Call<BookDataEntity> call = bookDataGetClient.getBookData("0-"+readData.toString());
+        binding.recyclerView.addOnScrollListener(new EndlessScrollListener((LinearLayoutManager)binding.recyclerView.getLayoutManager()) {
+            @Override
+            public void onLoadMore(int current_page) {
+                readData = current_page * 20;
+            }
+        });
         call.enqueue(new Callback<BookDataEntity>() {
             /**
              * API通信が成功したときに呼ばれるメソッド
