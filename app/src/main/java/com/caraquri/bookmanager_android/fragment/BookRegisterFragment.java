@@ -42,14 +42,14 @@ public class BookRegisterFragment extends Fragment {
         tappedBackLayout();
     }
 
-    private void tappedBackLayout(){
+    private void tappedBackLayout() {
         binding.bookAddFragment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(binding.bookTitleField.getWindowToken(),0);
-                inputMethodManager.hideSoftInputFromWindow(binding.bookDateField.getWindowToken(),0);
-                inputMethodManager.hideSoftInputFromWindow(binding.bookPriceField.getWindowToken(),0);
+                InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(binding.bookTitleField.getWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(binding.bookDateField.getWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(binding.bookPriceField.getWindowToken(), 0);
                 return true;
             }
         });
@@ -97,6 +97,7 @@ public class BookRegisterFragment extends Fragment {
      * 送られてきたIntentをrequestCodeによって分類
      * case 1のときは購入日のフィールドにデータをセットする
      * case 10のときはイメージを添付する
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -124,6 +125,7 @@ public class BookRegisterFragment extends Fragment {
 
     /**
      * URIkからデータをビットマップで使える形に変換するメソッド
+     *
      * @param uri 画像のURI
      * @return
      * @throws IOException

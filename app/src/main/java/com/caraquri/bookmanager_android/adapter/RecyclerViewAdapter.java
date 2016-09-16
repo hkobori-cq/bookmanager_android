@@ -30,6 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     /**
      * 本のデータとリスナーをセットするメソッド
+     *
      * @param mBookData
      * @param listener
      */

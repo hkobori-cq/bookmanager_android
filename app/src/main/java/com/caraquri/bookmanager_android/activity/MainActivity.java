@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
         super.onCreate(savedInstanceState);
         //初めてアプリを開いたかどうかを判定する
         SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if(defaultSharedPreferences.getBoolean("first_visit",true)){
-            defaultSharedPreferences.edit().putBoolean("first_visit",false).apply();
-            Intent intent = new Intent(MainActivity.this,UserLoginActivity.class);
+        if (defaultSharedPreferences.getBoolean("first_visit", true)) {
+            defaultSharedPreferences.edit().putBoolean("first_visit", false).apply();
+            Intent intent = new Intent(MainActivity.this, UserLoginActivity.class);
             startActivity(intent);
-        }else{
+        } else {
             binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
             initToolbar();
             initTabBar();
@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
      * Recyclerのセルをタップしたときに必要なリスナー
      * RecyclerViewAdapterでセルをタップするとMainActivityにこのリスナーを通してデータが送られてきて、
      * Intentを用いて、EditActivityに送られる。
+     *
      * @param view
      * @param bookID
      * @param bookName
@@ -158,25 +159,25 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
         String passwordStr = password.getText().toString();
         String passwordConStr = passwordCon.getText().toString();
 
-        if (emailStr.isEmpty()){
+        if (emailStr.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle("メールアドレスを入力してください")
-                    .setNegativeButton("ok",null)
+                    .setNegativeButton("ok", null)
                     .show();
-        }else if (passwordStr.isEmpty()){
+        } else if (passwordStr.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle("パスワードを入力してください")
-                    .setNegativeButton("ok",null)
+                    .setNegativeButton("ok", null)
                     .show();
-        } else if (passwordConStr.isEmpty()){
+        } else if (passwordConStr.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle("パスワード確認を入力してください")
-                    .setNegativeButton("ok",null)
+                    .setNegativeButton("ok", null)
                     .show();
-        }else if (!(passwordStr.equals(passwordConStr))){
+        } else if (!(passwordStr.equals(passwordConStr))) {
             new AlertDialog.Builder(this)
                     .setTitle("パスワードと確認が一致しません")
-                    .setNegativeButton("ok",null)
+                    .setNegativeButton("ok", null)
                     .show();
         } else {
             Gson gson = new GsonBuilder()
@@ -194,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
                 public void onResponse(Response<Void> response, Retrofit retrofit) {
                     new AlertDialog.Builder(MainActivity.this)
                             .setTitle("登録が完了しました")
-                            .setNegativeButton("ok",null)
+                            .setNegativeButton("ok", null)
                             .show();
                 }
 

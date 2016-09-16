@@ -66,22 +66,22 @@ public class UserLoginActivity extends AppCompatActivity {
     /**
      * 保存ボタンを押したときに呼ばれるメソッド
      */
-    public void registerUserData(){
+    public void registerUserData() {
         EditText email = (EditText) findViewById(R.id.user_login_email_field);
         EditText password = (EditText) findViewById(R.id.user_login_password_field);
 
         String emailStr = email.getText().toString();
         String passwordStr = password.getText().toString();
 
-        if (emailStr.isEmpty()){
+        if (emailStr.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle("メールアドレスを入力してください")
-                    .setNegativeButton("ok",null)
+                    .setNegativeButton("ok", null)
                     .show();
-        }else if (passwordStr.isEmpty()){
+        } else if (passwordStr.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle("パスワードを入力してください")
-                    .setNegativeButton("ok",null)
+                    .setNegativeButton("ok", null)
                     .show();
         } else {
             Gson gson = new GsonBuilder()
@@ -97,13 +97,13 @@ public class UserLoginActivity extends AppCompatActivity {
             call.enqueue(new Callback<Integer>() {
                 @Override
                 public void onResponse(Response<Integer> response, Retrofit retrofit) {
-                    if (response.isSuccess()){
-                        Intent intent = new Intent(UserLoginActivity.this,MainActivity.class);
+                    if (response.isSuccess()) {
+                        Intent intent = new Intent(UserLoginActivity.this, MainActivity.class);
                         startActivity(intent);
-                    }else {
+                    } else {
                         new AlertDialog.Builder(UserLoginActivity.this)
                                 .setTitle("ログインに失敗しました")
-                                .setNegativeButton("ok",null)
+                                .setNegativeButton("ok", null)
                                 .show();
                     }
                 }

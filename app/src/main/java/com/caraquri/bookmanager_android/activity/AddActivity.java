@@ -82,22 +82,22 @@ public class AddActivity extends AppCompatActivity {
         String dateStr = date.getText().toString();
 
 
-        if (nameStr.isEmpty()){
+        if (nameStr.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle("書籍名を入力してください")
-                    .setNegativeButton("ok",null)
+                    .setNegativeButton("ok", null)
                     .show();
-        }else if (price.getText().toString().isEmpty()){
+        } else if (price.getText().toString().isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle("価格を入力してください")
-                    .setNegativeButton("ok",null)
+                    .setNegativeButton("ok", null)
                     .show();
-        } else if (dateStr.isEmpty()){
+        } else if (dateStr.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle("日付を選択してください")
-                    .setNegativeButton("ok",null)
+                    .setNegativeButton("ok", null)
                     .show();
-        }else {
+        } else {
             Integer priceInt = Integer.parseInt(price.getText().toString());
 
             Gson gson = new GsonBuilder()

@@ -31,13 +31,13 @@ public class UserLoginFragment extends Fragment {
      * EditText以外のViewがタップされたときのメソッド
      * タップされたときはkeyboardを隠す
      */
-    private void tappedBackLayout(){
+    private void tappedBackLayout() {
         binding.userLoginFragment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(binding.userLoginEmailField.getWindowToken(),0);
-                inputMethodManager.hideSoftInputFromWindow(binding.userLoginPasswordField.getWindowToken(),0);
+                InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(binding.userLoginEmailField.getWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(binding.userLoginPasswordField.getWindowToken(), 0);
                 return true;
             }
         });
