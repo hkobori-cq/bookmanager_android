@@ -45,6 +45,7 @@ public class AddActivity extends AppCompatActivity {
             bar.setDisplayShowTitleEnabled(false);
             bar.setHomeButtonEnabled(true);
         }
+        binding.toolbar.setTitle("書籍追加");
     }
 
     @Override

@@ -24,12 +24,11 @@
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/user_login_email_field"
             android:hint=""
-            android:textColor="@color/indigo500"
             android:layout_below="@+id/user_login_email_text"
             android:layout_alignLeft="@+id/user_login_email_text"
             android:layout_alignStart="@+id/user_login_email_text"
             android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -45,12 +44,11 @@
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/user_login_password_field"
             android:hint=""
-            android:textColor="@color/indigo500"
             android:layout_below="@+id/user_login_password_text"
             android:layout_alignLeft="@+id/user_login_password_text"
             android:layout_alignStart="@+id/user_login_password_text"
             android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content" />
     </RelativeLayout>
 </layout>
