@@ -16,7 +16,7 @@
             app:title="書籍追加" />
 
         <fragment
-            android:id="@+id/add_view_fragment"
+            android:id="@+id/user_register_view_fragment"
             android:name="com.caraquri.bookmanager_android.fragment.UserSettingsFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

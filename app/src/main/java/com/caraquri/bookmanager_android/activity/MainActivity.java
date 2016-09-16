@@ -1,6 +1,5 @@
 package com.caraquri.bookmanager_android.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
@@ -20,9 +19,9 @@ import android.widget.EditText;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.PagerAdapter;
-import com.caraquri.bookmanager_android.api.UserDataClient;
+import com.caraquri.bookmanager_android.api.UserDataRegisterClient;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
-import com.caraquri.bookmanager_android.widget.OnItemClickListener;
+import com.caraquri.bookmanager_android.widget.OnRecyclerItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,22 +34,21 @@ import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
 
-public class MainActivity extends AppCompatActivity implements OnItemClickListener {
-    public ActivityMainBinding mainBinding;
+public class MainActivity extends AppCompatActivity implements OnRecyclerItemClickListener {
+    public ActivityMainBinding binding;
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //初めてアプリを開いたかどうかを判定する
+        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(defaultSharedPreferences.getBoolean("first_visit",true)){
             defaultSharedPreferences.edit().putBoolean("first_visit",false).apply();
-            Log.d(TAG,"一回目だよ");
             Intent intent = new Intent(MainActivity.this,UserLoginActivity.class);
             startActivity(intent);
         }else{
-            Log.d(TAG,"二回目以降だよ");
-            mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+            binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
             initToolbar();
             initTabBar();
         }
@@ -61,35 +59,40 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         PagerAdapter adapter = new PagerAdapter(manager);
         adapter.addCategory("書籍一覧");
         adapter.addCategory("設定");
-        mainBinding.viewPaper.setAdapter(adapter);
-        mainBinding.tabbar.setupWithViewPager(mainBinding.viewPaper);
+        binding.viewPaper.setAdapter(adapter);
+        binding.tabbar.setupWithViewPager(binding.viewPaper);
     }
 
 
     private void initToolbar() {
-        setSupportActionBar(mainBinding.toolbar);
+        setSupportActionBar(binding.toolbar);
         ActionBar bar = getSupportActionBar();
         if (bar != null) {
             bar.setDisplayShowHomeEnabled(true);
             bar.setHomeButtonEnabled(true);
         }
-        mainBinding.viewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        binding.viewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
 
+            /**
+             * ページが切り替わったときに呼ばれるメソッド
+             * ToolBarのタイトル変更と、メニュー切り替えを行う
+             * @param position
+             */
             @Override
             public void onPageSelected(int position) {
-                mainBinding.toolbar.getMenu().clear();
+                binding.toolbar.getMenu().clear();
                 switch (position) {
                     case 0:
-                        mainBinding.toolbar.setTitle("書籍一覧");
-                        mainBinding.toolbar.inflateMenu(R.menu.main_activity_actions);
+                        binding.toolbar.setTitle("書籍一覧");
+                        binding.toolbar.inflateMenu(R.menu.menu_main);
                         break;
                     case 1:
-                        mainBinding.toolbar.setTitle("設定");
-                        mainBinding.toolbar.inflateMenu(R.menu.user_settings_actions);
+                        binding.toolbar.setTitle("設定");
+                        binding.toolbar.inflateMenu(R.menu.menu_user_settings);
                         break;
                 }
             }
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
+        inflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -123,16 +126,29 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
         return true;
     }
 
+    /**
+     * Recyclerのセルをタップしたときに必要なリスナー
+     * RecyclerViewAdapterでセルをタップするとMainActivityにこのリスナーを通してデータが送られてきて、
+     * Intentを用いて、EditActivityに送られる。
+     * @param view
+     * @param bookID
+     * @param bookName
+     * @param bookPrice
+     * @param purchaseDate
+     */
     @Override
-    public void onItemClick(View view, String id, String name, String price, String date) {
+    public void onRecyclerItemClick(View view, String bookID, String bookName, String bookPrice, String purchaseDate) {
         Intent intent = new Intent(MainActivity.this, EditActivity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("name", name);
-        intent.putExtra("price", price);
-        intent.putExtra("date", date);
+        intent.putExtra("id", bookID);
+        intent.putExtra("name", bookName);
+        intent.putExtra("price", bookPrice);
+        intent.putExtra("date", purchaseDate);
         startActivity(intent);
     }
 
+    /**
+     * 設定画面で保存を押したときに呼ばれるメソッド
+     */
     public void registerUserData() {
         EditText email = (EditText) findViewById(R.id.user_email_field);
         EditText password = (EditText) findViewById(R.id.user_password_field);
@@ -171,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
-            UserDataClient client = retrofit.create(UserDataClient.class);
+            UserDataRegisterClient client = retrofit.create(UserDataRegisterClient.class);
             Call<Void> call = client.storeUserData(emailStr, passwordStr);
             call.enqueue(new Callback<Void>() {
                 @Override

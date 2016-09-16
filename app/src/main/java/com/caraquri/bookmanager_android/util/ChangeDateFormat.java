@@ -11,7 +11,7 @@ public class ChangeDateFormat {
     private int month;
     private int day;
 
-    public String changeDateFormat(String receivedDate) {
+    public String fromGMTFormatToDateFormat(String receivedDate) {
         String date = receivedDate.substring(5, receivedDate.length() - 13);
         String dd = date.substring(0, 2);
         String MMM = date.substring(3, 6);

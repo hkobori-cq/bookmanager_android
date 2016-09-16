@@ -66,11 +66,14 @@ public class AddActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.add_and_edit_activity_actions, menu);
+        inflater.inflate(R.menu.menu_book, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void registerBookData() {
+    /**
+     * 書籍をAPI通信で保存するメソッド
+     */
+    private void registerBookData() {
         EditText name = (EditText) findViewById(R.id.book_title_field);
         EditText price = (EditText) findViewById(R.id.book_price_field);
         EditText date = (EditText) findViewById(R.id.book_date_field);
@@ -108,6 +111,11 @@ public class AddActivity extends AppCompatActivity {
             BookDataRegisterClient client = retrofit.create(BookDataRegisterClient.class);
             Call<Void> call = client.storeBookData("sample", nameStr, priceInt, dateStr);
             call.enqueue(new Callback<Void>() {
+                /**
+                 * APIが完了したときに呼ばれるメソッド
+                 * @param response
+                 * @param retrofit
+                 */
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {
                     Intent intent = new Intent(AddActivity.this, MainActivity.class);

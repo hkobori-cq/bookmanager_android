@@ -8,7 +8,7 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 
-public interface BookDataClient {
+public interface BookDataGetClient {
     @POST("book/get")
     @Headers("Accept: application/json;charset=utf-8")
     @FormUrlEncoded

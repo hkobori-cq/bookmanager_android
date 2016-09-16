@@ -48,7 +48,7 @@ public class UserLoginActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.user_settings_actions, menu);
+        inflater.inflate(R.menu.menu_user_settings, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -63,6 +63,9 @@ public class UserLoginActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * 保存ボタンを押したときに呼ばれるメソッド
+     */
     public void registerUserData(){
         EditText email = (EditText) findViewById(R.id.user_login_email_field);
         EditText password = (EditText) findViewById(R.id.user_login_password_field);

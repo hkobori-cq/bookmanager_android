@@ -27,6 +27,10 @@ public class UserLoginFragment extends Fragment {
         tappedBackLayout();
     }
 
+    /**
+     * EditText以外のViewがタップされたときのメソッド
+     * タップされたときはkeyboardを隠す
+     */
     private void tappedBackLayout(){
         binding.userLoginFragment.setOnTouchListener(new View.OnTouchListener() {
             @Override

@@ -66,10 +66,13 @@ public class EditActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.add_and_edit_activity_actions, menu);
+        inflater.inflate(R.menu.menu_book, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * 保存ボタンを押したときに呼ばれるメソッド
+     */
     public void registerBookData() {
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
@@ -108,6 +111,11 @@ public class EditActivity extends AppCompatActivity {
             BookDataUpdateClient client = retrofit.create(BookDataUpdateClient.class);
             Call<Void> call = client.storeBookData(id, "sample", nameStr, priceInt, dateStr);
             call.enqueue(new Callback<Void>() {
+                /**
+                 * API通信が成功したときに呼ばれるメソッド
+                 * @param response
+                 * @param retrofit
+                 */
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {
                     Intent intent = new Intent(EditActivity.this, MainActivity.class);

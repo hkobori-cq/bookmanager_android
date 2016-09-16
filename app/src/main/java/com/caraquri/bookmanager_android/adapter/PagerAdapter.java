@@ -14,7 +14,6 @@ import java.util.List;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
-    private MainActivity activity;
     private final List<String> mCategoryNames = new ArrayList<>();
 
     public void addCategory(String categoryName) {

@@ -8,13 +8,9 @@ import java.util.List;
 public class BookDataEntity {
     @Expose
     @SerializedName("result")
-    private List<BookDataModel> bookDataModels;
+    protected List<BookDataModel> bookDataModels;
 
     public List<BookDataModel> getBookData() {
         return bookDataModels;
-    }
-
-    public void setBookData(List<BookDataModel> bookDataModels) {
-        this.bookDataModels = bookDataModels;
     }
 }

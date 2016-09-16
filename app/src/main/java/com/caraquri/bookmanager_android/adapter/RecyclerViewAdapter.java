@@ -1,10 +1,5 @@
 package com.caraquri.bookmanager_android.adapter;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.ParcelFileDescriptor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +10,14 @@ import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.databinding.ItemBookListRowBinding;
 import com.caraquri.bookmanager_android.model.BookDataModel;
 import com.caraquri.bookmanager_android.util.ChangeDateFormat;
-import com.caraquri.bookmanager_android.widget.OnItemClickListener;
+import com.caraquri.bookmanager_android.widget.OnRecyclerItemClickListener;
 
-import java.io.FileDescriptor;
-import java.io.IOException;
 import java.util.List;
 
 
-public class BookTitleAdapter extends RecyclerView.Adapter<BookTitleAdapter.ViewHolder> {
-    protected List<BookDataModel> dataset;
-    OnItemClickListener listener;
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+    private List<BookDataModel> bookData;
+    private OnRecyclerItemClickListener listener;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final ItemBookListRowBinding binding;
@@ -35,8 +28,13 @@ public class BookTitleAdapter extends RecyclerView.Adapter<BookTitleAdapter.View
         }
     }
 
-    public BookTitleAdapter(List<BookDataModel> myDataset, OnItemClickListener listener) {
-        dataset = myDataset;
+    /**
+     * 本のデータとリスナーをセットするメソッド
+     * @param mBookData
+     * @param listener
+     */
+    public RecyclerViewAdapter(List<BookDataModel> mBookData, OnRecyclerItemClickListener listener) {
+        bookData = mBookData;
         this.listener = listener;
     }
 
@@ -48,23 +46,28 @@ public class BookTitleAdapter extends RecyclerView.Adapter<BookTitleAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final BookDataModel bookDataModel = dataset.get(position);
+        final BookDataModel bookDataModel = bookData.get(position);
         bookDataModel.bookPrice = bookDataModel.bookPrice + "円";
         ChangeDateFormat format = new ChangeDateFormat();
-        bookDataModel.purchaseDate = format.changeDateFormat(bookDataModel.purchaseDate);
+        bookDataModel.purchaseDate = format.fromGMTFormatToDateFormat(bookDataModel.purchaseDate);
         holder.binding.bookImage.setImageResource(R.drawable.sample);
         holder.binding.setVariable(BR.bookData, bookDataModel);
         holder.binding.executePendingBindings();
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            /**
+             * セルをクリックしたときのメソッド
+             * MainActivityにデータを送るためにListenerにデータを送っている
+             * @param view
+             */
             @Override
             public void onClick(View view) {
-                listener.onItemClick(view, bookDataModel.id, bookDataModel.bookName, bookDataModel.bookPrice, bookDataModel.purchaseDate);
+                listener.onRecyclerItemClick(view, bookDataModel.id, bookDataModel.bookName, bookDataModel.bookPrice, bookDataModel.purchaseDate);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return dataset.size();
+        return bookData.size();
     }
 }

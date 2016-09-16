@@ -9,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.caraquri.bookmanager_android.R;
-import com.caraquri.bookmanager_android.activity.MainActivity;
-import com.caraquri.bookmanager_android.adapter.BookTitleAdapter;
-import com.caraquri.bookmanager_android.adapter.PagerAdapter;
-import com.caraquri.bookmanager_android.api.BookDataClient;
+import com.caraquri.bookmanager_android.adapter.RecyclerViewAdapter;
+import com.caraquri.bookmanager_android.api.BookDataGetClient;
 import com.caraquri.bookmanager_android.databinding.FragmentListViewBinding;
 import com.caraquri.bookmanager_android.model.BookDataEntity;
-import com.caraquri.bookmanager_android.widget.OnItemClickListener;
+import com.caraquri.bookmanager_android.widget.OnRecyclerItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -28,7 +26,7 @@ import retrofit.RxJavaCallAdapterFactory;
 
 public class RecyclerLayoutFragment extends Fragment {
     private FragmentListViewBinding binding;
-    OnItemClickListener listener;
+    OnRecyclerItemClickListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,7 +45,7 @@ public class RecyclerLayoutFragment extends Fragment {
         super.onAttach(context);
         Activity activity = getActivity();
         try {
-            listener = (OnItemClickListener) activity;
+            listener = (OnRecyclerItemClickListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnItemSelectedListener");
         }
@@ -63,12 +61,17 @@ public class RecyclerLayoutFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-        BookDataClient bookDataClient = retrofit.create(BookDataClient.class);
-        Call<BookDataEntity> call = bookDataClient.getBookData("0-100");
+        BookDataGetClient bookDataGetClient = retrofit.create(BookDataGetClient.class);
+        Call<BookDataEntity> call = bookDataGetClient.getBookData("0-15");
         call.enqueue(new Callback<BookDataEntity>() {
+            /**
+             * API通信が成功したときに呼ばれるメソッド
+             * @param response
+             * @param retrofit
+             */
             @Override
             public void onResponse(Response<BookDataEntity> response, Retrofit retrofit) {
-                BookTitleAdapter adapter = new BookTitleAdapter(response.body().getBookData(), listener);
+                RecyclerViewAdapter adapter = new RecyclerViewAdapter(response.body().getBookData(), listener);
                 binding.recyclerView.setAdapter(adapter);
             }
 

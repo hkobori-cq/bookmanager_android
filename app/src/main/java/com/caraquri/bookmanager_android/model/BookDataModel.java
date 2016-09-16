@@ -1,9 +1,7 @@
 package com.caraquri.bookmanager_android.model;
 
 import android.databinding.BaseObservable;
-import android.databinding.Bindable;
 
-import com.caraquri.bookmanager_android.BR;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

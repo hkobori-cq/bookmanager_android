@@ -68,6 +68,9 @@ public class BookRegisterFragment extends Fragment {
 
     }
 
+    /**
+     * getActivityがEditActivityだった場合は初期値を入れる
+     */
     private void initFieldData() {
         Intent intent = getActivity().getIntent();
         binding.addPageBookImage.setImageResource(R.drawable.sample);
@@ -90,6 +93,14 @@ public class BookRegisterFragment extends Fragment {
         });
     }
 
+    /**
+     * 送られてきたIntentをrequestCodeによって分類
+     * case 1のときは購入日のフィールドにデータをセットする
+     * case 10のときはイメージを添付する
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -111,6 +122,12 @@ public class BookRegisterFragment extends Fragment {
 
     }
 
+    /**
+     * URIkからデータをビットマップで使える形に変換するメソッド
+     * @param uri 画像のURI
+     * @return
+     * @throws IOException
+     */
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {
         ParcelFileDescriptor parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(uri, "r");
         assert parcelFileDescriptor != null;
