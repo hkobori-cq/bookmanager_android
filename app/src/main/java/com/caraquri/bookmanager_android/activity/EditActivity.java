@@ -45,6 +45,7 @@ public class EditActivity extends AppCompatActivity {
             bar.setDisplayShowTitleEnabled(false);
             bar.setHomeButtonEnabled(true);
         }
+        binding.toolbar.setTitle("書籍編集");
     }
 
     @Override
