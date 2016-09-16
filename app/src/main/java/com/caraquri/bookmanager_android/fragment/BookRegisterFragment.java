@@ -1,6 +1,6 @@
 package com.caraquri.bookmanager_android.fragment;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,10 +9,11 @@ import android.os.ParcelFileDescriptor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
@@ -38,8 +39,21 @@ public class BookRegisterFragment extends Fragment {
         }
         tappedDateButton();
         tappedAddImageButton();
+        tappedBackLayout();
     }
 
+    private void tappedBackLayout(){
+        binding.bookAddFragment.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                InputMethodManager inputMethodManager = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(binding.bookTitleField.getWindowToken(),0);
+                inputMethodManager.hideSoftInputFromWindow(binding.bookDateField.getWindowToken(),0);
+                inputMethodManager.hideSoftInputFromWindow(binding.bookPriceField.getWindowToken(),0);
+                return true;
+            }
+        });
+    }
 
     private void tappedAddImageButton() {
         binding.addImageButton.setOnClickListener(new View.OnClickListener() {

@@ -17,6 +17,7 @@
         <fragment
             android:id="@+id/add_view_fragment"
             android:name="com.caraquri.bookmanager_android.fragment.BookRegisterFragment"
+            android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </RelativeLayout>
