@@ -1,8 +1,11 @@
 package com.caraquri.bookmanager_android.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -39,9 +42,18 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        initToolbar();
-        initTabBar();
+        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if(defaultSharedPreferences.getBoolean("first_visit",true)){
+            defaultSharedPreferences.edit().putBoolean("first_visit",false).apply();
+            Log.d(TAG,"一回目だよ");
+            Intent intent = new Intent(MainActivity.this,UserLoginActivity.class);
+            startActivity(intent);
+        }else{
+            Log.d(TAG,"二回目以降だよ");
+            mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+            initToolbar();
+            initTabBar();
+        }
     }
 
     private void initTabBar() {

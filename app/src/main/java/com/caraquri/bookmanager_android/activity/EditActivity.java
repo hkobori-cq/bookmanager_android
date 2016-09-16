@@ -77,12 +77,11 @@ public class EditActivity extends AppCompatActivity {
         EditText date = (EditText) findViewById(R.id.book_date_field);
 
         String nameStr = name.getText().toString();
-        Integer priceInt = Integer.parseInt(price.getText().toString());
         String dateStr = date.getText().toString();
 
         if (nameStr.isEmpty()){
             new AlertDialog.Builder(this)
-                    .setTitle("名前を入力してください")
+                    .setTitle("書籍名を入力してください")
                     .setNegativeButton("ok",null)
                     .show();
         }else if (price.getText().toString().isEmpty()){
@@ -96,6 +95,7 @@ public class EditActivity extends AppCompatActivity {
                     .setNegativeButton("ok",null)
                     .show();
         }else {
+            Integer priceInt = Integer.parseInt(price.getText().toString());
             Gson gson = new GsonBuilder()
                     .create();
 

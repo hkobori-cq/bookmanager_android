@@ -14,8 +14,8 @@ public class UserLoginActivity extends AppCompatActivity {
     private static final String TAG = UserLoginActivity.class.getSimpleName();
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_user_login);
         initToolbar();
     }
