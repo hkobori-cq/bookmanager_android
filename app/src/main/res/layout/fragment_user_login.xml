@@ -24,7 +24,6 @@
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/user_login_email_field"
             android:hint=""
-            android:textColor="@color/indigo500"
             android:layout_below="@+id/user_login_email_text"
             android:layout_alignLeft="@+id/user_login_email_text"
             android:layout_alignStart="@+id/user_login_email_text"
@@ -45,7 +44,6 @@
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/user_login_password_field"
             android:hint=""
-            android:textColor="@color/indigo500"
             android:layout_below="@+id/user_login_password_text"
             android:layout_alignLeft="@+id/user_login_password_text"
             android:layout_alignStart="@+id/user_login_password_text"

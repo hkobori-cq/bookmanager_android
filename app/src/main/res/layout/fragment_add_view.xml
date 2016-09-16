@@ -46,7 +46,6 @@
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/book_title_field"
             android:hint=""
-            android:textColor="@color/indigo500"
             android:layout_below="@+id/book_title_text"
             android:layout_alignLeft="@+id/add_page_book_image"
             android:layout_alignStart="@+id/add_page_book_image"
@@ -67,7 +66,6 @@
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/book_price_field"
             android:hint=""
-            android:textColor="@color/indigo500"
             android:layout_below="@+id/book_price_text"
             android:layout_alignLeft="@+id/add_page_book_image"
             android:layout_alignStart="@+id/add_page_book_image"
@@ -88,7 +86,6 @@
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/book_date_field"
             android:hint=""
-            android:textColor="@color/indigo500"
             android:layout_below="@+id/book_date_text"
             android:layout_alignLeft="@+id/add_page_book_image"
             android:layout_alignStart="@+id/add_page_book_image"
