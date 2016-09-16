@@ -22,4 +22,6 @@ public class UserLoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentUserLoginBinding.bind(getView());
     }
+
+
 }
