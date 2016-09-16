@@ -42,7 +42,6 @@ public class BookRegisterFragment extends Fragment {
 
 
     private void tappedAddImageButton() {
-        Log.d("ok", binding.bookDateField.getText().toString());
         binding.addImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +56,7 @@ public class BookRegisterFragment extends Fragment {
 
     private void initFieldData() {
         Intent intent = getActivity().getIntent();
+        binding.addPageBookImage.setImageResource(R.drawable.sample);
         binding.bookTitleField.setText(intent.getStringExtra("name"));
         binding.bookPriceField.setText(intent.getStringExtra("price").replace("円", ""));
         binding.bookDateField.setText(intent.getStringExtra("date").replaceAll("/", "-"));

@@ -13,6 +13,9 @@ public class BookDataModel extends BaseObservable {
     @SerializedName("id")
     public String id;
     @Expose
+    @SerializedName("image_url")
+    public String imageUrl;
+    @Expose
     @SerializedName("name")
     public String bookName;
     @Expose
@@ -28,8 +31,4 @@ public class BookDataModel extends BaseObservable {
         this.purchaseDate = purchaseDate;
     }
 
-    @Bindable
-    public String getBookName() {
-        return bookName;
-    }
 }
