@@ -162,13 +162,13 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
 
         CreateAlertView alertView = new CreateAlertView();
         if (emailStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_mail_address),this);
+            alertView.createAlertView(getString(R.string.input_mail_address), this);
         } else if (passwordStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_password),this);
+            alertView.createAlertView(getString(R.string.input_password), this);
         } else if (passwordConStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_password_confirm),this);
+            alertView.createAlertView(getString(R.string.input_password_confirm), this);
         } else if (!(passwordStr.equals(passwordConStr))) {
-            alertView.createAlertView(getString(R.string.not_match_password),this);
+            alertView.createAlertView(getString(R.string.not_match_password), this);
         } else {
             DataClient client = new DataClient();
             Retrofit retrofit = client.createDataClient();

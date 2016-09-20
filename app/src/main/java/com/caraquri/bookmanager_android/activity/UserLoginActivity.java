@@ -76,9 +76,9 @@ public class UserLoginActivity extends AppCompatActivity {
 
         CreateAlertView alertView = new CreateAlertView();
         if (emailStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_mail_address),this);
+            alertView.createAlertView(getString(R.string.input_mail_address), this);
         } else if (passwordStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_password),this);
+            alertView.createAlertView(getString(R.string.input_password), this);
         } else {
             DataClient client = new DataClient();
             Retrofit retrofit = client.createDataClient();

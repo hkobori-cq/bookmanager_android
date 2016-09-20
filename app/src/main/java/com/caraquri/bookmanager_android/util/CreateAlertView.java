@@ -9,7 +9,7 @@ public class CreateAlertView {
     public void createAlertView(String title, Context context) {
         new AlertDialog.Builder(context)
                 .setTitle(title)
-                .setNegativeButton(R.string.alertOkMessage,null)
+                .setNegativeButton(R.string.alertOkMessage, null)
                 .show();
     }
 }

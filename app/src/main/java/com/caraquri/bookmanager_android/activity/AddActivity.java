@@ -74,15 +74,15 @@ public class AddActivity extends AppCompatActivity {
         CreateAlertView alertView = new CreateAlertView();
 
         if (nameStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_book_name),this);
+            alertView.createAlertView(getString(R.string.input_book_name), this);
         } else if (price.getText().toString().isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_book_price),this);
+            alertView.createAlertView(getString(R.string.input_book_price), this);
         } else if (dateStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.select_purchase_date),this);
+            alertView.createAlertView(getString(R.string.select_purchase_date), this);
         } else {
             Integer priceInt = Integer.parseInt(price.getText().toString());
             DataClient client = new DataClient();
-            client.bookRegisterClient("sample",nameStr,priceInt,dateStr,this);
+            client.bookRegisterClient("sample", nameStr, priceInt, dateStr, this);
         }
     }
 }

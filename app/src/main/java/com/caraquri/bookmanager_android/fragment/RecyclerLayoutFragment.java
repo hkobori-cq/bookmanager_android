@@ -57,8 +57,8 @@ public class RecyclerLayoutFragment extends Fragment {
         Retrofit retrofit = dataClient.createDataClient();
 
         BookDataGetService bookDataGetService = retrofit.create(BookDataGetService.class);
-        Call<BookDataEntity> call = bookDataGetService.getBookData("0-"+readData.toString());
-        binding.recyclerView.addOnScrollListener(new EndlessScrollListener((LinearLayoutManager)binding.recyclerView.getLayoutManager()) {
+        Call<BookDataEntity> call = bookDataGetService.getBookData("0-" + readData.toString());
+        binding.recyclerView.addOnScrollListener(new EndlessScrollListener((LinearLayoutManager) binding.recyclerView.getLayoutManager()) {
             @Override
             public void onLoadMore(int current_page) {
                 readData = current_page * 20;
