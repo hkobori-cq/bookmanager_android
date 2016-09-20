@@ -51,7 +51,7 @@ public class RecyclerLayoutFragment extends Fragment {
         try {
             listener = (OnRecyclerItemClickListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnItemSelectedListener");
+            throw new ClassCastException(activity.toString());
         }
     }
 
@@ -61,7 +61,7 @@ public class RecyclerLayoutFragment extends Fragment {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://app.com/")
+                .baseUrl(getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();

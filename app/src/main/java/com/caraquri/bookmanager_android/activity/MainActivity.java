@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
         super.onCreate(savedInstanceState);
         //初めてアプリを開いたかどうかを判定する
         SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (defaultSharedPreferences.getBoolean("first_visit", true)) {
-            defaultSharedPreferences.edit().putBoolean("first_visit", false).apply();
+        if (defaultSharedPreferences.getBoolean(getString(R.string.first_visit), true)) {
+            defaultSharedPreferences.edit().putBoolean(getString(R.string.first_visit), false).apply();
             Intent intent = new Intent(MainActivity.this, UserLoginActivity.class);
             startActivity(intent);
         } else {
@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
     private void initTabBar() {
         FragmentManager manager = getSupportFragmentManager();
         PagerAdapter adapter = new PagerAdapter(manager);
-        adapter.addCategory("書籍一覧");
-        adapter.addCategory("設定");
+        adapter.addCategory(getString(R.string.book_list));
+        adapter.addCategory(getString(R.string.settings));
         binding.viewPaper.setAdapter(adapter);
         binding.tabbar.setupWithViewPager(binding.viewPaper);
     }
@@ -87,11 +87,11 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
                 binding.toolbar.getMenu().clear();
                 switch (position) {
                     case 0:
-                        binding.toolbar.setTitle("書籍一覧");
+                        binding.toolbar.setTitle(R.string.book_list);
                         binding.toolbar.inflateMenu(R.menu.menu_main);
                         break;
                     case 1:
-                        binding.toolbar.setTitle("設定");
+                        binding.toolbar.setTitle(R.string.settings);
                         binding.toolbar.inflateMenu(R.menu.menu_user_settings);
                         break;
                 }
@@ -161,30 +161,30 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
 
         if (emailStr.isEmpty()) {
             new AlertDialog.Builder(this)
-                    .setTitle("メールアドレスを入力してください")
-                    .setNegativeButton("ok", null)
+                    .setTitle(R.string.input_mail_address)
+                    .setNegativeButton(getString(R.string.alertOkMessage), null)
                     .show();
         } else if (passwordStr.isEmpty()) {
             new AlertDialog.Builder(this)
-                    .setTitle("パスワードを入力してください")
-                    .setNegativeButton("ok", null)
+                    .setTitle(R.string.input_password)
+                    .setNegativeButton(getString(R.string.alertOkMessage), null)
                     .show();
         } else if (passwordConStr.isEmpty()) {
             new AlertDialog.Builder(this)
-                    .setTitle("パスワード確認を入力してください")
-                    .setNegativeButton("ok", null)
+                    .setTitle(R.string.input_password_confirm)
+                    .setNegativeButton(getString(R.string.alertOkMessage), null)
                     .show();
         } else if (!(passwordStr.equals(passwordConStr))) {
             new AlertDialog.Builder(this)
-                    .setTitle("パスワードと確認が一致しません")
-                    .setNegativeButton("ok", null)
+                    .setTitle(R.string.not_match_password)
+                    .setNegativeButton(getString(R.string.alertOkMessage), null)
                     .show();
         } else {
             Gson gson = new GsonBuilder()
                     .create();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://app.com")
+                    .baseUrl(getString(R.string.base_url))
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
@@ -194,14 +194,13 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {
                     new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("登録が完了しました")
-                            .setNegativeButton("ok", null)
+                            .setTitle(R.string.completed_register)
+                            .setNegativeButton(R.string.alertOkMessage, null)
                             .show();
                 }
 
                 @Override
                 public void onFailure(Throwable t) {
-                    Log.d(TAG, "だめ");
                 }
             });
         }

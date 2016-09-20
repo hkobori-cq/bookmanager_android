@@ -15,61 +15,61 @@
 
         <TextView
             android:id="@+id/user_email_text"
-            android:text="@string/email"
-            android:layout_marginTop="100dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginStart="100dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            android:layout_marginTop="@dimen/mail_address_text_top_margin"
+            android:layout_marginLeft="@dimen/mail_address_text_left_margin"
+            android:layout_marginStart="@dimen/mail_address_text_left_margin" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/user_email_field"
+            android:layout_width="@dimen/text_field_width"
+            android:layout_height="wrap_content"
             android:hint=""
             android:layout_below="@+id/user_email_text"
             android:layout_alignLeft="@+id/user_email_text"
             android:layout_alignStart="@+id/user_email_text"
-            android:layout_marginTop="10dp"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content" />
+            android:layout_marginTop="@dimen/margin_of_field_and_text" />
 
         <TextView
             android:id="@+id/user_password_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/password"
             android:layout_below="@+id/user_email_field"
             android:layout_alignLeft="@+id/user_email_field"
             android:layout_alignStart="@+id/user_email_field"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_marginTop="@dimen/margin_of_field_and_text" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/user_password_field"
+            android:layout_width="@dimen/text_field_width"
+            android:layout_height="wrap_content"
             android:hint=""
             android:layout_below="@+id/user_password_text"
             android:layout_alignLeft="@+id/user_password_text"
             android:layout_alignStart="@+id/user_password_text"
-            android:layout_marginTop="10dp"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content" />
+            android:layout_marginTop="@dimen/margin_of_field_and_text" />
 
         <TextView
             android:id="@+id/user_password_confirm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/password_confirm"
             android:layout_below="@+id/user_password_field"
             android:layout_alignLeft="@+id/user_password_field"
             android:layout_alignStart="@+id/user_password_field"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_marginTop="@dimen/margin_of_field_and_text" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/user_password_confirm_field"
+            android:layout_width="@dimen/text_field_width"
+            android:layout_height="wrap_content"
             android:hint=""
             android:layout_below="@+id/user_password_confirm_text"
             android:layout_alignLeft="@+id/user_password_confirm_text"
             android:layout_alignStart="@+id/user_password_confirm_text"
-            android:layout_marginTop="10dp"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content" />
+            android:layout_marginTop="@dimen/margin_of_field_and_text" />
     </RelativeLayout>
 </layout>

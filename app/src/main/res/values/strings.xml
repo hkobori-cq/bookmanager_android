@@ -13,4 +13,23 @@
     <string name="password">パスワード</string>
     <string name="save_user">保存</string>
     <string name="password_confirm">パスワード確認</string>
+    <string name="book_add">書籍追加</string>
+    <string name="book_edit">書籍編集</string>
+    <string name="input_book_name">書籍名を入力してください</string>
+    <string name="input_book_price">価格を入力してください</string>
+    <string name="select_purchase_date">日付を選択してください</string>
+    <string name="alertOkMessage">ok</string>
+    <string name="base_url">http://app.com</string>
+    <string name="image_sample_url">sample</string>
+    <string name="book_list">書籍一覧</string>
+    <string name="settings">設定</string>
+    <string name="input_mail_address">メールアドレスを入力してください</string>
+    <string name="input_password">パスワードを入力してください</string>
+    <string name="input_password_confirm">パスワード確認を入力してください</string>
+    <string name="not_match_password">パスワードと確認が一致しません</string>
+    <string name="completed_register">登録が完了しました</string>
+    <string name="failed_login_message">ログインに失敗しました</string>
+    <string name="japanese_yen">円</string>
+    <string name="login">ログイン</string>
+    <string name="first_visit">first_visit</string>
 </resources>

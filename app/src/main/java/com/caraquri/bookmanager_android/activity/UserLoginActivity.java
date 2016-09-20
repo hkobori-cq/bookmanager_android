@@ -75,20 +75,20 @@ public class UserLoginActivity extends AppCompatActivity {
 
         if (emailStr.isEmpty()) {
             new AlertDialog.Builder(this)
-                    .setTitle("メールアドレスを入力してください")
-                    .setNegativeButton("ok", null)
+                    .setTitle(R.string.input_mail_address)
+                    .setNegativeButton(R.string.alertOkMessage, null)
                     .show();
         } else if (passwordStr.isEmpty()) {
             new AlertDialog.Builder(this)
-                    .setTitle("パスワードを入力してください")
-                    .setNegativeButton("ok", null)
+                    .setTitle(R.string.input_password)
+                    .setNegativeButton(R.string.alertOkMessage, null)
                     .show();
         } else {
             Gson gson = new GsonBuilder()
                     .create();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://app.com")
+                    .baseUrl(getString(R.string.base_url))
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
@@ -102,15 +102,14 @@ public class UserLoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     } else {
                         new AlertDialog.Builder(UserLoginActivity.this)
-                                .setTitle("ログインに失敗しました")
-                                .setNegativeButton("ok", null)
+                                .setTitle(R.string.failed_login_message)
+                                .setNegativeButton(R.string.alertOkMessage, null)
                                 .show();
                     }
                 }
 
                 @Override
                 public void onFailure(Throwable t) {
-                    Log.d(TAG, "だめ");
                 }
             });
         }

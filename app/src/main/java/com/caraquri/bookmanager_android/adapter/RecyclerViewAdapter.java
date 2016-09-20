@@ -48,7 +48,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final BookDataModel bookDataModel = bookData.get(position);
-        bookDataModel.bookPrice = bookDataModel.bookPrice + "円";
+        bookDataModel.bookPrice = bookDataModel.bookPrice + R.string.japanese_yen;
         ChangeDateFormat format = new ChangeDateFormat();
         bookDataModel.purchaseDate = format.fromGMTFormatToDateFormat(bookDataModel.purchaseDate);
         holder.binding.bookImage.setImageResource(R.drawable.sample);

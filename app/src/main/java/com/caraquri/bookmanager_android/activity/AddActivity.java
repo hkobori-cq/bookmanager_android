@@ -45,7 +45,7 @@ public class AddActivity extends AppCompatActivity {
             bar.setDisplayShowTitleEnabled(false);
             bar.setHomeButtonEnabled(true);
         }
-        binding.toolbar.setTitle("書籍追加");
+        binding.toolbar.setTitle(R.string.book_add);
     }
 
     @Override
@@ -84,18 +84,18 @@ public class AddActivity extends AppCompatActivity {
 
         if (nameStr.isEmpty()) {
             new AlertDialog.Builder(this)
-                    .setTitle("書籍名を入力してください")
-                    .setNegativeButton("ok", null)
+                    .setTitle(R.string.input_book_name)
+                    .setNegativeButton(R.string.alertOkMessage, null)
                     .show();
         } else if (price.getText().toString().isEmpty()) {
             new AlertDialog.Builder(this)
-                    .setTitle("価格を入力してください")
-                    .setNegativeButton("ok", null)
+                    .setTitle(R.string.input_book_price)
+                    .setNegativeButton(R.string.alertOkMessage, null)
                     .show();
         } else if (dateStr.isEmpty()) {
             new AlertDialog.Builder(this)
-                    .setTitle("日付を選択してください")
-                    .setNegativeButton("ok", null)
+                    .setTitle(R.string.select_purchase_date)
+                    .setNegativeButton(R.string.alertOkMessage, null)
                     .show();
         } else {
             Integer priceInt = Integer.parseInt(price.getText().toString());
@@ -104,12 +104,12 @@ public class AddActivity extends AppCompatActivity {
                     .create();
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://app.com")
+                    .baseUrl(getString(R.string.base_url))
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
             BookDataRegisterClient client = retrofit.create(BookDataRegisterClient.class);
-            Call<Void> call = client.storeBookData("sample", nameStr, priceInt, dateStr);
+            Call<Void> call = client.storeBookData(getString(R.string.image_sample_url), nameStr, priceInt, dateStr);
             call.enqueue(new Callback<Void>() {
                 /**
                  * APIが完了したときに呼ばれるメソッド
@@ -124,7 +124,6 @@ public class AddActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Throwable t) {
-                    Log.d(TAG, "だめ");
                 }
             });
         }
