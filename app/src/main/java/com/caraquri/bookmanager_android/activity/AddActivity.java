@@ -15,6 +15,7 @@ import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.api.BookDataRegisterService;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityAddBinding;
+import com.caraquri.bookmanager_android.util.CreateAlertView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -81,22 +82,14 @@ public class AddActivity extends AppCompatActivity {
         String nameStr = name.getText().toString();
         String dateStr = date.getText().toString();
 
+        CreateAlertView alertView = new CreateAlertView();
 
         if (nameStr.isEmpty()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.input_book_name)
-                    .setNegativeButton(R.string.alertOkMessage, null)
-                    .show();
+            alertView.createAlertView(getString(R.string.input_book_name),this);
         } else if (price.getText().toString().isEmpty()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.input_book_price)
-                    .setNegativeButton(R.string.alertOkMessage, null)
-                    .show();
+            alertView.createAlertView(getString(R.string.input_book_price),this);
         } else if (dateStr.isEmpty()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.select_purchase_date)
-                    .setNegativeButton(R.string.alertOkMessage, null)
-                    .show();
+            alertView.createAlertView(getString(R.string.select_purchase_date),this);
         } else {
             Integer priceInt = Integer.parseInt(price.getText().toString());
 

@@ -15,6 +15,7 @@ import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.api.UserLoginService;
 import com.caraquri.bookmanager_android.databinding.ActivityUserLoginBinding;
+import com.caraquri.bookmanager_android.util.CreateAlertView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -73,16 +74,11 @@ public class UserLoginActivity extends AppCompatActivity {
         String emailStr = email.getText().toString();
         String passwordStr = password.getText().toString();
 
+        CreateAlertView alertView = new CreateAlertView();
         if (emailStr.isEmpty()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.input_mail_address)
-                    .setNegativeButton(R.string.alertOkMessage, null)
-                    .show();
+            alertView.createAlertView(getString(R.string.input_mail_address),this);
         } else if (passwordStr.isEmpty()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.input_password)
-                    .setNegativeButton(R.string.alertOkMessage, null)
-                    .show();
+            alertView.createAlertView(getString(R.string.input_password),this);
         } else {
             DataClient client = new DataClient();
             Retrofit retrofit = client.createDataClient();

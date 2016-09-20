@@ -21,6 +21,7 @@ import com.caraquri.bookmanager_android.adapter.PagerAdapter;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.api.UserDataRegisterService;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
+import com.caraquri.bookmanager_android.util.CreateAlertView;
 import com.caraquri.bookmanager_android.widget.OnRecyclerItemClickListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -159,26 +160,15 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
         String passwordStr = password.getText().toString();
         String passwordConStr = passwordCon.getText().toString();
 
+        CreateAlertView alertView = new CreateAlertView();
         if (emailStr.isEmpty()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.input_mail_address)
-                    .setNegativeButton(getString(R.string.alertOkMessage), null)
-                    .show();
+            alertView.createAlertView(getString(R.string.input_mail_address),this);
         } else if (passwordStr.isEmpty()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.input_password)
-                    .setNegativeButton(getString(R.string.alertOkMessage), null)
-                    .show();
+            alertView.createAlertView(getString(R.string.input_password),this);
         } else if (passwordConStr.isEmpty()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.input_password_confirm)
-                    .setNegativeButton(getString(R.string.alertOkMessage), null)
-                    .show();
+            alertView.createAlertView(getString(R.string.input_password_confirm),this);
         } else if (!(passwordStr.equals(passwordConStr))) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.not_match_password)
-                    .setNegativeButton(getString(R.string.alertOkMessage), null)
-                    .show();
+            alertView.createAlertView(getString(R.string.not_match_password),this);
         } else {
             DataClient client = new DataClient();
             Retrofit retrofit = client.createDataClient();
