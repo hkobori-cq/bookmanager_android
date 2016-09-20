@@ -171,23 +171,7 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
             alertView.createAlertView(getString(R.string.not_match_password), this);
         } else {
             DataClient client = new DataClient();
-            Retrofit retrofit = client.createDataClient();
-
-            UserDataRegisterService service = retrofit.create(UserDataRegisterService.class);
-            Call<Void> call = service.storeUserData(emailStr, passwordStr);
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Response<Void> response, Retrofit retrofit) {
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setTitle(R.string.completed_register)
-                            .setNegativeButton(R.string.alertOkMessage, null)
-                            .show();
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                }
-            });
+            client.userRegisterClient(emailStr,passwordStr,this);
         }
 
 

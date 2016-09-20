@@ -81,28 +81,7 @@ public class UserLoginActivity extends AppCompatActivity {
             alertView.createAlertView(getString(R.string.input_password), this);
         } else {
             DataClient client = new DataClient();
-            Retrofit retrofit = client.createDataClient();
-
-            UserLoginService service = retrofit.create(UserLoginService.class);
-            Call<Integer> call = service.storeUserData(emailStr, passwordStr);
-            call.enqueue(new Callback<Integer>() {
-                @Override
-                public void onResponse(Response<Integer> response, Retrofit retrofit) {
-                    if (response.isSuccess()) {
-                        Intent intent = new Intent(UserLoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        new AlertDialog.Builder(UserLoginActivity.this)
-                                .setTitle(R.string.failed_login_message)
-                                .setNegativeButton(R.string.alertOkMessage, null)
-                                .show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                }
-            });
+            client.userLoginClient(emailStr,passwordStr,this);
         }
     }
 }
