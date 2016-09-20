@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,19 +11,9 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.caraquri.bookmanager_android.R;
-import com.caraquri.bookmanager_android.api.BookDataRegisterService;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityAddBinding;
 import com.caraquri.bookmanager_android.util.CreateAlertView;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
 
 public class AddActivity extends AppCompatActivity {
     protected ActivityAddBinding binding;
@@ -92,28 +81,8 @@ public class AddActivity extends AppCompatActivity {
             alertView.createAlertView(getString(R.string.select_purchase_date),this);
         } else {
             Integer priceInt = Integer.parseInt(price.getText().toString());
-
             DataClient client = new DataClient();
-            Retrofit retrofit = client.createDataClient();
-
-            BookDataRegisterService service = retrofit.create(BookDataRegisterService.class);
-            Call<Void> call = service.storeBookData(getString(R.string.image_sample_url), nameStr, priceInt, dateStr);
-            call.enqueue(new Callback<Void>() {
-                /**
-                 * APIが完了したときに呼ばれるメソッド
-                 * @param response
-                 * @param retrofit
-                 */
-                @Override
-                public void onResponse(Response<Void> response, Retrofit retrofit) {
-                    Intent intent = new Intent(AddActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                }
-            });
+            client.bookRegisterClient("sample",nameStr,priceInt,dateStr,this);
         }
     }
 }
