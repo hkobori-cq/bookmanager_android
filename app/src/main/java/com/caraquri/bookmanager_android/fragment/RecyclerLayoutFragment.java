@@ -5,27 +5,23 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.RecyclerViewAdapter;
-import com.caraquri.bookmanager_android.api.BookDataGetClient;
+import com.caraquri.bookmanager_android.api.BookDataGetService;
+import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.FragmentListViewBinding;
 import com.caraquri.bookmanager_android.model.BookDataEntity;
 import com.caraquri.bookmanager_android.widget.EndlessScrollListener;
 import com.caraquri.bookmanager_android.widget.OnRecyclerItemClickListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import retrofit.Call;
 import retrofit.Callback;
-import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
 
 public class RecyclerLayoutFragment extends Fragment {
     private FragmentListViewBinding binding;
@@ -57,16 +53,11 @@ public class RecyclerLayoutFragment extends Fragment {
 
 
     public void initRecyclerView() {
-        Gson gson = new GsonBuilder()
-                .create();
+        DataClient dataClient = new DataClient();
+        Retrofit retrofit = dataClient.createDataClient();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.base_url))
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        BookDataGetClient bookDataGetClient = retrofit.create(BookDataGetClient.class);
-        Call<BookDataEntity> call = bookDataGetClient.getBookData("0-"+readData.toString());
+        BookDataGetService bookDataGetService = retrofit.create(BookDataGetService.class);
+        Call<BookDataEntity> call = bookDataGetService.getBookData("0-"+readData.toString());
         binding.recyclerView.addOnScrollListener(new EndlessScrollListener((LinearLayoutManager)binding.recyclerView.getLayoutManager()) {
             @Override
             public void onLoadMore(int current_page) {

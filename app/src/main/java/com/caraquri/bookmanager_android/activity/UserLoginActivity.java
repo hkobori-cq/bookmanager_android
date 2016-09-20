@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.caraquri.bookmanager_android.R;
-import com.caraquri.bookmanager_android.api.UserLoginClient;
+import com.caraquri.bookmanager_android.api.DataClient;
+import com.caraquri.bookmanager_android.api.UserLoginService;
 import com.caraquri.bookmanager_android.databinding.ActivityUserLoginBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -84,16 +84,11 @@ public class UserLoginActivity extends AppCompatActivity {
                     .setNegativeButton(R.string.alertOkMessage, null)
                     .show();
         } else {
-            Gson gson = new GsonBuilder()
-                    .create();
+            DataClient client = new DataClient();
+            Retrofit retrofit = client.createDataClient();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(getString(R.string.base_url))
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .build();
-            UserLoginClient client = retrofit.create(UserLoginClient.class);
-            Call<Integer> call = client.storeUserData(emailStr, passwordStr);
+            UserLoginService service = retrofit.create(UserLoginService.class);
+            Call<Integer> call = service.storeUserData(emailStr, passwordStr);
             call.enqueue(new Callback<Integer>() {
                 @Override
                 public void onResponse(Response<Integer> response, Retrofit retrofit) {

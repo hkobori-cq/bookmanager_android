@@ -6,7 +6,7 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 
-public interface BookDataUpdateClient {
+public interface BookDataUpdateService {
     @POST("book/update")
     @Headers("Accept: application/json;charset=utf-8")
     @FormUrlEncoded

@@ -6,11 +6,11 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 
-public interface UserLoginClient {
-    @POST("account/login")
+public interface UserDataRegisterService {
+    @POST("account/register")
     @Headers("Accept: application/json;charset=utf-8")
     @FormUrlEncoded
-    Call<Integer> storeUserData(
+    Call<Void> storeUserData(
             @Field("mail_address") String mail,
             @Field("password") String password
     );

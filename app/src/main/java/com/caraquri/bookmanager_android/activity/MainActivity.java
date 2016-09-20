@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +18,8 @@ import android.widget.EditText;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.PagerAdapter;
-import com.caraquri.bookmanager_android.api.UserDataRegisterClient;
+import com.caraquri.bookmanager_android.api.DataClient;
+import com.caraquri.bookmanager_android.api.UserDataRegisterService;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
 import com.caraquri.bookmanager_android.widget.OnRecyclerItemClickListener;
 import com.google.gson.Gson;
@@ -180,16 +180,11 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
                     .setNegativeButton(getString(R.string.alertOkMessage), null)
                     .show();
         } else {
-            Gson gson = new GsonBuilder()
-                    .create();
+            DataClient client = new DataClient();
+            Retrofit retrofit = client.createDataClient();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(getString(R.string.base_url))
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .build();
-            UserDataRegisterClient client = retrofit.create(UserDataRegisterClient.class);
-            Call<Void> call = client.storeUserData(emailStr, passwordStr);
+            UserDataRegisterService service = retrofit.create(UserDataRegisterService.class);
+            Call<Void> call = service.storeUserData(emailStr, passwordStr);
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {

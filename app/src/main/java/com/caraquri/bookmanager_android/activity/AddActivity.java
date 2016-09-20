@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.caraquri.bookmanager_android.R;
-import com.caraquri.bookmanager_android.api.BookDataRegisterClient;
+import com.caraquri.bookmanager_android.api.BookDataRegisterService;
+import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityAddBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -100,16 +100,11 @@ public class AddActivity extends AppCompatActivity {
         } else {
             Integer priceInt = Integer.parseInt(price.getText().toString());
 
-            Gson gson = new GsonBuilder()
-                    .create();
+            DataClient client = new DataClient();
+            Retrofit retrofit = client.createDataClient();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(getString(R.string.base_url))
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .build();
-            BookDataRegisterClient client = retrofit.create(BookDataRegisterClient.class);
-            Call<Void> call = client.storeBookData(getString(R.string.image_sample_url), nameStr, priceInt, dateStr);
+            BookDataRegisterService service = retrofit.create(BookDataRegisterService.class);
+            Call<Void> call = service.storeBookData(getString(R.string.image_sample_url), nameStr, priceInt, dateStr);
             call.enqueue(new Callback<Void>() {
                 /**
                  * APIが完了したときに呼ばれるメソッド
