@@ -7,14 +7,16 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
-public class AlertDialogFragment extends DialogFragment{
+import com.caraquri.bookmanager_android.R;
+
+public class AlertDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         String message = getArguments().getString("message");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(message);
-        builder.setPositiveButton("OK",null);
+        builder.setPositiveButton(getString(R.string.alertOkMessage), null);
         return builder.create();
     }
 }

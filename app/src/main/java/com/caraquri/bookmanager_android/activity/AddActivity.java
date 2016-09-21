@@ -40,7 +40,6 @@ public class AddActivity extends AppCompatActivity {
             bar.setDisplayShowTitleEnabled(false);
             bar.setHomeButtonEnabled(true);
         }
-        binding.toolbar.setTitle(R.string.book_add);
     }
 
     @Override
@@ -79,17 +78,17 @@ public class AddActivity extends AppCompatActivity {
         Bundle args = new Bundle();
         AlertDialogFragment alertDialog = new AlertDialogFragment();
         if (nameStr.isEmpty()) {
-            args.putString("message",getString(R.string.input_book_name));
+            args.putString("message", getString(R.string.input_book_name));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(),"dialog");
+            alertDialog.show(getSupportFragmentManager(), "dialog");
         } else if (price.getText().toString().isEmpty()) {
-            args.putString("message",getString(R.string.input_book_price));
+            args.putString("message", getString(R.string.input_book_price));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(),"dialog");
+            alertDialog.show(getSupportFragmentManager(), "dialog");
         } else if (dateStr.isEmpty()) {
-            args.putString("message",getString(R.string.select_purchase_date));
+            args.putString("message", getString(R.string.select_purchase_date));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(),"dialog");
+            alertDialog.show(getSupportFragmentManager(), "dialog");
         } else {
             Integer priceInt = Integer.parseInt(price.getText().toString());
             DataClient client = new DataClient();

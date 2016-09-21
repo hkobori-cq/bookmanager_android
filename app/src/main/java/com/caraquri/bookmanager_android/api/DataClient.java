@@ -13,7 +13,8 @@ import retrofit.http.Headers;
 import retrofit.http.POST;
 
 public class DataClient {
-    static final String BASEURL = "http://app.com";
+    static private final String BASEURL = "http://app.com";
+
     public Retrofit createDataClient() {
         Gson gson = new GsonBuilder()
                 .create();
@@ -26,28 +27,28 @@ public class DataClient {
     }
 
     public Call<Void> bookRegisterClient(String imageUrl, String nameStr,
-                                   Integer priceInt, String dateStr) {
+                                         Integer priceInt, String dateStr) {
         BookDataRegisterService service = createDataClient().create(BookDataRegisterService.class);
         Call<Void> call = service.storeBookData("sample", nameStr, priceInt, dateStr);
         return call;
     }
 
     public Call<Void> bookUpdateClient(String id, String imageUrl, String nameStr,
-                                 Integer priceInt, String dateStr) {
+                                       Integer priceInt, String dateStr) {
         BookDataUpdateService service = createDataClient().create(BookDataUpdateService.class);
         Call<Void> call = service.storeBookData(id, imageUrl, nameStr, priceInt, dateStr);
         return call;
     }
 
-    public Call<Integer> userLoginClient(String email, String password){
+    public Call<Integer> userLoginClient(String email, String password) {
         UserLoginService service = createDataClient().create(UserLoginService.class);
-        Call<Integer> call = service.storeUserData(email,password);
+        Call<Integer> call = service.storeUserData(email, password);
         return call;
     }
 
-    public Call<Void> userRegisterClient(String email, String password){
+    public Call<Void> userRegisterClient(String email, String password) {
         UserDataRegisterService service = createDataClient().create(UserDataRegisterService.class);
-        Call<Void> call = service.storeUserData(email,password);
+        Call<Void> call = service.storeUserData(email, password);
         return call;
     }
 
@@ -95,7 +96,6 @@ public class DataClient {
                 @Field("password") String password
         );
     }
-
 
 
 }

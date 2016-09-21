@@ -81,7 +81,6 @@ public class BookRegisterFragment extends Fragment {
 
 
     private void tappedDateButton() {
-
         binding.bookDateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

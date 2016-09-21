@@ -72,16 +72,16 @@ public class UserLoginActivity extends AppCompatActivity {
         AlertDialogFragment alertDialog = new AlertDialogFragment();
 
         if (emailStr.isEmpty()) {
-            args.putString("message",getString(R.string.input_mail_address));
+            args.putString("message", getString(R.string.input_mail_address));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(),"dialog");
+            alertDialog.show(getSupportFragmentManager(), "dialog");
         } else if (passwordStr.isEmpty()) {
-            args.putString("message",getString(R.string.input_password));
+            args.putString("message", getString(R.string.input_password));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(),"dialog");
+            alertDialog.show(getSupportFragmentManager(), "dialog");
         } else {
             DataClient client = new DataClient();
-            Call<Integer> call = client.userLoginClient(emailStr,passwordStr);
+            Call<Integer> call = client.userLoginClient(emailStr, passwordStr);
             call.enqueue(new Callback<Integer>() {
                 @Override
                 public void onResponse(Response<Integer> response, Retrofit retrofit) {
@@ -91,9 +91,9 @@ public class UserLoginActivity extends AppCompatActivity {
                     } else {
                         Bundle args = new Bundle();
                         AlertDialogFragment alertDialog = new AlertDialogFragment();
-                        args.putString("message",getString(R.string.failed_login_message));
+                        args.putString("message", getString(R.string.failed_login_message));
                         alertDialog.setArguments(args);
-                        alertDialog.show(getSupportFragmentManager(),"dialog");
+                        alertDialog.show(getSupportFragmentManager(), "dialog");
                     }
                 }
 

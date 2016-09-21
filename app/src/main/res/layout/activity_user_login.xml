@@ -11,8 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="@string/login" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <fragment
             android:id="@+id/login_view_fragment"

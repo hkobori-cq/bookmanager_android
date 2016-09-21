@@ -156,32 +156,32 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
         Bundle args = new Bundle();
         AlertDialogFragment alertDialog = new AlertDialogFragment();
         if (emailStr.isEmpty()) {
-            args.putString("message",getString(R.string.input_mail_address));
+            args.putString("message", getString(R.string.input_mail_address));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(),"dialog");
+            alertDialog.show(getSupportFragmentManager(), "dialog");
         } else if (passwordStr.isEmpty()) {
-            args.putString("message",getString(R.string.input_password));
+            args.putString("message", getString(R.string.input_password));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(),"dialog");
+            alertDialog.show(getSupportFragmentManager(), "dialog");
         } else if (passwordConStr.isEmpty()) {
-            args.putString("message",getString(R.string.input_password_confirm));
+            args.putString("message", getString(R.string.input_password_confirm));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(),"dialog");
+            alertDialog.show(getSupportFragmentManager(), "dialog");
         } else if (!(passwordStr.equals(passwordConStr))) {
-            args.putString("message",getString(R.string.not_match_password));
+            args.putString("message", getString(R.string.not_match_password));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(),"dialog");
+            alertDialog.show(getSupportFragmentManager(), "dialog");
         } else {
             DataClient client = new DataClient();
-            Call<Void> call = client.userRegisterClient(emailStr,passwordStr);
+            Call<Void> call = client.userRegisterClient(emailStr, passwordStr);
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {
                     Bundle args = new Bundle();
-                    args.putString("message",getString(R.string.completed_register));
+                    args.putString("message", getString(R.string.completed_register));
                     AlertDialogFragment alertDialog = new AlertDialogFragment();
                     alertDialog.setArguments(args);
-                    alertDialog.show(getSupportFragmentManager(),"dialog");
+                    alertDialog.show(getSupportFragmentManager(), "dialog");
                 }
 
                 @Override

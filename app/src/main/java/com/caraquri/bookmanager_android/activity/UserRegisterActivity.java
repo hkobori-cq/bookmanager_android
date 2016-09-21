@@ -28,6 +28,4 @@ public class UserRegisterActivity extends AppCompatActivity {
             bar.setDisplayShowHomeEnabled(true);
         }
     }
-
-
 }
