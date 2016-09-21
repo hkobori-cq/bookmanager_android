@@ -19,7 +19,6 @@
     <string name="input_book_price">価格を入力してください</string>
     <string name="select_purchase_date">日付を選択してください</string>
     <string name="alertOkMessage">ok</string>
-    <string name="base_url">http://app.com</string>
     <string name="image_sample_url">sample</string>
     <string name="book_list">書籍一覧</string>
     <string name="settings">設定</string>

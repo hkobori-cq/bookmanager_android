@@ -1,5 +1,6 @@
 package com.caraquri.bookmanager_android.activity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -12,7 +13,13 @@ import android.widget.EditText;
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityUserLoginBinding;
+import com.caraquri.bookmanager_android.fragment.AlertDialogFragment;
 import com.caraquri.bookmanager_android.util.CreateAlertView;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class UserLoginActivity extends AppCompatActivity {
     protected ActivityUserLoginBinding binding;
@@ -69,7 +76,24 @@ public class UserLoginActivity extends AppCompatActivity {
             alertView.createAlertView(getString(R.string.input_password), this);
         } else {
             DataClient client = new DataClient();
-            client.userLoginClient(emailStr,passwordStr,this);
+            Call<Integer> call = client.userLoginClient(emailStr,passwordStr);
+            call.enqueue(new Callback<Integer>() {
+                @Override
+                public void onResponse(Response<Integer> response, Retrofit retrofit) {
+                    if (response.isSuccess()) {
+                        Intent intent = new Intent(UserLoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        AlertDialogFragment alertDialog = new AlertDialogFragment();
+                        alertDialog.show(getSupportFragmentManager(),"dialog");
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
         }
     }
 }

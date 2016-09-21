@@ -19,8 +19,14 @@ import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.PagerAdapter;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
+import com.caraquri.bookmanager_android.fragment.AlertDialogFragment;
 import com.caraquri.bookmanager_android.util.CreateAlertView;
 import com.caraquri.bookmanager_android.widget.OnRecyclerItemClickListener;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 
 public class MainActivity extends AppCompatActivity implements OnRecyclerItemClickListener {
@@ -159,7 +165,19 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
             alertView.createAlertView(getString(R.string.not_match_password), this);
         } else {
             DataClient client = new DataClient();
-            client.userRegisterClient(emailStr,passwordStr,this);
+            Call<Void> call = client.userRegisterClient(emailStr,passwordStr);
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Response<Void> response, Retrofit retrofit) {
+                    AlertDialogFragment alertDialog = new AlertDialogFragment();
+                    alertDialog.show(getSupportFragmentManager(),"dialog");
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
         }
 
 

@@ -15,6 +15,11 @@ import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityAddBinding;
 import com.caraquri.bookmanager_android.util.CreateAlertView;
 
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
+
 public class AddActivity extends AppCompatActivity {
     protected ActivityAddBinding binding;
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -82,7 +87,19 @@ public class AddActivity extends AppCompatActivity {
         } else {
             Integer priceInt = Integer.parseInt(price.getText().toString());
             DataClient client = new DataClient();
-            client.bookRegisterClient("sample", nameStr, priceInt, dateStr, this);
+            Call<Void> call = client.bookRegisterClient("sample", nameStr, priceInt, dateStr);
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Response<Void> response, Retrofit retrofit) {
+                    Intent intent = new Intent(AddActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
         }
     }
 }

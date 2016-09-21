@@ -1,18 +1,10 @@
 package com.caraquri.bookmanager_android.api;
 
-import android.content.Context;
-import android.content.Intent;
-
-import com.caraquri.bookmanager_android.R;
-import com.caraquri.bookmanager_android.activity.MainActivity;
-import com.caraquri.bookmanager_android.util.CreateAlertView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import retrofit.Call;
-import retrofit.Callback;
 import retrofit.GsonConverterFactory;
-import retrofit.Response;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import retrofit.http.Field;
@@ -21,90 +13,42 @@ import retrofit.http.Headers;
 import retrofit.http.POST;
 
 public class DataClient {
+    static final String BASEURL = "http://app.com";
     public Retrofit createDataClient() {
         Gson gson = new GsonBuilder()
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://app.com")
+                .baseUrl(BASEURL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         return retrofit;
     }
 
-    public void bookRegisterClient(String imageUrl, String nameStr,
-                                   Integer priceInt, String dateStr, final Context context) {
+    public Call<Void> bookRegisterClient(String imageUrl, String nameStr,
+                                   Integer priceInt, String dateStr) {
         BookDataRegisterService service = createDataClient().create(BookDataRegisterService.class);
         Call<Void> call = service.storeBookData("sample", nameStr, priceInt, dateStr);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Response<Void> response, Retrofit retrofit) {
-                Intent intent = new Intent(context, MainActivity.class);
-                context.startActivity(intent);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+        return call;
     }
 
-    public void bookUpdateClient(String id, String imageUrl, String nameStr,
-                                 Integer priceInt, String dateStr, final Context context) {
+    public Call<Void> bookUpdateClient(String id, String imageUrl, String nameStr,
+                                 Integer priceInt, String dateStr) {
         BookDataUpdateService service = createDataClient().create(BookDataUpdateService.class);
         Call<Void> call = service.storeBookData(id, imageUrl, nameStr, priceInt, dateStr);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Response<Void> response, Retrofit retrofit) {
-                Intent intent = new Intent(context, MainActivity.class);
-                context.startActivity(intent);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+        return call;
     }
 
-    public void userLoginClient(String email, String password, final Context context){
+    public Call<Integer> userLoginClient(String email, String password){
         UserLoginService service = createDataClient().create(UserLoginService.class);
         Call<Integer> call = service.storeUserData(email,password);
-        call.enqueue(new Callback<Integer>() {
-            @Override
-            public void onResponse(Response<Integer> response, Retrofit retrofit) {
-                if (response.isSuccess()) {
-                    Intent intent = new Intent(context, MainActivity.class);
-                    context.startActivity(intent);
-                } else {
-                    CreateAlertView alertView = new CreateAlertView();
-                    alertView.createAlertView(context.getString(R.string.failed_login_message),context);
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+        return call;
     }
 
-    public void userRegisterClient(String email, String password, final Context context){
+    public Call<Void> userRegisterClient(String email, String password){
         UserDataRegisterService service = createDataClient().create(UserDataRegisterService.class);
         Call<Void> call = service.storeUserData(email,password);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Response<Void> response, Retrofit retrofit) {
-                CreateAlertView alertView = new CreateAlertView();
-                alertView.createAlertView(context.getString(R.string.completed_register),context);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+        return call;
     }
 
     private interface BookDataRegisterService {
