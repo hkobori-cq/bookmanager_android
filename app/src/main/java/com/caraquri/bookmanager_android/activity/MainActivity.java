@@ -8,7 +8,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,20 +18,9 @@ import android.widget.EditText;
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.adapter.PagerAdapter;
 import com.caraquri.bookmanager_android.api.DataClient;
-import com.caraquri.bookmanager_android.api.UserDataRegisterService;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
 import com.caraquri.bookmanager_android.util.CreateAlertView;
 import com.caraquri.bookmanager_android.widget.OnRecyclerItemClickListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
 
 
 public class MainActivity extends AppCompatActivity implements OnRecyclerItemClickListener {

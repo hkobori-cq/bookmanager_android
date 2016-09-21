@@ -19,10 +19,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<BookDataModel> bookData;
     private OnRecyclerItemClickListener listener;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
         final ItemBookListRowBinding binding;
 
-        public ViewHolder(ItemBookListRowBinding binding) {
+        private ViewHolder(ItemBookListRowBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

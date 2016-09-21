@@ -1,10 +1,8 @@
 package com.caraquri.bookmanager_android.activity;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,18 +11,8 @@ import android.widget.EditText;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.api.DataClient;
-import com.caraquri.bookmanager_android.api.UserLoginService;
 import com.caraquri.bookmanager_android.databinding.ActivityUserLoginBinding;
 import com.caraquri.bookmanager_android.util.CreateAlertView;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
 
 public class UserLoginActivity extends AppCompatActivity {
     protected ActivityUserLoginBinding binding;

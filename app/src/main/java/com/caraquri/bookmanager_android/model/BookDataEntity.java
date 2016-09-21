@@ -8,7 +8,7 @@ import java.util.List;
 public class BookDataEntity {
     @Expose
     @SerializedName("result")
-    protected List<BookDataModel> bookDataModels;
+    private List<BookDataModel> bookDataModels;
 
     public List<BookDataModel> getBookData() {
         return bookDataModels;

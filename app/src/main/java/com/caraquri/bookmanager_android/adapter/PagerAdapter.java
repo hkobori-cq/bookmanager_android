@@ -3,9 +3,7 @@ package com.caraquri.bookmanager_android.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 
-import com.caraquri.bookmanager_android.activity.MainActivity;
 import com.caraquri.bookmanager_android.fragment.RecyclerLayoutFragment;
 import com.caraquri.bookmanager_android.fragment.UserSettingsFragment;
 
