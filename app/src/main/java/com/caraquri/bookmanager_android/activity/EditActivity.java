@@ -48,7 +48,7 @@ public class EditActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.register:
-                registerBookData();
+                updateBookData();
                 break;
         }
         return true;
@@ -64,7 +64,7 @@ public class EditActivity extends AppCompatActivity {
     /**
      * 保存ボタンを押したときに呼ばれるメソッド
      */
-    public void registerBookData() {
+    public void updateBookData() {
         Intent intent = getIntent();
         String id = intent.getStringExtra("id");
         EditText name = (EditText) findViewById(R.id.book_title_field);
