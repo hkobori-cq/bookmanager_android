@@ -14,7 +14,6 @@ import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityUserLoginBinding;
 import com.caraquri.bookmanager_android.fragment.AlertDialogFragment;
-import com.caraquri.bookmanager_android.util.CreateAlertView;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -69,11 +68,17 @@ public class UserLoginActivity extends AppCompatActivity {
         String emailStr = email.getText().toString();
         String passwordStr = password.getText().toString();
 
-        CreateAlertView alertView = new CreateAlertView();
+        Bundle args = new Bundle();
+        AlertDialogFragment alertDialog = new AlertDialogFragment();
+
         if (emailStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_mail_address), this);
+            args.putString("message",getString(R.string.input_mail_address));
+            alertDialog.setArguments(args);
+            alertDialog.show(getSupportFragmentManager(),"dialog");
         } else if (passwordStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_password), this);
+            args.putString("message",getString(R.string.input_password));
+            alertDialog.setArguments(args);
+            alertDialog.show(getSupportFragmentManager(),"dialog");
         } else {
             DataClient client = new DataClient();
             Call<Integer> call = client.userLoginClient(emailStr,passwordStr);
@@ -84,7 +89,10 @@ public class UserLoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(UserLoginActivity.this, MainActivity.class);
                         startActivity(intent);
                     } else {
+                        Bundle args = new Bundle();
                         AlertDialogFragment alertDialog = new AlertDialogFragment();
+                        args.putString("message",getString(R.string.failed_login_message));
+                        alertDialog.setArguments(args);
                         alertDialog.show(getSupportFragmentManager(),"dialog");
                     }
                 }

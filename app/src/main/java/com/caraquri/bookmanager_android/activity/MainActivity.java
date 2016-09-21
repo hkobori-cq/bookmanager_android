@@ -20,7 +20,6 @@ import com.caraquri.bookmanager_android.adapter.PagerAdapter;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityMainBinding;
 import com.caraquri.bookmanager_android.fragment.AlertDialogFragment;
-import com.caraquri.bookmanager_android.util.CreateAlertView;
 import com.caraquri.bookmanager_android.widget.OnRecyclerItemClickListener;
 
 import retrofit.Call;
@@ -154,22 +153,34 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
         String passwordStr = password.getText().toString();
         String passwordConStr = passwordCon.getText().toString();
 
-        CreateAlertView alertView = new CreateAlertView();
+        Bundle args = new Bundle();
+        AlertDialogFragment alertDialog = new AlertDialogFragment();
         if (emailStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_mail_address), this);
+            args.putString("message",getString(R.string.input_mail_address));
+            alertDialog.setArguments(args);
+            alertDialog.show(getSupportFragmentManager(),"dialog");
         } else if (passwordStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_password), this);
+            args.putString("message",getString(R.string.input_password));
+            alertDialog.setArguments(args);
+            alertDialog.show(getSupportFragmentManager(),"dialog");
         } else if (passwordConStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_password_confirm), this);
+            args.putString("message",getString(R.string.input_password_confirm));
+            alertDialog.setArguments(args);
+            alertDialog.show(getSupportFragmentManager(),"dialog");
         } else if (!(passwordStr.equals(passwordConStr))) {
-            alertView.createAlertView(getString(R.string.not_match_password), this);
+            args.putString("message",getString(R.string.not_match_password));
+            alertDialog.setArguments(args);
+            alertDialog.show(getSupportFragmentManager(),"dialog");
         } else {
             DataClient client = new DataClient();
             Call<Void> call = client.userRegisterClient(emailStr,passwordStr);
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {
+                    Bundle args = new Bundle();
+                    args.putString("message",getString(R.string.completed_register));
                     AlertDialogFragment alertDialog = new AlertDialogFragment();
+                    alertDialog.setArguments(args);
                     alertDialog.show(getSupportFragmentManager(),"dialog");
                 }
 

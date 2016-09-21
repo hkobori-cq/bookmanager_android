@@ -13,7 +13,7 @@ import android.widget.EditText;
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.ActivityAddBinding;
-import com.caraquri.bookmanager_android.util.CreateAlertView;
+import com.caraquri.bookmanager_android.fragment.AlertDialogFragment;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -76,14 +76,20 @@ public class AddActivity extends AppCompatActivity {
         String nameStr = name.getText().toString();
         String dateStr = date.getText().toString();
 
-        CreateAlertView alertView = new CreateAlertView();
-
+        Bundle args = new Bundle();
+        AlertDialogFragment alertDialog = new AlertDialogFragment();
         if (nameStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_book_name), this);
+            args.putString("message",getString(R.string.input_book_name));
+            alertDialog.setArguments(args);
+            alertDialog.show(getSupportFragmentManager(),"dialog");
         } else if (price.getText().toString().isEmpty()) {
-            alertView.createAlertView(getString(R.string.input_book_price), this);
+            args.putString("message",getString(R.string.input_book_price));
+            alertDialog.setArguments(args);
+            alertDialog.show(getSupportFragmentManager(),"dialog");
         } else if (dateStr.isEmpty()) {
-            alertView.createAlertView(getString(R.string.select_purchase_date), this);
+            args.putString("message",getString(R.string.select_purchase_date));
+            alertDialog.setArguments(args);
+            alertDialog.show(getSupportFragmentManager(),"dialog");
         } else {
             Integer priceInt = Integer.parseInt(price.getText().toString());
             DataClient client = new DataClient();

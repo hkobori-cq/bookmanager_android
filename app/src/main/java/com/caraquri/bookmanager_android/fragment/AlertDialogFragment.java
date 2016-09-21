@@ -11,9 +11,9 @@ public class AlertDialogFragment extends DialogFragment{
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        String message = getArguments().getString("message");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("title");
-        builder.setMessage("message");
+        builder.setMessage(message);
         builder.setPositiveButton("OK",null);
         return builder.create();
     }
