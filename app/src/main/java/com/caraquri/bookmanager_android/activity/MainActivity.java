@@ -50,16 +50,6 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
         adapter.addCategory(getString(R.string.settings));
         binding.viewPaper.setAdapter(adapter);
         binding.tabbar.setupWithViewPager(binding.viewPaper);
-    }
-
-
-    private void initToolbar() {
-        setSupportActionBar(binding.toolbar);
-        ActionBar bar = getSupportActionBar();
-        if (bar != null) {
-            bar.setDisplayShowHomeEnabled(true);
-            bar.setHomeButtonEnabled(true);
-        }
         binding.viewPaper.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -91,6 +81,16 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
 
             }
         });
+    }
+
+
+    private void initToolbar() {
+        setSupportActionBar(binding.toolbar);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayShowHomeEnabled(true);
+            bar.setHomeButtonEnabled(true);
+        }
     }
 
     @Override
