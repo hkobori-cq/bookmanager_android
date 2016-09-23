@@ -31,11 +31,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     /**
      * 本のデータとリスナーをセットするメソッド
      *
-     * @param mBookData
+     * @param bookData
      * @param listener
      */
-    public RecyclerViewAdapter(List<BookDataModel> mBookData, OnRecyclerItemClickListener listener) {
-        bookData = mBookData;
+    public RecyclerViewAdapter(List<BookDataModel> bookData, OnRecyclerItemClickListener listener) {
+        this.bookData = bookData;
         this.listener = listener;
     }
 

@@ -10,10 +10,10 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     private int current_page = 1;
     private int visibleThreshold = 5;
 
-    private LinearLayoutManager mLinearLayoutManager;
+    private LinearLayoutManager linearLayoutManager;
 
     protected EndlessScrollListener(LinearLayoutManager linearLayoutManager) {
-        this.mLinearLayoutManager = linearLayoutManager;
+        this.linearLayoutManager = linearLayoutManager;
     }
 
     @Override
@@ -21,8 +21,8 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
         super.onScrolled(recyclerView, dx, dy);
 
         visibleItemCount = recyclerView.getChildCount();
-        totalItemCount = mLinearLayoutManager.getItemCount();
-        firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+        totalItemCount = linearLayoutManager.getItemCount();
+        firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
 
         if (loading) {
             if (totalItemCount > previousTotal) {
