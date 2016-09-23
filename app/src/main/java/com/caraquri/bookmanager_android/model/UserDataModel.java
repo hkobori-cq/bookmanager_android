@@ -8,11 +8,11 @@ import com.google.gson.annotations.SerializedName;
 public class UserDataModel extends BaseObservable {
     @Expose
     @SerializedName("mail_address")
-    public String mailAddress;
+    private String mailAddress;
 
     @Expose
     @SerializedName("password")
-    public String password;
+    private String password;
 
     public UserDataModel(String mailAddress, String password) {
         this.mailAddress = mailAddress;

@@ -35,9 +35,12 @@ public class UserLoginFragment extends Fragment {
         binding.userLoginFragment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(binding.userLoginEmailField.getWindowToken(), 0);
-                inputMethodManager.hideSoftInputFromWindow(binding.userLoginPasswordField.getWindowToken(), 0);
+                InputMethodManager inputMethodManager = (InputMethodManager) getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(binding.userLoginEmailField
+                        .getWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(binding.userLoginPasswordField
+                        .getWindowToken(), 0);
                 return true;
             }
         });

@@ -46,10 +46,14 @@ public class BookRegisterFragment extends Fragment {
         binding.bookAddFragment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(binding.bookTitleField.getWindowToken(), 0);
-                inputMethodManager.hideSoftInputFromWindow(binding.bookDateField.getWindowToken(), 0);
-                inputMethodManager.hideSoftInputFromWindow(binding.bookPriceField.getWindowToken(), 0);
+                InputMethodManager inputMethodManager = (InputMethodManager) getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager
+                        .hideSoftInputFromWindow(binding.bookTitleField.getWindowToken(), 0);
+                inputMethodManager
+                        .hideSoftInputFromWindow(binding.bookDateField.getWindowToken(), 0);
+                inputMethodManager
+                        .hideSoftInputFromWindow(binding.bookPriceField.getWindowToken(), 0);
                 return true;
             }
         });
@@ -130,7 +134,8 @@ public class BookRegisterFragment extends Fragment {
      * @throws IOException
      */
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {
-        ParcelFileDescriptor parcelFileDescriptor = getActivity().getContentResolver().openFileDescriptor(uri, "r");
+        ParcelFileDescriptor parcelFileDescriptor = getActivity()
+                .getContentResolver().openFileDescriptor(uri, "r");
         assert parcelFileDescriptor != null;
         FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
         Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);

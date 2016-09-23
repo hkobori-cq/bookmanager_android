@@ -34,10 +34,14 @@ public class UserSettingsFragment extends Fragment {
         binding.userRegisterFragment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(binding.userEmailField.getWindowToken(), 0);
-                inputMethodManager.hideSoftInputFromWindow(binding.userPasswordField.getWindowToken(), 0);
-                inputMethodManager.hideSoftInputFromWindow(binding.userPasswordConfirmField.getWindowToken(), 0);
+                InputMethodManager inputMethodManager = (InputMethodManager) getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(binding.userEmailField
+                        .getWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(binding.userPasswordField
+                        .getWindowToken(), 0);
+                inputMethodManager.hideSoftInputFromWindow(binding.userPasswordConfirmField
+                        .getWindowToken(), 0);
                 return true;
             }
         });

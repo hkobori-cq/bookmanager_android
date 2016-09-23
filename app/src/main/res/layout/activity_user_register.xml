@@ -16,8 +16,8 @@
 
         <fragment
             android:id="@+id/user_register_view_fragment"
+            android:name="com.caraquri.bookmanager_android.fragment.UserSettingsFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.caraquri.bookmanager_android.fragment.UserSettingsFragment" />
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 </layout>

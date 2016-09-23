@@ -11,7 +11,8 @@ import android.widget.DatePicker;
 
 import java.util.Calendar;
 
-public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+public class DatePickerFragment extends DialogFragment
+        implements DatePickerDialog.OnDateSetListener {
     protected int year;
     protected int month;
     protected int dayOfMonth;
