@@ -46,3 +46,6 @@ captures/
 
 ### Android Patch ###
 gen-external-apklibs
+.idea/misc.xml
+app/libs/
+app/src/main/res/values/themes/
