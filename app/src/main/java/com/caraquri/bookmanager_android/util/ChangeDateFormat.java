@@ -32,5 +32,4 @@ public class ChangeDateFormat {
         return this.year + "/" + this.month + "/" + this.day;
     }
 
-
 }

@@ -96,6 +96,4 @@ public class DataClient {
                 @Field("password") String password
         );
     }
-
-
 }
