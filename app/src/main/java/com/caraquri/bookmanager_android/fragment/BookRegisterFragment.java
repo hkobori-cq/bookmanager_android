@@ -9,17 +9,30 @@ import android.os.ParcelFileDescriptor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.caraquri.bookmanager_android.R;
+import com.caraquri.bookmanager_android.activity.MainActivity;
+import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 
 public class BookRegisterFragment extends Fragment {
@@ -29,6 +42,7 @@ public class BookRegisterFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_add_view, container, false);
     }
 
@@ -42,8 +56,77 @@ public class BookRegisterFragment extends Fragment {
         tappedDateButton();
         tappedAddImageButton();
         onTextFieldUnFocused();
+        initToolbar();
     }
 
+    private void initToolbar() {
+        ActionBar bar =((AppCompatActivity)getActivity()).getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayHomeAsUpEnabled(true);
+            bar.setDisplayShowHomeEnabled(true);
+            bar.setDisplayShowTitleEnabled(false);
+            bar.setHomeButtonEnabled(true);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_book,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+            case R.id.register:
+                registerBookData();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void registerBookData(){
+        Bundle args = new Bundle();
+        AlertDialogFragment alertDialog = new AlertDialogFragment();
+        if (binding.bookTitleField.getText().toString().isEmpty()){
+            args.putString(getString(R.string.message), getString(R.string.input_book_name));
+            alertDialog.setArguments(args);
+            alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
+        }else if (binding.bookPriceField.getText().toString().isEmpty()){
+            args.putString(getString(R.string.message), getString(R.string.input_book_price));
+            alertDialog.setArguments(args);
+            alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
+        }else if (binding.bookDateField.getText().toString().isEmpty()){
+            args.putString(getString(R.string.message), getString(R.string.select_purchase_date));
+            alertDialog.setArguments(args);
+            alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
+        }else {
+            DataClient client = new DataClient();
+            Call<Void> call = client.bookRegisterClient(
+                    getString(R.string.sample_image),
+                    binding.bookTitleField.getText().toString(),
+                    Integer.parseInt(binding.bookPriceField.getText().toString()),
+                    binding.bookDateField.getText().toString()
+            );
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Response<Void> response, Retrofit retrofit) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
+        }
+    }
     /**
      * EditTextでキーボードが出ている際、バックレイヤーを触るとキーボードが消えるようにするメソッド
      */
