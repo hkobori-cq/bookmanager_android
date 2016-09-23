@@ -24,9 +24,9 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 public class RecyclerLayoutFragment extends Fragment {
+    private Integer readData = 15;
     private FragmentListViewBinding binding;
     private OnRecyclerItemClickListener listener;
-    private Integer readData = 15;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,32 +38,20 @@ public class RecyclerLayoutFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentListViewBinding.bind(getView());
         initRecyclerView();
+        isRecyclerViewScrolled();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         Activity activity = getActivity();
-        try {
-            listener = (OnRecyclerItemClickListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString());
-        }
+        listener = (OnRecyclerItemClickListener) activity;
     }
 
 
-    public void initRecyclerView() {
-        DataClient dataClient = new DataClient();
-        Retrofit retrofit = dataClient.createDataClient();
-
-        BookDataGetService bookDataGetService = retrofit.create(BookDataGetService.class);
-        Call<BookDataEntity> call = bookDataGetService.getBookData("0-" + readData.toString());
-        binding.recyclerView.addOnScrollListener(new EndlessScrollListener((LinearLayoutManager) binding.recyclerView.getLayoutManager()) {
-            @Override
-            public void onLoadMore(int current_page) {
-                readData = current_page * 20;
-            }
-        });
+    private void initRecyclerView() {
+        DataClient client = new DataClient();
+        Call<BookDataEntity> call = client.bookDataLoadClient("0-" + readData.toString());
         call.enqueue(new Callback<BookDataEntity>() {
             /**
              * API通信が成功したときに呼ばれるメソッド
@@ -78,6 +66,15 @@ public class RecyclerLayoutFragment extends Fragment {
 
             @Override
             public void onFailure(Throwable t) {
+            }
+        });
+    }
+
+    private void isRecyclerViewScrolled(){
+        binding.recyclerView.addOnScrollListener(new EndlessScrollListener((LinearLayoutManager) binding.recyclerView.getLayoutManager()) {
+            @Override
+            public void onLoadMore(int current_page) {
+                readData = current_page * 20;
             }
         });
     }

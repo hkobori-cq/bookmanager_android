@@ -9,24 +9,40 @@ import android.os.ParcelFileDescriptor;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.caraquri.bookmanager_android.R;
+import com.caraquri.bookmanager_android.activity.MainActivity;
+import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
 
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
+
 
 public class BookRegisterFragment extends Fragment {
+    public static final int SET_DATE = 1;
+    public static final int TAPPED_ADD_IMAGE_BUTTON = 2;
     protected FragmentAddViewBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_add_view, container, false);
     }
 
@@ -34,15 +50,103 @@ public class BookRegisterFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentAddViewBinding.bind(getView());
-        if (!(getActivity().getIntent().getStringExtra("name") == null)) {
+        if (getActivity().getIntent().hasExtra(getString(R.string.name))) {
             initFieldData();
         }
         tappedDateButton();
         tappedAddImageButton();
-        tappedBackLayout();
+        onTextFieldUnFocused();
+        initToolbar();
     }
 
-    private void tappedBackLayout() {
+    private void initToolbar() {
+        ActionBar bar =((AppCompatActivity)getActivity()).getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayHomeAsUpEnabled(true);
+            bar.setDisplayShowHomeEnabled(true);
+            bar.setDisplayShowTitleEnabled(false);
+            bar.setHomeButtonEnabled(true);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_book,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                break;
+            case R.id.register:
+                registerBookData();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void registerBookData(){
+        Call<Void> call;
+        String bookIDText = getActivity().getIntent().getStringExtra(getString(R.string.id));
+        String bookTitleFieldText = binding.bookTitleField.getText().toString();
+        int bookPriceFieldText = Integer.parseInt(binding.bookPriceField.getText().toString());
+        String bookDateFieldText = binding.bookDateField.getText().toString();
+
+        Bundle args = new Bundle();
+        AlertDialogFragment alertDialog = new AlertDialogFragment();
+        if (binding.bookTitleField.getText().toString().isEmpty()){
+            args.putString(getString(R.string.message), getString(R.string.input_book_name));
+            alertDialog.setArguments(args);
+            alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
+        }else if (binding.bookPriceField.getText().toString().isEmpty()){
+            args.putString(getString(R.string.message), getString(R.string.input_book_price));
+            alertDialog.setArguments(args);
+            alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
+        }else if (binding.bookDateField.getText().toString().isEmpty()){
+            args.putString(getString(R.string.message), getString(R.string.select_purchase_date));
+            alertDialog.setArguments(args);
+            alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
+        }else {
+            DataClient client = new DataClient();
+            if (getActivity().getIntent().hasExtra(getString(R.string.name))){
+                call = client.bookUpdateClient(
+                        bookIDText,
+                        getString(R.string.sample_image),
+                        bookTitleFieldText,
+                        bookPriceFieldText,
+                        bookDateFieldText
+                );
+            }else {
+                call = client.bookRegisterClient(
+                        getString(R.string.sample_image),
+                        bookTitleFieldText,
+                        bookPriceFieldText,
+                        bookDateFieldText
+                );
+            }
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Response<Void> response, Retrofit retrofit) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+
+                }
+            });
+        }
+    }
+    /**
+     * EditTextでキーボードが出ている際、バックレイヤーを触るとキーボードが消えるようにするメソッド
+     */
+    private void onTextFieldUnFocused() {
         binding.bookAddFragment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -66,7 +170,7 @@ public class BookRegisterFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, 10);
+                startActivityForResult(intent, TAPPED_ADD_IMAGE_BUTTON);
             }
         });
 
@@ -78,9 +182,9 @@ public class BookRegisterFragment extends Fragment {
     private void initFieldData() {
         Intent intent = getActivity().getIntent();
         binding.addPageBookImage.setImageResource(R.drawable.sample);
-        binding.bookTitleField.setText(intent.getStringExtra("name"));
-        binding.bookPriceField.setText(intent.getStringExtra("price").replace("円", ""));
-        binding.bookDateField.setText(intent.getStringExtra("date").replaceAll("/", "-"));
+        binding.bookTitleField.setText(intent.getStringExtra(getString(R.string.name)));
+        binding.bookPriceField.setText(intent.getStringExtra(getString(R.string.price)).replace("円", ""));
+        binding.bookDateField.setText(intent.getStringExtra(getString(R.string.date)).replaceAll("/", "-"));
     }
 
 
@@ -91,7 +195,7 @@ public class BookRegisterFragment extends Fragment {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 DatePickerFragment datePicker = new DatePickerFragment();
                 datePicker.setTargetFragment(BookRegisterFragment.this, 0);
-                datePicker.show(manager, "datePicker");
+                datePicker.show(manager, getString(R.string.date_picker));
             }
         });
     }
@@ -108,15 +212,15 @@ public class BookRegisterFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case 1:
+            case SET_DATE:
                 String date = data.getStringExtra(Intent.EXTRA_TEXT);
                 binding.bookDateField.setText(date);
                 break;
-            case 10:
+            case TAPPED_ADD_IMAGE_BUTTON:
                 Uri uri = data.getData();
 
                 try {
-                    Bitmap bmp = getBitmapFromUri(uri);
+                    Bitmap bmp = createBitmapFromUri(uri);
                     binding.addPageBookImage.setImageBitmap(bmp);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -133,13 +237,17 @@ public class BookRegisterFragment extends Fragment {
      * @return
      * @throws IOException
      */
-    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+    private Bitmap createBitmapFromUri(Uri uri) throws IOException {
         ParcelFileDescriptor parcelFileDescriptor = getActivity()
                 .getContentResolver().openFileDescriptor(uri, "r");
-        assert parcelFileDescriptor != null;
-        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        FileDescriptor fileDescriptor = null;
+        if (parcelFileDescriptor != null) {
+            fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        }
         Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-        parcelFileDescriptor.close();
+        if (parcelFileDescriptor != null) {
+            parcelFileDescriptor.close();
+        }
         return image;
     }
 

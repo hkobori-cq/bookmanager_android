@@ -12,10 +12,10 @@ import java.util.List;
 
 public class PagerAdapter extends FragmentPagerAdapter {
 
-    private final List<String> mCategoryNames = new ArrayList<>();
+    private final List<String> categoryNames = new ArrayList<>();
 
     public void addCategory(String categoryName) {
-        mCategoryNames.add(categoryName);
+        categoryNames.add(categoryName);
     }
 
     public PagerAdapter(FragmentManager fragmentManager) {
@@ -39,6 +39,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mCategoryNames.get(position);
+        return categoryNames.get(position);
     }
 }

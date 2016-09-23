@@ -8,7 +8,6 @@
     <string name="book_price">金額</string>
     <string name="purchase_date">購入日</string>
     <string name="register">保存</string>
-    <string name="date">購入日を追加</string>
     <string name="email">メールアドレス</string>
     <string name="password">パスワード</string>
     <string name="save_user">保存</string>
@@ -31,4 +30,12 @@
     <string name="japanese_yen">円</string>
     <string name="login">ログイン</string>
     <string name="first_visit">first_visit</string>
+    <string name="message">message</string>
+    <string name="dialog">dialog</string>
+    <string name="sample_image">sample</string>
+    <string name="id">id</string>
+    <string name="name">name</string>
+    <string name="price">price</string>
+    <string name="date">date</string>
+    <string name="date_picker">datePicker</string>
 </resources>
