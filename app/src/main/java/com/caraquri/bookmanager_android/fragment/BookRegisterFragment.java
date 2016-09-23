@@ -91,6 +91,12 @@ public class BookRegisterFragment extends Fragment {
     }
 
     private void registerBookData(){
+        Call<Void> call;
+        String bookIDText = getActivity().getIntent().getStringExtra(getString(R.string.id));
+        String bookTitleFieldText = binding.bookTitleField.getText().toString();
+        int bookPriceFieldText = Integer.parseInt(binding.bookPriceField.getText().toString());
+        String bookDateFieldText = binding.bookDateField.getText().toString();
+
         Bundle args = new Bundle();
         AlertDialogFragment alertDialog = new AlertDialogFragment();
         if (binding.bookTitleField.getText().toString().isEmpty()){
@@ -107,12 +113,22 @@ public class BookRegisterFragment extends Fragment {
             alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
         }else {
             DataClient client = new DataClient();
-            Call<Void> call = client.bookRegisterClient(
-                    getString(R.string.sample_image),
-                    binding.bookTitleField.getText().toString(),
-                    Integer.parseInt(binding.bookPriceField.getText().toString()),
-                    binding.bookDateField.getText().toString()
-            );
+            if (getActivity().getIntent().hasExtra(getString(R.string.name))){
+                call = client.bookUpdateClient(
+                        bookIDText,
+                        getString(R.string.sample_image),
+                        bookTitleFieldText,
+                        bookPriceFieldText,
+                        bookDateFieldText
+                );
+            }else {
+                call = client.bookRegisterClient(
+                        getString(R.string.sample_image),
+                        bookTitleFieldText,
+                        bookPriceFieldText,
+                        bookDateFieldText
+                );
+            }
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {

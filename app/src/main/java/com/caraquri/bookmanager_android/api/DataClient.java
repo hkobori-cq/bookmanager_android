@@ -14,11 +14,13 @@ import retrofit.http.POST;
 
 public class DataClient {
     static private final String BASEURL = "http://app.com";
+    private DataRegisterService service;
+    static private Retrofit retrofit;
 
     public Retrofit createDataClient() {
         Gson gson = new GsonBuilder()
                 .create();
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl(BASEURL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -28,31 +30,47 @@ public class DataClient {
 
     public Call<Void> bookRegisterClient(String imageUrl, String nameStr,
                                          Integer priceInt, String dateStr) {
-        BookDataRegisterService service = createDataClient().create(BookDataRegisterService.class);
+        if (retrofit.toString().isEmpty()){
+            service = createDataClient().create(DataRegisterService.class);
+        }else {
+            service = retrofit.create(DataRegisterService.class);
+        }
         Call<Void> call = service.storeBookData("sample", nameStr, priceInt, dateStr);
         return call;
     }
 
     public Call<Void> bookUpdateClient(String id, String imageUrl, String nameStr,
                                        Integer priceInt, String dateStr) {
-        BookDataUpdateService service = createDataClient().create(BookDataUpdateService.class);
+        if (retrofit.toString().isEmpty()){
+            service = createDataClient().create(DataRegisterService.class);
+        }else {
+            service = retrofit.create(DataRegisterService.class);
+        }
         Call<Void> call = service.storeBookData(id, imageUrl, nameStr, priceInt, dateStr);
         return call;
     }
 
     public Call<Integer> userLoginClient(String email, String password) {
-        UserLoginService service = createDataClient().create(UserLoginService.class);
-        Call<Integer> call = service.storeUserData(email, password);
+        if (retrofit.toString().isEmpty()){
+            service = createDataClient().create(DataRegisterService.class);
+        }else {
+            service = retrofit.create(DataRegisterService.class);
+        }
+        Call<Integer> call = service.loginUserData(email, password);
         return call;
     }
 
     public Call<Void> userRegisterClient(String email, String password) {
-        UserDataRegisterService service = createDataClient().create(UserDataRegisterService.class);
+        if (retrofit.toString().isEmpty()){
+            service = createDataClient().create(DataRegisterService.class);
+        }else {
+            service = retrofit.create(DataRegisterService.class);
+        }
         Call<Void> call = service.storeUserData(email, password);
         return call;
     }
 
-    private interface BookDataRegisterService {
+    private interface DataRegisterService {
         @POST("book/regist")
         @Headers("Accept: application/json;charset=utf-8")
         @FormUrlEncoded
@@ -62,9 +80,7 @@ public class DataClient {
                 @Field("price") int price,
                 @Field("purchase_date") String date
         );
-    }
 
-    private interface BookDataUpdateService {
         @POST("book/update")
         @Headers("Accept: application/json;charset=utf-8")
         @FormUrlEncoded
@@ -75,9 +91,7 @@ public class DataClient {
                 @Field("price") Integer price,
                 @Field("purchase_date") String date
         );
-    }
 
-    private interface UserDataRegisterService {
         @POST("account/register")
         @Headers("Accept: application/json;charset=utf-8")
         @FormUrlEncoded
@@ -85,15 +99,14 @@ public class DataClient {
                 @Field("mail_address") String mail,
                 @Field("password") String password
         );
-    }
 
-    private interface UserLoginService {
         @POST("account/login")
         @Headers("Accept: application/json;charset=utf-8")
         @FormUrlEncoded
-        Call<Integer> storeUserData(
+        Call<Integer> loginUserData(
                 @Field("mail_address") String mail,
                 @Field("password") String password
         );
     }
+
 }
