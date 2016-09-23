@@ -81,22 +81,22 @@ public class EditActivity extends AppCompatActivity {
         AlertDialogFragment alertDialog = new AlertDialogFragment();
 
         if (nameStr.isEmpty()) {
-            args.putString("message", getString(R.string.input_book_name));
+            args.putString(getString(R.string.message), getString(R.string.input_book_name));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), "dialog");
+            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
         } else if (price.getText().toString().isEmpty()) {
-            args.putString("message", getString(R.string.input_book_price));
+            args.putString(getString(R.string.message), getString(R.string.input_book_price));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), "dialog");
+            alertDialog.show(getSupportFragmentManager(),getString(R.string.dialog));
         } else if (dateStr.isEmpty()) {
-            args.putString("message", getString(R.string.select_purchase_date));
+            args.putString(getString(R.string.message), getString(R.string.select_purchase_date));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), "dialog");
+            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
         } else {
             Integer priceInt = Integer.parseInt(price.getText().toString());
 
             DataClient client = new DataClient();
-            Call<Void> call = client.bookUpdateClient(id, "sample", nameStr, priceInt, dateStr);
+            Call<Void> call = client.bookUpdateClient(id, getString(R.string.sample_image), nameStr, priceInt, dateStr);
             call.enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {

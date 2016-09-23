@@ -16,6 +16,7 @@ public class DatePickerFragment extends DialogFragment
     protected int year;
     protected int month;
     protected int dayOfMonth;
+    public static final int SET_DATE = 1;
 
     @NonNull
     @Override
@@ -36,6 +37,6 @@ public class DatePickerFragment extends DialogFragment
         Fragment target = getTargetFragment();
         Intent intent = new Intent();
         intent.putExtra(Intent.EXTRA_TEXT, date);
-        target.onActivityResult(1, 1, intent);
+        target.onActivityResult(SET_DATE, SET_DATE, intent);
     }
 }

@@ -23,6 +23,8 @@ import java.io.IOException;
 
 
 public class BookRegisterFragment extends Fragment {
+    public static final int SET_DATE = 1;
+    public static final int TAPPED_ADD_IMAGE_BUTTON = 2;
     protected FragmentAddViewBinding binding;
 
     @Override
@@ -34,7 +36,7 @@ public class BookRegisterFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentAddViewBinding.bind(getView());
-        if (!(getActivity().getIntent().getStringExtra("name") == null)) {
+        if (!(getActivity().getIntent().getStringExtra(getString(R.string.name)) == null)) {
             initFieldData();
         }
         tappedDateButton();
@@ -66,7 +68,7 @@ public class BookRegisterFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, 10);
+                startActivityForResult(intent, TAPPED_ADD_IMAGE_BUTTON);
             }
         });
 
@@ -78,9 +80,9 @@ public class BookRegisterFragment extends Fragment {
     private void initFieldData() {
         Intent intent = getActivity().getIntent();
         binding.addPageBookImage.setImageResource(R.drawable.sample);
-        binding.bookTitleField.setText(intent.getStringExtra("name"));
-        binding.bookPriceField.setText(intent.getStringExtra("price").replace("円", ""));
-        binding.bookDateField.setText(intent.getStringExtra("date").replaceAll("/", "-"));
+        binding.bookTitleField.setText(intent.getStringExtra(getString(R.string.name)));
+        binding.bookPriceField.setText(intent.getStringExtra(getString(R.string.price)).replace("円", ""));
+        binding.bookDateField.setText(intent.getStringExtra(getString(R.string.date)).replaceAll("/", "-"));
     }
 
 
@@ -91,7 +93,7 @@ public class BookRegisterFragment extends Fragment {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 DatePickerFragment datePicker = new DatePickerFragment();
                 datePicker.setTargetFragment(BookRegisterFragment.this, 0);
-                datePicker.show(manager, "datePicker");
+                datePicker.show(manager, getString(R.string.date_picker));
             }
         });
     }
@@ -108,11 +110,11 @@ public class BookRegisterFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case 1:
+            case SET_DATE:
                 String date = data.getStringExtra(Intent.EXTRA_TEXT);
                 binding.bookDateField.setText(date);
                 break;
-            case 10:
+            case TAPPED_ADD_IMAGE_BUTTON:
                 Uri uri = data.getData();
 
                 try {

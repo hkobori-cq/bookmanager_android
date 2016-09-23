@@ -134,10 +134,10 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
     @Override
     public void onRecyclerItemClick(View view, String bookID, String bookName, String bookPrice, String purchaseDate) {
         Intent intent = new Intent(MainActivity.this, EditActivity.class);
-        intent.putExtra("id", bookID);
-        intent.putExtra("name", bookName);
-        intent.putExtra("price", bookPrice);
-        intent.putExtra("date", purchaseDate);
+        intent.putExtra(getString(R.string.id), bookID);
+        intent.putExtra(getString(R.string.name), bookName);
+        intent.putExtra(getString(R.string.price), bookPrice);
+        intent.putExtra(getString(R.string.date), purchaseDate);
         startActivity(intent);
     }
 
@@ -156,21 +156,21 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
         Bundle args = new Bundle();
         AlertDialogFragment alertDialog = new AlertDialogFragment();
         if (emailStr.isEmpty()) {
-            args.putString("message", getString(R.string.input_mail_address));
+            args.putString(getString(R.string.message), getString(R.string.input_mail_address));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), "dialog");
+            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
         } else if (passwordStr.isEmpty()) {
-            args.putString("message", getString(R.string.input_password));
+            args.putString(getString(R.string.message), getString(R.string.input_password));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), "dialog");
+            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
         } else if (passwordConStr.isEmpty()) {
-            args.putString("message", getString(R.string.input_password_confirm));
+            args.putString(getString(R.string.message), getString(R.string.input_password_confirm));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), "dialog");
+            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
         } else if (!(passwordStr.equals(passwordConStr))) {
-            args.putString("message", getString(R.string.not_match_password));
+            args.putString(getString(R.string.message), getString(R.string.not_match_password));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), "dialog");
+            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
         } else {
             DataClient client = new DataClient();
             Call<Void> call = client.userRegisterClient(emailStr, passwordStr);
@@ -178,10 +178,10 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {
                     Bundle args = new Bundle();
-                    args.putString("message", getString(R.string.completed_register));
+                    args.putString(getString(R.string.message), getString(R.string.completed_register));
                     AlertDialogFragment alertDialog = new AlertDialogFragment();
                     alertDialog.setArguments(args);
-                    alertDialog.show(getSupportFragmentManager(), "dialog");
+                    alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
                 }
 
                 @Override
