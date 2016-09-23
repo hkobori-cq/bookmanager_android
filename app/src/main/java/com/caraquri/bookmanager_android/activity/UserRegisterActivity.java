@@ -10,8 +10,8 @@ import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.databinding.ActivityUserRegisterBinding;
 
 public class UserRegisterActivity extends AppCompatActivity {
-    protected ActivityUserRegisterBinding binding;
     private static final String TAG = UserRegisterActivity.class.getSimpleName();
+    protected ActivityUserRegisterBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {

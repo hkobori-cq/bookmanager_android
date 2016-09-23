@@ -22,8 +22,8 @@ import retrofit.Retrofit;
 
 
 public class EditActivity extends AppCompatActivity {
-    protected ActivityEditBinding binding;
     private static final String TAG = EditActivity.class.getSimpleName();
+    protected ActivityEditBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

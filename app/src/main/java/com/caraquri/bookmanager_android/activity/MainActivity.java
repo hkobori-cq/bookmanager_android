@@ -29,8 +29,8 @@ import retrofit.Retrofit;
 
 
 public class MainActivity extends AppCompatActivity implements OnRecyclerItemClickListener {
-    public ActivityMainBinding binding;
     private static final String TAG = MainActivity.class.getSimpleName();
+    public ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

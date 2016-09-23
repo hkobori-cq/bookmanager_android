@@ -24,9 +24,9 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 public class RecyclerLayoutFragment extends Fragment {
+    private Integer readData = 15;
     private FragmentListViewBinding binding;
     private OnRecyclerItemClickListener listener;
-    private Integer readData = 15;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

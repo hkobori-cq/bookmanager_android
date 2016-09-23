@@ -13,10 +13,10 @@ import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
+    public static final int SET_DATE = 1;
     protected int year;
     protected int month;
     protected int dayOfMonth;
-    public static final int SET_DATE = 1;
 
     @NonNull
     @Override

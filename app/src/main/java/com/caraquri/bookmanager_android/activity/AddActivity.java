@@ -21,8 +21,8 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 public class AddActivity extends AppCompatActivity {
-    protected ActivityAddBinding binding;
     private static final String TAG = MainActivity.class.getSimpleName();
+    protected ActivityAddBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

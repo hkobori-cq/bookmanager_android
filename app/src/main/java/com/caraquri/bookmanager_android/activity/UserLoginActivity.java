@@ -21,8 +21,8 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 public class UserLoginActivity extends AppCompatActivity {
-    protected ActivityUserLoginBinding binding;
     private static final String TAG = UserLoginActivity.class.getSimpleName();
+    protected ActivityUserLoginBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
