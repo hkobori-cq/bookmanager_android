@@ -59,7 +59,7 @@ public class DataClient {
         Call<Void> storeBookData(
                 @Field("image_url") String url,
                 @Field("name") String name,
-                @Field("price") Integer price,
+                @Field("price") int price,
                 @Field("purchase_date") String date
         );
     }

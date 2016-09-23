@@ -93,7 +93,7 @@ public class EditActivity extends AppCompatActivity {
             alertDialog.setArguments(args);
             alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
         } else {
-            Integer priceInt = Integer.parseInt(price.getText().toString());
+            int priceInt = Integer.parseInt(price.getText().toString());
 
             DataClient client = new DataClient();
             Call<Void> call = client.bookUpdateClient(id, getString(R.string.sample_image), nameStr, priceInt, dateStr);
