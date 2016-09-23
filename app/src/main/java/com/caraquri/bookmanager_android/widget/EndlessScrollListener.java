@@ -12,7 +12,7 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
 
     private LinearLayoutManager mLinearLayoutManager;
 
-    public EndlessScrollListener(LinearLayoutManager linearLayoutManager) {
+    protected EndlessScrollListener(LinearLayoutManager linearLayoutManager) {
         this.mLinearLayoutManager = linearLayoutManager;
     }
 
@@ -29,9 +29,7 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
                 loading = false;
                 previousTotal = totalItemCount;
             }
-        }
-
-        if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+        }else if ((totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)){
             current_page++;
 
             onLoadMore(current_page);
