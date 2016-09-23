@@ -18,7 +18,7 @@ public class DataClient {
     private DataRegisterService service;
     static private Retrofit retrofit;
 
-    public Retrofit createDataClient() {
+    private Retrofit createDataClient() {
         Gson gson = new GsonBuilder()
                 .create();
         retrofit = new Retrofit.Builder()
@@ -30,35 +30,31 @@ public class DataClient {
     }
 
     public Call<BookDataEntity> bookDataLoadClient(String pageParam){
-        service = createDataClient().create(DataRegisterService.class);
+        if (retrofit == null){
+            service = createDataClient().create(DataRegisterService.class);
+        }else {
+            service = retrofit.create(DataRegisterService.class);
+        }
         Call<BookDataEntity> call = service.getBookData(pageParam);
         return call;
     }
 
     public Call<Void> bookRegisterClient(String imageUrl, String nameStr,
                                          Integer priceInt, String dateStr) {
-        if (retrofit.toString().isEmpty()){
-            service = createDataClient().create(DataRegisterService.class);
-        }else {
-            service = retrofit.create(DataRegisterService.class);
-        }
+        service = retrofit.create(DataRegisterService.class);
         Call<Void> call = service.storeBookData("sample", nameStr, priceInt, dateStr);
         return call;
     }
 
     public Call<Void> bookUpdateClient(String id, String imageUrl, String nameStr,
                                        Integer priceInt, String dateStr) {
-        if (retrofit.toString().isEmpty()){
-            service = createDataClient().create(DataRegisterService.class);
-        }else {
-            service = retrofit.create(DataRegisterService.class);
-        }
+        service = retrofit.create(DataRegisterService.class);
         Call<Void> call = service.storeBookData(id, imageUrl, nameStr, priceInt, dateStr);
         return call;
     }
 
     public Call<Integer> userLoginClient(String email, String password) {
-        if (retrofit.toString().isEmpty()){
+        if (retrofit == null){
             service = createDataClient().create(DataRegisterService.class);
         }else {
             service = retrofit.create(DataRegisterService.class);
@@ -68,11 +64,7 @@ public class DataClient {
     }
 
     public Call<Void> userRegisterClient(String email, String password) {
-        if (retrofit.toString().isEmpty()){
-            service = createDataClient().create(DataRegisterService.class);
-        }else {
-            service = retrofit.create(DataRegisterService.class);
-        }
+        service = retrofit.create(DataRegisterService.class);
         Call<Void> call = service.storeUserData(email, password);
         return call;
     }
