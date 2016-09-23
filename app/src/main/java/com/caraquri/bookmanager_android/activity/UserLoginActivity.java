@@ -78,7 +78,7 @@ public class UserLoginActivity extends AppCompatActivity {
         } else if (passwordStr.isEmpty()) {
             args.putString(getString(R.string.message), getString(R.string.input_password));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(),getString(R.string.dialog));
+            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
         } else {
             DataClient client = new DataClient();
             Call<Integer> call = client.userLoginClient(emailStr, passwordStr);

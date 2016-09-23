@@ -60,7 +60,7 @@ public class BookRegisterFragment extends Fragment {
     }
 
     private void initToolbar() {
-        ActionBar bar =((AppCompatActivity)getActivity()).getSupportActionBar();
+        ActionBar bar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
             bar.setDisplayShowHomeEnabled(true);
@@ -71,13 +71,13 @@ public class BookRegisterFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_book,menu);
+        inflater.inflate(R.menu.menu_book, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -90,7 +90,7 @@ public class BookRegisterFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void registerBookData(){
+    private void registerBookData() {
         Call<Void> call;
         String bookIDText = getActivity().getIntent().getStringExtra(getString(R.string.id));
         String bookTitleFieldText = binding.bookTitleField.getText().toString();
@@ -99,21 +99,21 @@ public class BookRegisterFragment extends Fragment {
 
         Bundle args = new Bundle();
         AlertDialogFragment alertDialog = new AlertDialogFragment();
-        if (binding.bookTitleField.getText().toString().isEmpty()){
+        if (binding.bookTitleField.getText().toString().isEmpty()) {
             args.putString(getString(R.string.message), getString(R.string.input_book_name));
             alertDialog.setArguments(args);
             alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
-        }else if (binding.bookPriceField.getText().toString().isEmpty()){
+        } else if (binding.bookPriceField.getText().toString().isEmpty()) {
             args.putString(getString(R.string.message), getString(R.string.input_book_price));
             alertDialog.setArguments(args);
             alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
-        }else if (binding.bookDateField.getText().toString().isEmpty()){
+        } else if (binding.bookDateField.getText().toString().isEmpty()) {
             args.putString(getString(R.string.message), getString(R.string.select_purchase_date));
             alertDialog.setArguments(args);
             alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
-        }else {
+        } else {
             DataClient client = new DataClient();
-            if (getActivity().getIntent().hasExtra(getString(R.string.name))){
+            if (getActivity().getIntent().hasExtra(getString(R.string.name))) {
                 call = client.bookUpdateClient(
                         bookIDText,
                         getString(R.string.sample_image),
@@ -121,7 +121,7 @@ public class BookRegisterFragment extends Fragment {
                         bookPriceFieldText,
                         bookDateFieldText
                 );
-            }else {
+            } else {
                 call = client.bookRegisterClient(
                         getString(R.string.sample_image),
                         bookTitleFieldText,
@@ -143,6 +143,7 @@ public class BookRegisterFragment extends Fragment {
             });
         }
     }
+
     /**
      * EditTextでキーボードが出ている際、バックレイヤーを触るとキーボードが消えるようにするメソッド
      */

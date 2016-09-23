@@ -29,10 +29,10 @@ public class DataClient {
         return retrofit;
     }
 
-    public Call<BookDataEntity> bookDataLoadClient(String pageParam){
-        if (retrofit == null){
+    public Call<BookDataEntity> bookDataLoadClient(String pageParam) {
+        if (retrofit == null) {
             service = createDataClient().create(DataRegisterService.class);
-        }else {
+        } else {
             service = retrofit.create(DataRegisterService.class);
         }
         Call<BookDataEntity> call = service.getBookData(pageParam);
@@ -54,9 +54,9 @@ public class DataClient {
     }
 
     public Call<Integer> userLoginClient(String email, String password) {
-        if (retrofit == null){
+        if (retrofit == null) {
             service = createDataClient().create(DataRegisterService.class);
-        }else {
+        } else {
             service = retrofit.create(DataRegisterService.class);
         }
         Call<Integer> call = service.loginUserData(email, password);

@@ -70,7 +70,7 @@ public class RecyclerLayoutFragment extends Fragment {
         });
     }
 
-    private void isRecyclerViewScrolled(){
+    private void isRecyclerViewScrolled() {
         binding.recyclerView.addOnScrollListener(new EndlessScrollListener((LinearLayoutManager) binding.recyclerView.getLayoutManager()) {
             @Override
             public void onLoadMore(int current_page) {
