@@ -121,7 +121,7 @@ public class BookRegisterFragment extends Fragment {
                 Uri uri = data.getData();
 
                 try {
-                    Bitmap bmp = getBitmapFromUri(uri);
+                    Bitmap bmp = createBitmapFromUri(uri);
                     binding.addPageBookImage.setImageBitmap(bmp);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -138,13 +138,17 @@ public class BookRegisterFragment extends Fragment {
      * @return
      * @throws IOException
      */
-    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+    private Bitmap createBitmapFromUri(Uri uri) throws IOException {
         ParcelFileDescriptor parcelFileDescriptor = getActivity()
                 .getContentResolver().openFileDescriptor(uri, "r");
-        assert parcelFileDescriptor != null;
-        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        FileDescriptor fileDescriptor = null;
+        if (parcelFileDescriptor != null) {
+            fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        }
         Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-        parcelFileDescriptor.close();
+        if (parcelFileDescriptor != null) {
+            parcelFileDescriptor.close();
+        }
         return image;
     }
 
