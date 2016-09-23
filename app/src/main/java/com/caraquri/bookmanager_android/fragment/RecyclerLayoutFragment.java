@@ -45,11 +45,7 @@ public class RecyclerLayoutFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         Activity activity = getActivity();
-        try {
-            listener = (OnRecyclerItemClickListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString());
-        }
+        listener = (OnRecyclerItemClickListener) activity;
     }
 
 
