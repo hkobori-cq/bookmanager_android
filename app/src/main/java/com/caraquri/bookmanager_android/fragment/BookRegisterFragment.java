@@ -36,7 +36,7 @@ public class BookRegisterFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentAddViewBinding.bind(getView());
-        if (!(getActivity().getIntent().hasExtra(getString(R.string.name)))) {
+        if (getActivity().getIntent().hasExtra(getString(R.string.name))) {
             initFieldData();
         }
         tappedDateButton();
