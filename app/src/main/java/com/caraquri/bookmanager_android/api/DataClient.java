@@ -1,5 +1,6 @@
 package com.caraquri.bookmanager_android.api;
 
+import com.caraquri.bookmanager_android.model.BookDataEntity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -26,6 +27,12 @@ public class DataClient {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         return retrofit;
+    }
+
+    public Call<BookDataEntity> bookDataLoadClient(String pageParam){
+        service = createDataClient().create(DataRegisterService.class);
+        Call<BookDataEntity> call = service.getBookData(pageParam);
+        return call;
     }
 
     public Call<Void> bookRegisterClient(String imageUrl, String nameStr,
@@ -71,6 +78,13 @@ public class DataClient {
     }
 
     private interface DataRegisterService {
+        @POST("book/get")
+        @Headers("Accept: application/json;charset=utf-8")
+        @FormUrlEncoded
+        Call<BookDataEntity> getBookData(
+                @Field("page") String param
+        );
+
         @POST("book/regist")
         @Headers("Accept: application/json;charset=utf-8")
         @FormUrlEncoded

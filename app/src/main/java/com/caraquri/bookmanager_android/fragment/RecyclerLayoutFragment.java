@@ -50,11 +50,8 @@ public class RecyclerLayoutFragment extends Fragment {
 
 
     private void initRecyclerView() {
-        DataClient dataClient = new DataClient();
-        Retrofit retrofit = dataClient.createDataClient();
-
-        BookDataGetService bookDataGetService = retrofit.create(BookDataGetService.class);
-        Call<BookDataEntity> call = bookDataGetService.getBookData("0-" + readData.toString());
+        DataClient client = new DataClient();
+        Call<BookDataEntity> call = client.bookDataLoadClient("0-" + readData.toString());
         call.enqueue(new Callback<BookDataEntity>() {
             /**
              * API通信が成功したときに呼ばれるメソッド
