@@ -41,10 +41,13 @@ public class BookRegisterFragment extends Fragment {
         }
         tappedDateButton();
         tappedAddImageButton();
-        tappedBackLayout();
+        onTextFieldUnFocused();
     }
 
-    private void tappedBackLayout() {
+    /**
+     * EditTextでキーボードが出ている際、バックレイヤーを触るとキーボードが消えるようにするメソッド
+     */
+    private void onTextFieldUnFocused() {
         binding.bookAddFragment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
