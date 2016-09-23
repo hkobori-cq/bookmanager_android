@@ -36,8 +36,9 @@ import retrofit.Retrofit;
 
 
 public class BookRegisterFragment extends Fragment {
-    public static final int SET_DATE = 1;
-    public static final int TAPPED_ADD_IMAGE_BUTTON = 2;
+    private static final int SET_DATE = 1;
+    private static final int TAPPED_ADD_IMAGE_BUTTON = 2;
+    private static final String IMAGE_STORE_URL = "image/*";
     protected FragmentAddViewBinding binding;
 
     @Override
@@ -53,7 +54,7 @@ public class BookRegisterFragment extends Fragment {
         if (getActivity().getIntent().hasExtra(getString(R.string.name))) {
             initFieldData();
         }
-        tappedDateButton();
+        tappedDateEditField();
         tappedAddImageButton();
         onTextFieldUnFocused();
         initToolbar();
@@ -169,7 +170,7 @@ public class BookRegisterFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setType("image/*");
+                intent.setType(IMAGE_STORE_URL);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, TAPPED_ADD_IMAGE_BUTTON);
             }
@@ -184,12 +185,13 @@ public class BookRegisterFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         binding.addPageBookImage.setImageResource(R.drawable.sample);
         binding.bookTitleField.setText(intent.getStringExtra(getString(R.string.name)));
-        binding.bookPriceField.setText(intent.getStringExtra(getString(R.string.price)).replace("円", ""));
+        binding.bookPriceField.setText(intent.getStringExtra(getString(R.string.price))
+                .replace(getString(R.string.japanese_yen), ""));
         binding.bookDateField.setText(intent.getStringExtra(getString(R.string.date)).replaceAll("/", "-"));
     }
 
 
-    private void tappedDateButton() {
+    private void tappedDateEditField() {
         binding.bookDateField.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
