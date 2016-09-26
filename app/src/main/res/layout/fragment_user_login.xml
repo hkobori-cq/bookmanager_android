@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="userData"
+            type="com.caraquri.bookmanager_android.model.UserDataModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/user_login_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/user_login_email_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/mail_address_text_left_margin"
+            android:layout_marginStart="@dimen/mail_address_text_left_margin"
+            android:layout_marginTop="@dimen/mail_address_text_top_margin"
+            android:text="@string/email" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_login_email_field"
+            android:layout_width="@dimen/text_field_width"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/user_login_email_text"
+            android:layout_alignStart="@+id/user_login_email_text"
+            android:layout_below="@+id/user_login_email_text"
+            android:layout_marginTop="@dimen/margin_of_field_and_text"
+            android:hint="" />
+
+        <TextView
+            android:id="@+id/user_login_password_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/user_login_email_field"
+            android:layout_alignStart="@+id/user_login_email_field"
+            android:layout_below="@+id/user_login_email_field"
+            android:layout_marginTop="@dimen/margin_of_field_and_text"
+            android:text="@string/password" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_login_password_field"
+            android:layout_width="@dimen/margin_of_field_and_text"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/user_login_password_text"
+            android:layout_alignStart="@+id/user_login_password_text"
+            android:layout_below="@+id/user_login_password_text"
+            android:layout_marginTop="@dimen/margin_of_field_and_text"
+            android:hint="" />
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="bookData"
+            type="com.caraquri.bookmanager_android.model.BookDataModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/book_list_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/book_image"
+            android:layout_width="@dimen/image_width"
+            android:layout_height="@dimen/image_height"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/top_view_image_margin"
+            android:contentDescription="@string/book_image_picture" />
+
+        <TextView
+            android:id="@+id/book_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/book_image"
+            android:layout_toEndOf="@+id/book_image"
+            android:layout_toRightOf="@+id/book_image"
+            android:drawablePadding="@dimen/top_book_title_text_padding"
+            android:text="@{bookData.bookName}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <TextView
+            android:id="@+id/book_price_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/book_image"
+            android:layout_toEndOf="@id/book_image"
+            android:layout_toRightOf="@id/book_image"
+            android:text="@{bookData.bookPrice}" />
+
+        <TextView
+            android:id="@+id/purchase_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/book_image"
+            android:gravity="end"
+            android:text="@{bookData.purchaseDate}" />
+    </RelativeLayout>
+</layout>
