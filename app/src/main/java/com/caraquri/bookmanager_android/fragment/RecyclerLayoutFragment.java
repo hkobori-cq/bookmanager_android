@@ -32,6 +32,7 @@ import retrofit.Retrofit;
 public class RecyclerLayoutFragment extends Fragment {
     private static final String LOAD_DATA_START = "0-";
     private int LOAD_DATA_END = 15;
+    private static final int ONE_TIMES_LOAD_DATA = 20;
     private FragmentListViewBinding binding;
     private OnRecyclerItemClickListener listener;
 
@@ -110,7 +111,7 @@ public class RecyclerLayoutFragment extends Fragment {
         binding.recyclerView.addOnScrollListener(new EndlessScrollListener((LinearLayoutManager) binding.recyclerView.getLayoutManager()) {
             @Override
             public void onLoadMore(int current_page) {
-                LOAD_DATA_END = current_page * 20;
+                LOAD_DATA_END = current_page * ONE_TIMES_LOAD_DATA;
             }
         });
     }

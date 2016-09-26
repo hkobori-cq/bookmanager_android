@@ -41,6 +41,8 @@ public class BookRegisterFragment extends Fragment {
     private static final String SAMPLE_IMAGE_URL = "sample.jpg";
     private static final String JAPANESE_YEN = "円";
     private static final String FROM_DATE_TO_BITMAP_CANCEL_SIGNAL = "cancel";
+    private static final String BETWEEN_DATE_HYPHEN = "-";
+    private static final String BETWEEN_DATE_BACKSLASH = "/";
     protected FragmentAddViewBinding binding;
 
     @Override
@@ -186,7 +188,7 @@ public class BookRegisterFragment extends Fragment {
         binding.bookPriceField.setText(intent.getStringExtra(EditActivity.BOOK_PRICE)
                 .replace(JAPANESE_YEN, ""));
         binding.bookDateField.setText(intent.getStringExtra(EditActivity.PURCHASE_DATE)
-                .replaceAll("/", "-"));
+                .replaceAll(BETWEEN_DATE_BACKSLASH, BETWEEN_DATE_HYPHEN));
     }
 
 
