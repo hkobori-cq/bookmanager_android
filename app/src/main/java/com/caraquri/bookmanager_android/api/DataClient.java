@@ -19,54 +19,44 @@ public class DataClient {
     private DataRegisterService service;
     private static Retrofit retrofit;
 
-    private Retrofit createDataClient() {
-        Gson gson = new GsonBuilder()
-                .create();
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        return retrofit;
+    private DataRegisterService createDataClient() {
+        if (service == null){
+            Gson gson = new GsonBuilder()
+                    .create();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .build();
+            service = retrofit.create(DataRegisterService.class);
+        }
+        return service;
     }
 
     public Call<BookDataEntity> bookDataLoadClient(String pageParam) {
-        if (retrofit == null) {
-            service = createDataClient().create(DataRegisterService.class);
-        } else {
-            service = retrofit.create(DataRegisterService.class);
-        }
-        Call<BookDataEntity> call = service.getBookData(pageParam);
+        Call<BookDataEntity> call = createDataClient().getBookData(pageParam);
         return call;
     }
 
     public Call<Void> bookRegisterClient(String imageUrl, String nameStr,
                                          Integer priceInt, String dateStr) {
-        service = retrofit.create(DataRegisterService.class);
-        Call<Void> call = service.storeBookData(SAMPLE_IMAGE_URL, nameStr, priceInt, dateStr);
+        Call<Void> call = createDataClient().storeBookData(SAMPLE_IMAGE_URL, nameStr, priceInt, dateStr);
         return call;
     }
 
     public Call<Void> bookUpdateClient(String id, String imageUrl, String nameStr,
                                        Integer priceInt, String dateStr) {
-        service = retrofit.create(DataRegisterService.class);
-        Call<Void> call = service.storeBookData(id, imageUrl, nameStr, priceInt, dateStr);
+        Call<Void> call = createDataClient().storeBookData(id, imageUrl, nameStr, priceInt, dateStr);
         return call;
     }
 
     public Call<Integer> userLoginClient(String email, String password) {
-        if (retrofit == null) {
-            service = createDataClient().create(DataRegisterService.class);
-        } else {
-            service = retrofit.create(DataRegisterService.class);
-        }
-        Call<Integer> call = service.loginUserData(email, password);
+        Call<Integer> call = createDataClient().loginUserData(email, password);
         return call;
     }
 
     public Call<Void> userRegisterClient(String email, String password) {
-        service = retrofit.create(DataRegisterService.class);
-        Call<Void> call = service.storeUserData(email, password);
+        Call<Void> call = createDataClient().storeUserData(email, password);
         return call;
     }
 

@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.activity.AddActivity;
-import com.caraquri.bookmanager_android.activity.MainActivity;
 import com.caraquri.bookmanager_android.adapter.RecyclerViewAdapter;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.FragmentListViewBinding;

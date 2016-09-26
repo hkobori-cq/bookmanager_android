@@ -1,7 +1,5 @@
 package com.caraquri.bookmanager_android.fragment;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -13,10 +11,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 import com.caraquri.bookmanager_android.R;
-import com.caraquri.bookmanager_android.activity.AddActivity;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.FragmentUserRegisterBinding;
 import com.caraquri.bookmanager_android.util.KeyboardUtil;
