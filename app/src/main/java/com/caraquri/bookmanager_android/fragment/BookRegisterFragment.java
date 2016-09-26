@@ -26,6 +26,7 @@ import com.caraquri.bookmanager_android.activity.EditActivity;
 import com.caraquri.bookmanager_android.activity.MainActivity;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
+import com.caraquri.bookmanager_android.util.KeyboardUtil;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -153,17 +154,13 @@ public class BookRegisterFragment extends Fragment {
      * EditTextでキーボードが出ている際、バックレイヤーを触るとキーボードが消えるようにするメソッド
      */
     private void onTextFieldUnFocused() {
+        final KeyboardUtil keyboardUtil = new KeyboardUtil();
         binding.bookAddFragment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getContext()
-                        .getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager
-                        .hideSoftInputFromWindow(binding.bookTitleField.getWindowToken(), 0);
-                inputMethodManager
-                        .hideSoftInputFromWindow(binding.bookDateField.getWindowToken(), 0);
-                inputMethodManager
-                        .hideSoftInputFromWindow(binding.bookPriceField.getWindowToken(), 0);
+                keyboardUtil.hideKeyboard(binding.bookTitleField,getContext());
+                keyboardUtil.hideKeyboard(binding.bookDateField,getContext());
+                keyboardUtil.hideKeyboard(binding.bookPriceField,getContext());
                 return true;
             }
         });

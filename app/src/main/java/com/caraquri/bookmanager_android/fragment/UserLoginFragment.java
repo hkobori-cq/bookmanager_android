@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.databinding.FragmentUserLoginBinding;
+import com.caraquri.bookmanager_android.util.KeyboardUtil;
 
 public class UserLoginFragment extends Fragment {
     protected FragmentUserLoginBinding binding;
@@ -24,23 +25,20 @@ public class UserLoginFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentUserLoginBinding.bind(getView());
-        tappedBackLayout();
+        onTextFieldUnFocused();
     }
 
     /**
      * EditText以外のViewがタップされたときのメソッド
      * タップされたときはkeyboardを隠す
      */
-    private void tappedBackLayout() {
+    private void onTextFieldUnFocused() {
+        final KeyboardUtil keyboardUtil = new KeyboardUtil();
         binding.userLoginFragment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getContext()
-                        .getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(binding.userLoginEmailField
-                        .getWindowToken(), 0);
-                inputMethodManager.hideSoftInputFromWindow(binding.userLoginPasswordField
-                        .getWindowToken(), 0);
+                keyboardUtil.hideKeyboard(binding.userLoginEmailField,getContext());
+                keyboardUtil.hideKeyboard(binding.userLoginPasswordField,getContext());
                 return true;
             }
         });

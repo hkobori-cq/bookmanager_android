@@ -19,6 +19,7 @@ import com.caraquri.bookmanager_android.R;
 import com.caraquri.bookmanager_android.activity.AddActivity;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.FragmentUserRegisterBinding;
+import com.caraquri.bookmanager_android.util.KeyboardUtil;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -38,7 +39,7 @@ public class UserSettingsFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentUserRegisterBinding.bind(getView());
-        tappedBackLayout();
+        onTextFieldUnFocused();
         initToolbar();
     }
 
@@ -56,6 +57,14 @@ public class UserSettingsFragment extends Fragment {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initToolbar(){
+        ActionBar bar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayShowHomeEnabled(true);
+            bar.setHomeButtonEnabled(true);
+        }
     }
 
     private void registerUserData(){
@@ -101,29 +110,17 @@ public class UserSettingsFragment extends Fragment {
         }
     }
 
-    private void initToolbar(){
-        ActionBar bar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (bar != null) {
-            bar.setDisplayShowHomeEnabled(true);
-            bar.setHomeButtonEnabled(true);
-        }
-    }
-
     /**
      * @see UserLoginFragment
      */
-    private void tappedBackLayout() {
+    private void onTextFieldUnFocused() {
+        final KeyboardUtil keyboardUtil = new KeyboardUtil();
         binding.userRegisterFragment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                InputMethodManager inputMethodManager = (InputMethodManager) getContext()
-                        .getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(binding.userEmailField
-                        .getWindowToken(), 0);
-                inputMethodManager.hideSoftInputFromWindow(binding.userPasswordField
-                        .getWindowToken(), 0);
-                inputMethodManager.hideSoftInputFromWindow(binding.userPasswordConfirmField
-                        .getWindowToken(), 0);
+                keyboardUtil.hideKeyboard(binding.userEmailField,getContext());
+                keyboardUtil.hideKeyboard(binding.userPasswordField,getContext());
+                keyboardUtil.hideKeyboard(binding.userPasswordConfirmField,getContext());
                 return true;
             }
         });
