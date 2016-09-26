@@ -72,13 +72,13 @@ public class UserLoginActivity extends AppCompatActivity {
         AlertDialogFragment alertDialog = new AlertDialogFragment();
 
         if (emailStr.isEmpty()) {
-            args.putString(getString(R.string.message), getString(R.string.input_mail_address));
+            args.putString(AlertDialogFragment.ALERT_DIALOG_MESSAGE_KEY, getString(R.string.input_mail_address));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
+            alertDialog.show(getSupportFragmentManager(), AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
         } else if (passwordStr.isEmpty()) {
-            args.putString(getString(R.string.message), getString(R.string.input_password));
+            args.putString(AlertDialogFragment.ALERT_DIALOG_MESSAGE_KEY, getString(R.string.input_password));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
+            alertDialog.show(getSupportFragmentManager(), AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
         } else {
             DataClient client = new DataClient();
             Call<Integer> call = client.userLoginClient(emailStr, passwordStr);
@@ -91,9 +91,9 @@ public class UserLoginActivity extends AppCompatActivity {
                     } else {
                         Bundle args = new Bundle();
                         AlertDialogFragment alertDialog = new AlertDialogFragment();
-                        args.putString(getString(R.string.message), getString(R.string.failed_login_message));
+                        args.putString(AlertDialogFragment.ALERT_DIALOG_MESSAGE_KEY, getString(R.string.failed_login_message));
                         alertDialog.setArguments(args);
-                        alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
+                        alertDialog.show(getSupportFragmentManager(), AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
                     }
                 }
 

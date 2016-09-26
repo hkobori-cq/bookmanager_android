@@ -23,7 +23,8 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 public class RecyclerLayoutFragment extends Fragment {
-    private Integer readData = 15;
+    private static final String LOAD_DATA_START = "0-";
+    private int LOAD_DATA_END = 15;
     private FragmentListViewBinding binding;
     private OnRecyclerItemClickListener listener;
 
@@ -50,7 +51,7 @@ public class RecyclerLayoutFragment extends Fragment {
 
     private void initRecyclerView() {
         DataClient client = new DataClient();
-        Call<BookDataEntity> call = client.bookDataLoadClient("0-" + readData.toString());
+        Call<BookDataEntity> call = client.bookDataLoadClient(LOAD_DATA_START + LOAD_DATA_END);
         call.enqueue(new Callback<BookDataEntity>() {
             /**
              * API通信が成功したときに呼ばれるメソッド
@@ -73,7 +74,7 @@ public class RecyclerLayoutFragment extends Fragment {
         binding.recyclerView.addOnScrollListener(new EndlessScrollListener((LinearLayoutManager) binding.recyclerView.getLayoutManager()) {
             @Override
             public void onLoadMore(int current_page) {
-                readData = current_page * 20;
+                LOAD_DATA_END = current_page * 20;
             }
         });
     }

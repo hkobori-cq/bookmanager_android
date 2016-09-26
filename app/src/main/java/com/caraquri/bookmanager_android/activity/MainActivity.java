@@ -30,6 +30,7 @@ import retrofit.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements OnRecyclerItemClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String FIRST_VISIT_FLAG = "first_visit_flag";
     public ActivityMainBinding binding;
 
     @Override
@@ -37,8 +38,8 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
         super.onCreate(savedInstanceState);
         //初めてアプリを開いたかどうかを判定する
         SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (defaultSharedPreferences.getBoolean(getString(R.string.first_visit), true)) {
-            defaultSharedPreferences.edit().putBoolean(getString(R.string.first_visit), false).apply();
+        if (defaultSharedPreferences.getBoolean(FIRST_VISIT_FLAG, true)) {
+            defaultSharedPreferences.edit().putBoolean(FIRST_VISIT_FLAG, false).apply();
             Intent intent = new Intent(MainActivity.this, UserLoginActivity.class);
             startActivity(intent);
         } else {
@@ -134,10 +135,10 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
     @Override
     public void onRecyclerItemClick(View view, String bookID, String bookName, String bookPrice, String purchaseDate) {
         Intent intent = new Intent(MainActivity.this, EditActivity.class);
-        intent.putExtra(getString(R.string.id), bookID);
-        intent.putExtra(getString(R.string.name), bookName);
-        intent.putExtra(getString(R.string.price), bookPrice);
-        intent.putExtra(getString(R.string.date), purchaseDate);
+        intent.putExtra(EditActivity.BOOK_ID, bookID);
+        intent.putExtra(EditActivity.BOOK_NAME, bookName);
+        intent.putExtra(EditActivity.BOOK_PRICE, bookPrice);
+        intent.putExtra(EditActivity.PURCHASE_DATE, purchaseDate);
         startActivity(intent);
     }
 
@@ -156,21 +157,21 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
         Bundle args = new Bundle();
         AlertDialogFragment alertDialog = new AlertDialogFragment();
         if (emailStr.isEmpty()) {
-            args.putString(getString(R.string.message), getString(R.string.input_mail_address));
+            args.putString(AlertDialogFragment.ALERT_DIALOG_MESSAGE_KEY, getString(R.string.input_mail_address));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
+            alertDialog.show(getSupportFragmentManager(), AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
         } else if (passwordStr.isEmpty()) {
-            args.putString(getString(R.string.message), getString(R.string.input_password));
+            args.putString(AlertDialogFragment.ALERT_DIALOG_MESSAGE_KEY, getString(R.string.input_password));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
+            alertDialog.show(getSupportFragmentManager(), AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
         } else if (passwordConStr.isEmpty()) {
-            args.putString(getString(R.string.message), getString(R.string.input_password_confirm));
+            args.putString(AlertDialogFragment.ALERT_DIALOG_MESSAGE_KEY, getString(R.string.input_password_confirm));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
+            alertDialog.show(getSupportFragmentManager(), AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
         } else if (!(passwordStr.equals(passwordConStr))) {
-            args.putString(getString(R.string.message), getString(R.string.not_match_password));
+            args.putString(AlertDialogFragment.ALERT_DIALOG_MESSAGE_KEY, getString(R.string.not_match_password));
             alertDialog.setArguments(args);
-            alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
+            alertDialog.show(getSupportFragmentManager(), AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
         } else {
             DataClient client = new DataClient();
             Call<Void> call = client.userRegisterClient(emailStr, passwordStr);
@@ -178,10 +179,10 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerItemCli
                 @Override
                 public void onResponse(Response<Void> response, Retrofit retrofit) {
                     Bundle args = new Bundle();
-                    args.putString(getString(R.string.message), getString(R.string.completed_register));
+                    args.putString(AlertDialogFragment.ALERT_DIALOG_MESSAGE_KEY, getString(R.string.completed_register));
                     AlertDialogFragment alertDialog = new AlertDialogFragment();
                     alertDialog.setArguments(args);
-                    alertDialog.show(getSupportFragmentManager(), getString(R.string.dialog));
+                    alertDialog.show(getSupportFragmentManager(), AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
                 }
 
                 @Override

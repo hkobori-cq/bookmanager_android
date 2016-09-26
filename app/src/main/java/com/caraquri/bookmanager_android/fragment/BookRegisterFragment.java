@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.caraquri.bookmanager_android.R;
+import com.caraquri.bookmanager_android.activity.EditActivity;
 import com.caraquri.bookmanager_android.activity.MainActivity;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.FragmentAddViewBinding;
@@ -39,6 +40,9 @@ public class BookRegisterFragment extends Fragment {
     private static final int SET_DATE = 1;
     private static final int TAPPED_ADD_IMAGE_BUTTON = 2;
     private static final String IMAGE_STORE_URL = "image/*";
+    private static final String SAMPLE_IMAGE_URL = "sample.jpg";
+    private static final String JAPANESE_YEN = "円";
+    private static final String FROM_DATE_TO_BITMAP_CANCEL_SIGNAL = "cancel";
     protected FragmentAddViewBinding binding;
 
     @Override
@@ -51,7 +55,7 @@ public class BookRegisterFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding = FragmentAddViewBinding.bind(getView());
-        if (getActivity().getIntent().hasExtra(getString(R.string.name))) {
+        if (getActivity().getIntent().hasExtra(EditActivity.BOOK_NAME)) {
             initFieldData();
         }
         tappedDateEditField();
@@ -93,7 +97,7 @@ public class BookRegisterFragment extends Fragment {
 
     private void registerBookData() {
         Call<Void> call;
-        String bookIDText = getActivity().getIntent().getStringExtra(getString(R.string.id));
+        String bookIDText = getActivity().getIntent().getStringExtra(EditActivity.BOOK_ID);
         String bookTitleFieldText = binding.bookTitleField.getText().toString();
         int bookPriceFieldText = Integer.parseInt(binding.bookPriceField.getText().toString());
         String bookDateFieldText = binding.bookDateField.getText().toString();
@@ -101,30 +105,30 @@ public class BookRegisterFragment extends Fragment {
         Bundle args = new Bundle();
         AlertDialogFragment alertDialog = new AlertDialogFragment();
         if (binding.bookTitleField.getText().toString().isEmpty()) {
-            args.putString(getString(R.string.message), getString(R.string.input_book_name));
+            args.putString(AlertDialogFragment.ALERT_DIALOG_MESSAGE_KEY, getString(R.string.input_book_name));
             alertDialog.setArguments(args);
-            alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
+            alertDialog.show(getActivity().getSupportFragmentManager(),AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
         } else if (binding.bookPriceField.getText().toString().isEmpty()) {
-            args.putString(getString(R.string.message), getString(R.string.input_book_price));
+            args.putString(AlertDialogFragment.ALERT_DIALOG_MESSAGE_KEY, getString(R.string.input_book_price));
             alertDialog.setArguments(args);
-            alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
+            alertDialog.show(getActivity().getSupportFragmentManager(), AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
         } else if (binding.bookDateField.getText().toString().isEmpty()) {
-            args.putString(getString(R.string.message), getString(R.string.select_purchase_date));
+            args.putString(AlertDialogFragment.ALERT_DIALOG_MESSAGE_KEY, getString(R.string.select_purchase_date));
             alertDialog.setArguments(args);
-            alertDialog.show(getActivity().getSupportFragmentManager(), getString(R.string.dialog));
+            alertDialog.show(getActivity().getSupportFragmentManager(), AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
         } else {
             DataClient client = new DataClient();
-            if (getActivity().getIntent().hasExtra(getString(R.string.name))) {
+            if (getActivity().getIntent().hasExtra(EditActivity.BOOK_NAME)) {
                 call = client.bookUpdateClient(
                         bookIDText,
-                        getString(R.string.sample_image),
+                        SAMPLE_IMAGE_URL,
                         bookTitleFieldText,
                         bookPriceFieldText,
                         bookDateFieldText
                 );
             } else {
                 call = client.bookRegisterClient(
-                        getString(R.string.sample_image),
+                        SAMPLE_IMAGE_URL,
                         bookTitleFieldText,
                         bookPriceFieldText,
                         bookDateFieldText
@@ -184,10 +188,11 @@ public class BookRegisterFragment extends Fragment {
     private void initFieldData() {
         Intent intent = getActivity().getIntent();
         binding.addPageBookImage.setImageResource(R.drawable.sample);
-        binding.bookTitleField.setText(intent.getStringExtra(getString(R.string.name)));
-        binding.bookPriceField.setText(intent.getStringExtra(getString(R.string.price))
-                .replace(getString(R.string.japanese_yen), ""));
-        binding.bookDateField.setText(intent.getStringExtra(getString(R.string.date)).replaceAll("/", "-"));
+        binding.bookTitleField.setText(intent.getStringExtra(EditActivity.BOOK_NAME));
+        binding.bookPriceField.setText(intent.getStringExtra(EditActivity.BOOK_PRICE)
+                .replace(JAPANESE_YEN, ""));
+        binding.bookDateField.setText(intent.getStringExtra(EditActivity.PURCHASE_DATE)
+                .replaceAll("/", "-"));
     }
 
 
@@ -234,7 +239,7 @@ public class BookRegisterFragment extends Fragment {
     }
 
     /**
-     * URIkからデータをビットマップで使える形に変換するメソッド
+     * URIからデータをビットマップで使える形に変換するメソッド
      *
      * @param uri 画像のURI
      * @return
@@ -242,7 +247,7 @@ public class BookRegisterFragment extends Fragment {
      */
     private Bitmap createBitmapFromUri(Uri uri) throws IOException {
         ParcelFileDescriptor parcelFileDescriptor = getActivity()
-                .getContentResolver().openFileDescriptor(uri, "r");
+                .getContentResolver().openFileDescriptor(uri, FROM_DATE_TO_BITMAP_CANCEL_SIGNAL);
         FileDescriptor fileDescriptor = null;
         if (parcelFileDescriptor != null) {
             fileDescriptor = parcelFileDescriptor.getFileDescriptor();

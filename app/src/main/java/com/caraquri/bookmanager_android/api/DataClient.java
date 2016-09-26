@@ -14,15 +14,16 @@ import retrofit.http.Headers;
 import retrofit.http.POST;
 
 public class DataClient {
-    static private final String BASEURL = "http://app.com";
+    private static final String BASE_URL = "http://app.com";
+    private static final String SAMPLE_IMAGE_URL = "sample.jpg";
     private DataRegisterService service;
-    static private Retrofit retrofit;
+    private static Retrofit retrofit;
 
     private Retrofit createDataClient() {
         Gson gson = new GsonBuilder()
                 .create();
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASEURL)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
@@ -42,7 +43,7 @@ public class DataClient {
     public Call<Void> bookRegisterClient(String imageUrl, String nameStr,
                                          Integer priceInt, String dateStr) {
         service = retrofit.create(DataRegisterService.class);
-        Call<Void> call = service.storeBookData("sample", nameStr, priceInt, dateStr);
+        Call<Void> call = service.storeBookData(SAMPLE_IMAGE_URL, nameStr, priceInt, dateStr);
         return call;
     }
 

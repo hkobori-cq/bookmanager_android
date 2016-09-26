@@ -14,6 +14,7 @@ import java.util.Calendar;
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
     public static final int SET_DATE = 1;
+    private static final String BETWEEN_DATE_HYPHEN = "-";
     protected int year;
     protected int month;
     protected int dayOfMonth;
@@ -33,7 +34,7 @@ public class DatePickerFragment extends DialogFragment
         String yearStr = String.valueOf(year);
         String monthStr = String.valueOf(++month);
         String dayStr = String.valueOf(day);
-        String date = yearStr + "-" + monthStr + "-" + dayStr;
+        String date = yearStr + BETWEEN_DATE_HYPHEN + monthStr + BETWEEN_DATE_HYPHEN + dayStr;
         Fragment target = getTargetFragment();
         Intent intent = new Intent();
         intent.putExtra(Intent.EXTRA_TEXT, date);

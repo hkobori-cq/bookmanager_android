@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class ChangeDateFormat {
+    private static final String API_DATE_FORMAT = "yyyy/MMM/dd";
+    private static final String BETWEEN_DATE_FORMAT = "/";
     private int year;
     private int month;
     private int day;
@@ -17,10 +19,10 @@ public class ChangeDateFormat {
         String MMM = date.substring(3, 6);
         String yyyy = date.substring(7, 11);
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MMM/dd", Locale.ENGLISH);
+        SimpleDateFormat format = new SimpleDateFormat(API_DATE_FORMAT, Locale.ENGLISH);
 
         try {
-            Date mDate = format.parse(yyyy + "/" + MMM + "/" + dd);
+            Date mDate = format.parse(yyyy + BETWEEN_DATE_FORMAT + MMM + BETWEEN_DATE_FORMAT + dd);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(mDate);
             this.year = calendar.get(Calendar.YEAR);
@@ -29,7 +31,7 @@ public class ChangeDateFormat {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return this.year + "/" + this.month + "/" + this.day;
+        return this.year + BETWEEN_DATE_FORMAT + this.month + BETWEEN_DATE_FORMAT + this.day;
     }
 
 }

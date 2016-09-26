@@ -18,6 +18,7 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private List<BookDataModel> bookData;
     private OnRecyclerItemClickListener listener;
+    private static final String JAPANESE_YEN = "円";
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
         final ItemBookListRowBinding binding;
@@ -48,7 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final BookDataModel bookDataModel = bookData.get(position);
-        bookDataModel.bookPrice = bookDataModel.bookPrice + "円";
+        bookDataModel.bookPrice = bookDataModel.bookPrice + JAPANESE_YEN;
         ChangeDateFormat format = new ChangeDateFormat();
         bookDataModel.purchaseDate = format.fromGMTFormatToDateFormat(bookDataModel.purchaseDate);
         holder.binding.bookImage.setImageResource(R.drawable.sample);
