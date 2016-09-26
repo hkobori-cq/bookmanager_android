@@ -2,14 +2,22 @@ package com.caraquri.bookmanager_android.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.caraquri.bookmanager_android.R;
+import com.caraquri.bookmanager_android.activity.AddActivity;
+import com.caraquri.bookmanager_android.activity.MainActivity;
 import com.caraquri.bookmanager_android.adapter.RecyclerViewAdapter;
 import com.caraquri.bookmanager_android.api.DataClient;
 import com.caraquri.bookmanager_android.databinding.FragmentListViewBinding;
@@ -30,6 +38,7 @@ public class RecyclerLayoutFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_list_view, container, false);
     }
 
@@ -39,6 +48,7 @@ public class RecyclerLayoutFragment extends Fragment {
         binding = FragmentListViewBinding.bind(getView());
         initRecyclerView();
         isRecyclerViewScrolled();
+        initToolbar();
     }
 
     @Override
@@ -47,6 +57,33 @@ public class RecyclerLayoutFragment extends Fragment {
         Activity activity = getActivity();
         listener = (OnRecyclerItemClickListener) activity;
     }
+
+    private void initToolbar(){
+        ActionBar bar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayShowHomeEnabled(true);
+            bar.setHomeButtonEnabled(true);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                Intent intent = new Intent(getActivity(), AddActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
 
     private void initRecyclerView() {

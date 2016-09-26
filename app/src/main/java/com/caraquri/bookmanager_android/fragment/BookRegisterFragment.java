@@ -96,7 +96,6 @@ public class BookRegisterFragment extends Fragment {
     }
 
     private void registerBookData() {
-        Call<Void> call;
         String bookIDText = getActivity().getIntent().getStringExtra(EditActivity.BOOK_ID);
         String bookTitleFieldText = binding.bookTitleField.getText().toString();
         int bookPriceFieldText = Integer.parseInt(binding.bookPriceField.getText().toString());
@@ -118,6 +117,7 @@ public class BookRegisterFragment extends Fragment {
             alertDialog.show(getActivity().getSupportFragmentManager(), AlertDialogFragment.ALERT_DIALOG_SHOW_KEY);
         } else {
             DataClient client = new DataClient();
+            Call<Void> call;
             if (getActivity().getIntent().hasExtra(EditActivity.BOOK_NAME)) {
                 call = client.bookUpdateClient(
                         bookIDText,
